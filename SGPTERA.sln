@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGPTERA", "SGPTERA\SGPTERA.csproj", "{B5F86754-8D54-4FB5-9948-E583E445D19E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeracromController", "TeracromController\TeracromController.csproj", "{C609527A-79AF-4336-9D8A-C25A6B7AD335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeracromModels", "TeracromModels\TeracromModels.csproj", "{A45FEAFC-9A08-454C-AA96-0F132DED5B85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeracromDatabase", "TeracromDatabase\TeracromDatabase.csproj", "{CA48E4F5-7AB5-43E1-A25C-CA693D09CDFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5F86754-8D54-4FB5-9948-E583E445D19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5F86754-8D54-4FB5-9948-E583E445D19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5F86754-8D54-4FB5-9948-E583E445D19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5F86754-8D54-4FB5-9948-E583E445D19E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C609527A-79AF-4336-9D8A-C25A6B7AD335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C609527A-79AF-4336-9D8A-C25A6B7AD335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C609527A-79AF-4336-9D8A-C25A6B7AD335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C609527A-79AF-4336-9D8A-C25A6B7AD335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A45FEAFC-9A08-454C-AA96-0F132DED5B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A45FEAFC-9A08-454C-AA96-0F132DED5B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A45FEAFC-9A08-454C-AA96-0F132DED5B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A45FEAFC-9A08-454C-AA96-0F132DED5B85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA48E4F5-7AB5-43E1-A25C-CA693D09CDFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA48E4F5-7AB5-43E1-A25C-CA693D09CDFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA48E4F5-7AB5-43E1-A25C-CA693D09CDFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA48E4F5-7AB5-43E1-A25C-CA693D09CDFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1296CC77-9B1B-479E-BA54-9C8522F5EEE2}
+	EndGlobalSection
+EndGlobal

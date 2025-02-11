@@ -1,0 +1,12 @@
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\bin\Debug\net8.0\TeracromDatabase.deps.json
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\bin\Debug\net8.0\TeracromDatabase.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\bin\Debug\net8.0\TeracromDatabase.pdb
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\TeracromDatabase.csproj.AssemblyReference.cache
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\TeracromDatabase.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\TeracromDatabase.AssemblyInfoInputs.cache
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\TeracromDatabase.AssemblyInfo.cs
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\TeracromDatabase.csproj.CoreCompileInputs.cache
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\TeracromDatabase.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\refint\TeracromDatabase.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\TeracromDatabase.pdb
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\ref\TeracromDatabase.dll

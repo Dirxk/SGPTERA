@@ -1,0 +1,17 @@
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\bin\Debug\net8.0\TeracromController.deps.json
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\bin\Debug\net8.0\TeracromController.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\bin\Debug\net8.0\TeracromController.pdb
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\bin\Debug\net8.0\TeracromDatabase.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\bin\Debug\net8.0\TeracromModels.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\bin\Debug\net8.0\TeracromDatabase.pdb
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\bin\Debug\net8.0\TeracromModels.pdb
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\TeracromController.csproj.AssemblyReference.cache
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\TeracromController.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\TeracromController.AssemblyInfoInputs.cache
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\TeracromController.AssemblyInfo.cs
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\TeracromController.csproj.CoreCompileInputs.cache
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\Teracrom.2AA47746.Up2Date
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\TeracromController.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\refint\TeracromController.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\TeracromController.pdb
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\ref\TeracromController.dll

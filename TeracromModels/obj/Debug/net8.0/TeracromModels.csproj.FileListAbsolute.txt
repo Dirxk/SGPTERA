@@ -1,0 +1,11 @@
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\bin\Debug\net8.0\TeracromModels.deps.json
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\bin\Debug\net8.0\TeracromModels.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\bin\Debug\net8.0\TeracromModels.pdb
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\TeracromModels.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\TeracromModels.AssemblyInfoInputs.cache
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\TeracromModels.AssemblyInfo.cs
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\TeracromModels.csproj.CoreCompileInputs.cache
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\TeracromModels.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\refint\TeracromModels.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\TeracromModels.pdb
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\ref\TeracromModels.dll

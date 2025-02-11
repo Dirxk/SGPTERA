@@ -1,0 +1,292 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\SGPTERA.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\SGPTERA.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\SGPTERA.csproj",
+        "projectName": "SGPTERA",
+        "projectPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\SGPTERA.csproj",
+        "packagesPath": "C:\\Users\\Teracrom 10\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Teracrom 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\TeracromController.csproj": {
+                "projectPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\TeracromController.csproj"
+              },
+              "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\TeracromDatabase.csproj": {
+                "projectPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\TeracromDatabase.csproj"
+              },
+              "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\TeracromModels.csproj": {
+                "projectPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\TeracromModels.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Negotiate": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
+              "target": "Package",
+              "version": "[8.0.12, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\TeracromController.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\TeracromController.csproj",
+        "projectName": "TeracromController",
+        "projectPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\TeracromController.csproj",
+        "packagesPath": "C:\\Users\\Teracrom 10\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Teracrom 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\TeracromDatabase.csproj": {
+                "projectPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\TeracromDatabase.csproj"
+              },
+              "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\TeracromModels.csproj": {
+                "projectPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\TeracromModels.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\TeracromDatabase.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\TeracromDatabase.csproj",
+        "projectName": "TeracromDatabase",
+        "projectPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\TeracromDatabase.csproj",
+        "packagesPath": "C:\\Users\\Teracrom 10\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Teracrom 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.66, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\TeracromModels.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\TeracromModels.csproj",
+        "projectName": "TeracromModels",
+        "projectPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\TeracromModels.csproj",
+        "packagesPath": "C:\\Users\\Teracrom 10\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Teracrom 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
