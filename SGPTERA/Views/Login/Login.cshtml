@@ -1,5 +1,187 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Inicio de sesión";
 }
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<form id="login" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-xl-6 mt-5 d-none d-xl-block">
+                <img src="https://img.freepik.com/vector-premium/diseno-plantilla-logotipo-coche-estacionamiento_20029-1037.jpg" class="img-fluid rounded-start" style="height: 25rem; object-fit: cover;" alt="Imagen de Steam">
+            </div>
+            <div class="col-12 col-xl-6 mb-4 mt-5">
+                <div class="row">
+                    <div class="col-12 text-center mb-5">
+                        <h1>Inicio de Sesión</h1>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text justify-content-center d-inline-block btn-outline-secondary btn" id="basic-addon1">
+                                <i class="fas fa-user"></i>
+                            </span>
+                        </div>
+                        <input type="email" class="form-control input-valid-out" id="email" name="email" placeholder="Correo" aria-label="email" aria-describedby="basic-addon1" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary toggle-password" type="button">
+                                <i class="fas fa-lock"></i>
+                            </button>
+                        </div>
+                        <input type="password" class="form-control password-input input-valid-out" id="password" name="password" minlength="8" placeholder="Contraseña" aria-label="Password" aria-describedby="basic-addon1" required>
+                    </div>
+                    <div class="col-12 d-grid gap-2 mb-3">
+                        <button class="btn btn-dark" id="btnlogin" type="submit">
+                            Iniciar Sesión
+                        </button>
+                    </div>
+                    <div class="col-12 text-center mb-3">
+                        <a id="register-link" class="custom-link" href="#">
+                            ¿No tienes cuenta? Regístrate
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+        function GetUrl(action, controller) {
+            const urlBase = '@Url.Action("__action__", "__controller__")';
+            return urlBase.replace("__action__", action).replace("__controller__", controller);
+        }
+        $(function () {
+            // Funcionalidad para mostrar/ocultar contraseña
+            $(".toggle-password").click(function () {
+                const $passwordInput = $('.password-input');
+                const $icon = $(this).find('i');
+
+                if ($passwordInput.attr('type') === 'password') {
+                    $passwordInput.attr('type', 'text');
+                    $icon.removeClass('fa-lock').addClass('fa-lock-open');
+                } else {
+                    $passwordInput.attr('type', 'password');
+                    $icon.removeClass('fa-lock-open').addClass('fa-lock');
+                }
+            });
+
+            // Redireccionar al registro
+            $("#register-link").click(function (event) {
+                event.preventDefault(); // Evitar comportamiento por defecto del enlace
+                const url = GetUrl("Logout", "Usuarios"); // Cambiar por la vista que deseas
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    beforeSend: function () {
+                        mostrarModal();
+                    },
+                    success: function (data) {
+                        setTimeout(function () {
+                            ocultarModal();
+                            window.location.href = url;
+                        }, 1000);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function (jqXHR, textStatus) {
+                        setTimeout(function () {
+                            ocultarModal();
+                        }, 3000);
+                        console.log("Solicitud completada con estado:", textStatus);
+                    }
+                });
+            });
+
+            $("#login").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 8
+                    }
+                },
+                messages: {
+                    email: {
+                        required: "Por favor, ingresa tu correo.",
+                        email: "Por favor, ingresa un correo válido."
+                    },
+                    password: {
+                        required: "Por favor, ingresa tu contraseña.",
+                        minlength: "La contraseña debe tener al menos 8 caracteres."
+                    }
+                },
+                submitHandler: function (form) {
+                    var email = $("#email").val();
+                    var password = $("#password").val();
+
+                    var urlVerificarUsuario = '@Url.Action("VerificarUsuario", "ParkingSystem")';
+
+                    $.ajax({
+                        type: 'POST',
+                        url: urlVerificarUsuario,
+                        data: { email: email, password: password },
+                        success: function (response) {
+                            if (response.resultado) {
+                                // Mostrar modal solo si es exitoso
+                                mostrarModal();
+
+                                Swal.fire({
+                                    title: "Inicio de Sesión exitoso",
+                                    icon: "success",
+                                    draggable: true
+                                }).then(() => {
+                                    // Ocultar modal 1000 ms después de presionar OK
+                                    setTimeout(function () {
+                                        ocultarModal();
+                                        window.location.href = '@Url.Action("Panel", "Home")';
+                                    }, 1000);
+                                });
+                            } else {
+                                // Manejo de error, no se muestra el modal
+                                Swal.fire({
+                                    title: "Error",
+                                    text: response.mensaje || "Credenciales inválidas.",
+                                    icon: "error",
+                                    draggable: true
+                                });
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            // Manejo de error, no se muestra el modal
+                            console.error("Error en la solicitud:", textStatus, errorThrown);
+                            Swal.fire({
+                                title: "Error",
+                                text: "Ocurrió un error inesperado. Inténtalo de nuevo.",
+                                icon: "error"
+                            });
+                        }
+                    });
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('col-12 mb-2 mt-2 bg-danger text-white text-center p-2 rounded');
+                    error.insertAfter(element);
+                },
+                errorElement: 'div',
+                errorClass: 'alert-validate'
+            });
+
+
+
+
+        });
+    </script>
+
+}
+
+

@@ -2,45 +2,331 @@
 <html lang="es">
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SGPTERA</title>
+    <title>@ViewData["Title"] - Teracrom</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SGPTERA.styles.css" asp-append-version="true" />
-    
+
+
+    <!-- Favicons -->
+    @* <link rel="apple-touch-icon" sizes="180x180" href="~/lib/dashboard/assets/img/favicons/apple-touch-icon.png"> *@
+   @*  <link rel="icon" type="image/png" sizes="32x32" href="~/lib/dashboard/assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/lib/dashboard/assets/img/favicons/favicon-16x16.png"> *@
+    <link rel="shortcut icon" type="image/x-icon" href="~/lib/dashboard/assets/img/favicons/Teracrom.ico">
+    <link rel="manifest" href="~/lib/dashboard/assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="~/lib/dashboard/assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Scripts -->
+    <script src="~/lib/dashboard/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/lib/dashboard/vendors/simplebar/simplebar.min.js"></script>
+    <script src="~/lib/dashboard/assets/js/config.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="~/lib/dashboard/vendors/simplebar/simplebar.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link href="~/lib/dashboard/assets/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl">
+    <link href="~/lib/dashboard/assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default">
+    <link href="~/lib/dashboard/assets/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl">
+    <link href="~/lib/dashboard/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
+ 
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SGPTERA</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <p class="nav navbar-text">Hello, @User.Identity?.Name!</p>
+        <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
+            <div class="collapse navbar-collapse">
+                <div class="navbar-logo d-flex justify-content-start">
+                    <a class="navbar-brand me-1 me-sm-3" href="#">
+                        <picture>
+                            <img class="logo-dark d-none" src="~/lib/dashboard/assets/img/icons/TeracromWhite.svg"
+                                 alt="Teracrom Logo Dark" width="220" height="35">
+                            <img class="logo-light" src="~/lib/dashboard/assets/img/icons/TeracromBlack.svg"
+                                 alt="Teracrom Logo Light" width="220" height="35">
+                        </picture>
+                    </a>
                 </div>
+
+                <div class="search-box navbar-top-search-box d-none d-lg-block justify-content-between" data-list='{"valueNames":["title"]}' style="width:30rem;">
+                    <form class="position-relative d-flex" data-bs-toggle="search" data-bs-display="static">
+                        <input class="form-control search-input fuzzy-search rounded-pill form-control-sm" type="search" placeholder="Buscar..." aria-label="Buscar" />
+                        <span class="fas fa-search search-box-icon"></span>
+                    </form>
+                    <div class="btn-close position-absolute end-0 top-50 translate-middle cursor-pointer shadow-none" data-bs-dismiss="search">
+                        <button class="btn btn-link btn-close-falcon p-0" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="dropdown-menu border border-300 font-base start-0 py-0 overflow-hidden w-100">
+                        <div class="scrollbar-overlay" style="max-height: 30rem;">
+                            <div class="list pb-3">
+                                <hr class="text-200 my-0" />
+                                <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Búsquedas recientes</h6>
+                                <div class="py-2">
+                                    <a class="dropdown-item" href="../apps/e-commerce/landing/product-details.html">
+                                        <div class="d-flex align-items-center">
+                                            <div class="fw-normal text-1000 title"><span class="fa-solid fa-clock-rotate-left" data-fa-transform="shrink-2"></span> Tienda Macbook</div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item" href="../apps/e-commerce/landing/product-details.html">
+                                        <div class="d-flex align-items-center">
+                                            <div class="fw-normal text-1000 title"> <span class="fa-solid fa-clock-rotate-left" data-fa-transform="shrink-2"></span> MacBook Air - 13″</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="navbar-nav navbar-nav-icons flex-row justify-content-end w-100">
+                    <li class="nav-item">
+                        <div class="theme-control-toggle fa-icon-wait px-2">
+                            <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox" data-theme-control="phoenixTheme" value="dark" id="themeControlToggle" />
+                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Cambiar a tema claro"><span class="icon" data-feather="moon"></span></label>
+                            <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Cambiar a tema obscuro"><span class="icon" data-feather="sun"></span></label>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" style="min-width: 2.5rem" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside"><span data-feather="bell" style="height:20px;width:20px;"></span></a>
+
+                        <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border border-300 navbar-dropdown-caret" id="navbarDropdownNotfication" aria-labelledby="navbarDropdownNotfication">
+                            <div class="card position-relative border-0">
+                                <div class="card-header p-2">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="text-black mb-0">Notificaciones</h5>
+                                        <button class="btn btn-link p-0 fs--1 fw-normal" type="button">Marcar todo como leído</button>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="scrollbar-overlay" style="height: 27rem;">
+                                        <div class="border-300">
+                                            <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative read border-bottom">
+                                                <div class="d-flex align-items-center justify-content-between position-relative">
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-m status-online me-3">
+                                                            <img class="rounded-circle" src="~/lib/dashboard/assets/img/team/AvatarTeracromGreen.webp" alt="" />
+                                                        </div>
+                                                        <div class="flex-1 me-sm-3">
+                                                            <h4 class="fs--1 text-black">Axel Segura</h4>
+                                                            <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class='me-1 fs--2'>🙍‍</span>Creó un nuevo usuario.<span class="ms-2 text-400 fw-bold fs--2">10m</span></p>
+                                                            <p class="text-800 fs--1 mb-0"><span class="me-1 fas fa-clock"></span><span class="fw-bold">10:41 AM </span>12 de febrero, 2025</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="font-sans-serif d-none d-sm-block">
+                                                        <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2 text-900"></span></button>
+                                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Marcar como no leído</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="px-2 px-sm-3 py-3 border-300 notification-card position-relative unread border-bottom">
+                                                <div class="d-flex align-items-center justify-content-between position-relative">
+                                                    <div class="d-flex">
+                                                        <div class="avatar avatar-m status-online me-3">
+                                                            <img class="rounded-circle" src="~/lib/dashboard/assets/img/team/AvatarTeracromGreen.webp" alt="" />
+                                                        </div>
+                                                        <div class="flex-1 me-sm-3">
+                                                            <h4 class="fs--1 text-black">Miguel Blanco</h4>
+                                                            <p class="fs--1 text-1000 mb-2 mb-sm-3 fw-normal"><span class='me-1 fs--2'>📅</span>Creó un nuevo proyecto.<span class="ms-2 text-400 fw-bold fs--2">20m</span></p>
+                                                            <p class="text-800 fs--1 mb-0"><span class="me-1 fas fa-clock"></span><span class="fw-bold">10:20 AM </span>12 de febrero, 2025</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="font-sans-serif d-none d-sm-block">
+                                                        <button class="btn fs--2 btn-sm dropdown-toggle dropdown-caret-none transition-none notification-dropdown-toggle" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs--2 text-900"></span></button>
+                                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Marcar como no leído</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar avatar-l">
+                                <img class="rounded-circle" src="~/lib/dashboard/assets/img/team/AvatarTeracrom.webp" alt="User Avatar" />
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300" aria-labelledby="navbarDropdownUser">
+                            <div class="card position-relative border-0">
+                                <div class="card-body p-0">
+                                    <div class="text-center pt-4 pb-3">
+                                        <div class="avatar avatar-xl mb-2">
+                                            <img class="rounded-circle" src="~/lib/dashboard/assets/img/team/AvatarTeracrom.webp" alt="User Avatar" />
+                                        </div>
+                                        <h6 class="mt-2 text-black">Usuario Teracrom</h6>
+                                    </div>
+                                </div>
+                                <div class="card-footer p-0 border-top">
+                                    <div class="px-3 mt-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#"> <span class="me-2" data-feather="log-out"> </span>Cerrar Sesión</a></div>
+                                    <div class="my-2 text-center fw-bold fs--2 text-600">
+                                        <a class="text-600 me-1" href="#">Privacy policy</a> &bull;
+                                        <a class="text-600 mx-1" href="#">Terms</a> &bull;
+                                        <a class="text-600 ms-1" href="#">Cookies</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
             </div>
         </nav>
     </header>
+    <nav class="navbar navbar-vertical navbar-expand-lg">
+
+        <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+            <!-- scrollbar removed-->
+            <div class="navbar-vertical-content">
+                <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                    <li class="nav-item">
+                        <!-- parent pages-->
+                        <div class="nav-item-wrapper">
+                            <a class="nav-link label-1" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                                <div class="d-flex align-items-center">
+                                    <span class="nav-link-icon"><span data-feather="home"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Inicio</span></span>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <!-- label-->
+                        <p class="navbar-vertical-label">
+                            Aplicaciones
+                        </p>
+                        <hr class="navbar-vertical-line" />
+                        <!-- parent pages-->
+                        <div class="nav-item-wrapper">
+                            <a class="nav-link dropdown-indicator label-1" href="#nv-Proyectos" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-Proyectos">
+                                <div class="d-flex align-items-center">
+                                    <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                                    <span class="nav-link-icon"><span data-feather="code"></span></span>
+                                    <span class="nav-link-text">Proyectos</span>
+                                </div>
+                            </a>
+                            <div class="parent-wrapper label-1">
+                                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-Proyectos">
+                                    <li class="collapsed-nav-item-title d-none">
+                                        Proyectos
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-text">Nuevo Proyecto</span>
+                                            </div>
+                                        </a>
+                                        <!-- more inner pages-->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- parent pages-->
+                        <div class="nav-item-wrapper">
+                            <a class="nav-link dropdown-indicator label-1" href="#nv-Soporte" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-Soporte">
+                                <div class="d-flex align-items-center">
+                                    <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                                    <span class="nav-link-icon"><span data-feather="help-circle"></span></span>
+                                    <span class="nav-link-text">Soporte</span>
+                                </div>
+                            </a>
+                            <div class="parent-wrapper label-1">
+                                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-Soporte">
+                                    <li class="collapsed-nav-item-title d-none">
+                                        Soporte
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-text">PROXIMAMENTE</span>
+                                            </div>
+                                        </a>
+                                        <!-- more inner pages-->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- parent pages-->
+                        <div class="nav-item-wrapper">
+                            <a class="nav-link dropdown-indicator label-1" href="#nv-Catalogos" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-Catalogos">
+                                <div class="d-flex align-items-center">
+                                    <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                                    <span class="nav-link-icon"><span data-feather="list"></span></span>
+                                    <span class="nav-link-text">Catálogos</span>
+                                </div>
+                            </a>
+                            <div class="parent-wrapper label-1">
+                                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-Catalogos">
+                                    <li class="collapsed-nav-item-title d-none">
+                                        Catálogos
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-text">Clientes</span>
+                                            </div>
+                                        </a>
+                                        <!-- more inner pages-->
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-text">Sistemas</span>
+                                            </div>
+                                        </a>
+                                        <!-- more inner pages-->
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-text">Usuarios</span>
+                                            </div>
+                                        </a>
+                                        <!-- more inner pages-->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="navbar-vertical-footer">
+            <button class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center"><span class="uil uil-left-arrow-to-left fs-0"></span><span class="uil uil-arrow-from-right fs-0"></span><span class="navbar-vertical-footer-text ms-2">Contraer Menu</span></button>
+        </div>
+    </nav>
     <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
+    <!-- Scripts de Bootstrap y jQuery -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Scripts adicionales -->
+    <script src="~/lib/dashboard/vendors/popper/popper.min.js"></script>
+    <script src="~/lib/dashboard/vendors/anchorjs/anchor.min.js"></script>
+    <script src="~/lib/dashboard/vendors/is/is.min.js"></script>
+    <script src="~/lib/dashboard/vendors/fontawesome/all.min.js"></script>
+    <script src="~/lib/dashboard/vendors/lodash/lodash.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="~/lib/dashboard/vendors/list.js/list.min.js"></script>
+    <script src="~/lib/dashboard/vendors/feather-icons/feather.min.js"></script>
+    <script src="~/lib/dashboard/vendors/dayjs/dayjs.min.js"></script>
+    <script src="~/lib/dashboard/assets/js/phoenix.js"></script>
+
+    <!-- Referencia al archivo navs.js -->
+    <script src="~/js/Navs/navs.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

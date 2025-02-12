@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\js\\Navs\\navs.js",
+      "PackagePath": "staticwebassets\\js\\Navs\\navs.js"
+    },
+    {
       "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
@@ -1007,6 +1011,10 @@
     {
       "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\e-commerce\\whooping_banner_shape_2.png",
       "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\e-commerce\\whooping_banner_shape_2.png"
+    },
+    {
+      "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\favicons\\Teracrom.ico",
+      "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\favicons\\Teracrom.ico"
     },
     {
       "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\favicons\\android-chrome-192x192.png",
@@ -4007,6 +4015,14 @@
     {
       "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\team\\9.webp",
       "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\team\\9.webp"
+    },
+    {
+      "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\team\\AvatarTeracrom.webp",
+      "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\team\\AvatarTeracrom.webp"
+    },
+    {
+      "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\team\\AvatarTeracromGreen.webp",
+      "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\team\\AvatarTeracromGreen.webp"
     },
     {
       "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\team\\avatar-placeholder.webp",

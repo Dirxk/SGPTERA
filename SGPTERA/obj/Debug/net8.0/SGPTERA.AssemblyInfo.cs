@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SGPTERA")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dd33e5734556ecdb2042d89a2dbe5496c60fbd16")]
 [assembly: System.Reflection.AssemblyProductAttribute("SGPTERA")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SGPTERA")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
