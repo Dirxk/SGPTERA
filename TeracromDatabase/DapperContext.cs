@@ -5,7 +5,6 @@ using System.Data;
 
 namespace TeracromDatabase
 {
-
     public class DapperContext : IDisposable
     {
         private readonly IConfiguration _configuration;
@@ -16,7 +15,6 @@ namespace TeracromDatabase
         public DapperContext(IConfiguration configuration)
         {
             _configuration = configuration;
-
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
 
@@ -25,22 +23,25 @@ namespace TeracromDatabase
             try
             {
                 _dbConnection = new SqlConnection(_configuration.GetConnectionString(cadenaConexion));
-
                 if (_dbConnection.State != ConnectionState.Open)
                     _dbConnection.Open();
-
                 if (useTransaction)
                 {
                     _transaccion = _dbConnection.BeginTransaction();
                 }
             }
-            catch (SqlException ex) { throw ex; }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error al abrir la conexión a la base de datos.", ex);
+            }
 
             return _dbConnection;
         }
-
         public void IniciarTransaccion()
         {
+            if (_dbConnection == null)
+                throw new InvalidOperationException("La conexión no está abierta.");
+
             _transaccion = _dbConnection.BeginTransaction();
         }
         public void ConfirmarTransaccion()

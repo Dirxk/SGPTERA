@@ -15,3 +15,4 @@ C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\Te
 C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\refint\TeracromController.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\TeracromController.pdb
 C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\ref\TeracromController.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromController\obj\Debug\net8.0\TeracromController.sourcelink.json

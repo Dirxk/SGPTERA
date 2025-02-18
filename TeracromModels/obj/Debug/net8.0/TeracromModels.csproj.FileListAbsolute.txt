@@ -9,3 +9,4 @@ C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\Teracr
 C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\refint\TeracromModels.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\TeracromModels.pdb
 C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\ref\TeracromModels.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromModels\obj\Debug\net8.0\TeracromModels.sourcelink.json

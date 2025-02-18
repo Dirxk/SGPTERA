@@ -10,3 +10,4 @@ C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\Tera
 C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\refint\TeracromDatabase.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\TeracromDatabase.pdb
 C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\ref\TeracromDatabase.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\TeracromDatabase\obj\Debug\net8.0\TeracromDatabase.sourcelink.json

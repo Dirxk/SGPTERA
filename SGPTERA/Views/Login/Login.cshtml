@@ -1,51 +1,123 @@
 ﻿@{
     ViewData["Title"] = "Inicio de sesión";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
-<form id="login" method="post">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-xl-6 mt-5 d-none d-xl-block">
-                <img src="https://img.freepik.com/vector-premium/diseno-plantilla-logotipo-coche-estacionamiento_20029-1037.jpg" class="img-fluid rounded-start" style="height: 25rem; object-fit: cover;" alt="Imagen de Steam">
+<form id="FrmLogin" name="FrmLogin" method="post">
+    <div class="container-fluid p-0 vh-100">
+        <div class="row g-0 vh-100">
+            <div class="col-12 col-lg-7 d-none d-lg-block p-0 h-100">
+                <img src="~/lib/dashboard/assets/img/bg/Background.svg" alt="Imagen de fondo"
+                     class="w-100 h-100 img-animation"
+                     style="object-fit: cover;"
+                     id="BackgroundLoginTeracrom">
             </div>
-            <div class="col-12 col-xl-6 mb-4 mt-5">
-                <div class="row">
-                    <div class="col-12 text-center mb-5">
-                        <h1>Inicio de Sesión</h1>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text justify-content-center d-inline-block btn-outline-secondary btn" id="basic-addon1">
-                                <i class="fas fa-user"></i>
-                            </span>
-                        </div>
-                        <input type="email" class="form-control input-valid-out" id="email" name="email" placeholder="Correo" aria-label="email" aria-describedby="basic-addon1" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary toggle-password" type="button">
+            <div class="col-12 col-lg-5 d-flex align-items-center justify-content-center h-100">
+                <div class="w-lg-75 w-100 px-4">
+                    <div id="login-form" class="form-container">
+                        <div class="row">
+                            <div class="col-12 text-center mb-5">
+                                <h2>Inicio de sesión</h2>
+                                <p>Inicia sesión con tu cuenta</p>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control input-valid-out" id="TCLoginEmail" name="TCLoginEmail" placeholder="Correo" aria-label="TCLoginEmail" aria-describedby="basic-addon1" required>
+                                <label for="TCLoginEmail" class="me-3">Correo electrónico o nombre de usuario</label>
+                            </div>
+                            <div class="TogglePassword d-flex justify-content-end align-items-center gap-2 mb-3" style="cursor: pointer;">
+                                <p class="mb-0 small">Mostrar contraseña</p>
                                 <i class="fas fa-lock"></i>
-                            </button>
+                            </div>
+                            <div class="form-floating position-relative">
+                                <input type="password" class="form-control password-input input-valid-out" id="TCLoginPassword" name="TCLoginPassword" minlength="8" placeholder="Contraseña" aria-label="TCLoginPassword" aria-describedby="basic-addon1" required>
+                                <label for="TCLoginPassword" class="me-3">contraseña</label>
+                            </div>
+                            <div class="col-12 text-start mb-3 mt-3">
+                                <a id="ResetPasswordLink" class="custom-link" href="#">
+                                    ¿Olvidaste tu contraseña?
+                                </a>
+                            </div>
+                            <div class="col-12 d-grid gap-2">
+                                <button id="TCBtnLogin" type="submit" class="btn btn-primary">Iniciar sesión</button>
+                            </div>
+                            <div class="col-12 d-grid gap-2 mt-2">
+                                <button id="BtnNewRegister" type="button" class="btn btn-secondary">Crear una cuenta</button>
+                            </div>
                         </div>
-                        <input type="password" class="form-control password-input input-valid-out" id="password" name="password" minlength="8" placeholder="Contraseña" aria-label="Password" aria-describedby="basic-addon1" required>
                     </div>
-                    <div class="col-12 d-grid gap-2 mb-3">
-                        <button class="btn btn-dark" id="btnlogin" type="submit">
-                            Iniciar Sesión
-                        </button>
-                    </div>
-                    <div class="col-12 text-center mb-3">
-                        <a id="register-link" class="custom-link" href="#">
-                            ¿No tienes cuenta? Regístrate
-                        </a>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
 </form>
+
+<form id="FrmRegister" method="post" style="display: none;">
+    <div class="container-fluid p-0 vh-100">
+        <div class="row g-0 vh-100">
+            <!-- Columna del formulario -->
+            <div class="col-12 col-lg-5 d-flex align-items-center justify-content-center h-100">
+                <div class="w-lg-80 w-100 px-4">
+                    <div class="form-container">
+                        <div class="row">
+                            <div class="col-12 text-center mb-5">
+                                <h2>Registro</h2>
+                                <p>Accede a todos nuestros beneficios.</p>
+                            </div>
+                            <div class="col-6 form-floating mb-3">
+                                <input type="text" class="form-control input-valid-out" id="TCUserName" name="TCUserName" placeholder="Nombre de Usuario" aria-label="TCUserName" required>
+                                <label for="TCUserName" class="me-3">Nombre de usuario</label>
+                            </div>
+                            <div class="col-6 form-floating">
+                                <input type="text" class="form-control input-valid-out" id="TCName" name="TCName" placeholder="Nombre" aria-label="TCName" required>
+                                <label for="TCName" class="me-3">Nombre(s)</label>
+                            </div>
+                            <div class="col-6 form-floating mb-3">
+                                <input type="text" class="form-control input-valid-out" id="TCLastNameP" name="TCLastNameP" placeholder="Apellido Paterno" aria-label="TCLastNameP" required>
+                                <label for="TCLastNameP" class="me-3">Apellido Paterno</label>
+                            </div>
+                            <div class="col-6 form-floating mb-2">
+                                <input type="text" class="form-control input-valid-out" id="TCLastNameM" name="TCLastNameM" placeholder="Apellido Materno" aria-label="TCLastNameM" required>
+                                <label for="TCLastNameM" class="me-3">Apellido Materno</label>
+                            </div>
+                            <div class="col-6 form-floating mb-2">
+                                <input type="tel" class="form-control input-valid-out" id="TCTelefono" name="TCTelefono" placeholder="Teléfono" aria-label="TCTelefono" required>
+                                <label for="TCTelefono" class="me-3">Teléfono</label>
+                            </div>
+                            <div class="col-6 form-floating mb-3">
+                                <input type="email" class="form-control input-valid-out" id="TCEmail" name="TCEmail" placeholder="Correo electrónico" aria-label="TCEmail" required>
+                                <label for="TCEmail" class="me-3">Correo Electrónico</label>
+                            </div>
+                            <div class="col-6 form-floating position-relative mb-2">
+                                <input type="text" class="form-control password-input input-valid-out" id="TCPassword" name="TCPassword" minlength="8" placeholder="Contraseña" aria-label="TCPassword" required>
+                                <label for="TCPassword" class="me-3">Contraseña</label>
+                            </div>
+                            <div class="col-6 form-floating position-relative mb-3">
+                                <input type="password" class="form-control password-input input-valid-out" id="TCconfirmPassword" name="TCconfirmPassword" minlength="8" placeholder="Repite la Contraseña" aria-label="TCconfirmPassword" required>
+                                <label for="TCconfirmPassword" class="me-3">Repite la Contraseña</label>
+                            </div>
+                            <div class="col-12 d-grid gap-2">
+                                <button id="TCbtnRegister" type="submit" class="btn btn-primary">Registrarse</button>
+                            </div>
+                            <div class="col-12 d-grid gap-2 mt-2">
+                                <button id="btnBack" type="button" class="btn btn-secondary">Regresar al inicio</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna de la imagen -->
+            <div class="col-12 col-lg-7 d-none d-lg-block p-0 h-100">
+                <img src="~/lib/dashboard/assets/img/bg/Background.svg" alt="Imagen de fondo"
+                     class="w-100 h-100 img-animation"
+                     style="object-fit: cover;"
+                     id="BackgroundRegisterTeracrom">
+            </div>
+        </div>
+    </div>
+</form>
+
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
@@ -58,95 +130,118 @@
             return urlBase.replace("__action__", action).replace("__controller__", controller);
         }
         $(function () {
+
+            // Bloquear clic derecho en la imagen
+            $('#BackgroundLoginTeracrom').on('contextmenu', function (e) {
+                return false;
+            });
+
+            // Bloquear arrastre de la imagen
+            $('#BackgroundLoginTeracrom').on('dragstart', function (e) {
+                return false;
+            });
+
+            // Bloquear clic derecho en la imagen
+            $('#BackgroundRegisterTeracrom').on('contextmenu', function (e) {
+                return false;
+            });
+
+            // Bloquear arrastre de la imagen
+            $('#BackgroundRegisterTeracrom').on('dragstart', function (e) {
+                return false;
+            });
+
             // Funcionalidad para mostrar/ocultar contraseña
-            $(".toggle-password").click(function () {
+            $(".TogglePassword").click(function () {
                 const $passwordInput = $('.password-input');
                 const $icon = $(this).find('i');
+                const $text = $(this).find('p');
 
                 if ($passwordInput.attr('type') === 'password') {
                     $passwordInput.attr('type', 'text');
                     $icon.removeClass('fa-lock').addClass('fa-lock-open');
+                    $text.text('Ocultar contraseña');
                 } else {
                     $passwordInput.attr('type', 'password');
                     $icon.removeClass('fa-lock-open').addClass('fa-lock');
+                    $text.text('Mostrar contraseña');
                 }
             });
 
-            // Redireccionar al registro
-            $("#register-link").click(function (event) {
-                event.preventDefault(); // Evitar comportamiento por defecto del enlace
-                const url = GetUrl("Logout", "Usuarios"); // Cambiar por la vista que deseas
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    beforeSend: function () {
-                        mostrarModal();
-                    },
-                    success: function (data) {
-                        setTimeout(function () {
-                            ocultarModal();
-                            window.location.href = url;
-                        }, 1000);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error("Error en la solicitud:", textStatus, errorThrown);
-                    },
-                    complete: function (jqXHR, textStatus) {
-                        setTimeout(function () {
-                            ocultarModal();
-                        }, 3000);
-                        console.log("Solicitud completada con estado:", textStatus);
-                    }
+            // Botón "Crear una cuenta"
+            $('#BtnNewRegister').click(function () {
+                // Desplazamiento de la imagen
+                $('.img-animation').addClass('img-move');
+
+                // Ocultar el formulario de login y mostrar el de registro
+                $('#FrmLogin').fadeOut(500, function () {
+                    $('#FrmRegister').fadeIn(500);
                 });
             });
 
-            $("#login").validate({
+            // Botón "Regresar al inicio"
+            $('#btnBack').click(function () {
+                // Volver la imagen a su posición original
+                $('.img-animation').removeClass('img-move');
+
+                // Ocultar el formulario de registro y mostrar el de login
+                $('#FrmRegister').fadeOut(500, function () {
+                    $('#FrmLogin').fadeIn(500);
+                });
+            });
+
+            $("#FrmLogin").validate({
                 rules: {
-                    email: {
-                        required: true,
-                        email: true
+                    TCLoginEmail: {
+                        required: true
                     },
-                    password: {
+                    TCLoginPassword: {
                         required: true,
                         minlength: 8
                     }
                 },
                 messages: {
-                    email: {
-                        required: "Por favor, ingresa tu correo.",
-                        email: "Por favor, ingresa un correo válido."
+                    TCLoginEmail: {
+                        required: "Por favor, ingresa tu correo."
                     },
-                    password: {
+                    TCLoginPassword: {
                         required: "Por favor, ingresa tu contraseña.",
                         minlength: "La contraseña debe tener al menos 8 caracteres."
                     }
                 },
-                submitHandler: function (form) {
-                    var email = $("#email").val();
-                    var password = $("#password").val();
+                submitHandler: function (form, event) {
+                    event.preventDefault()
 
-                    var urlVerificarUsuario = '@Url.Action("VerificarUsuario", "ParkingSystem")';
+                    var email = $("#TCLoginEmail").val();
+                    var password = $("#TCLoginPassword").val();
+                    var user2 = $("#TCLoginEmail").val();
+
+                    var urlVerificarUsuario = '@Url.Action("VerificarUsuario", "GestionProyectos")';
 
                     $.ajax({
                         type: 'POST',
                         url: urlVerificarUsuario,
-                        data: { email: email, password: password },
+                        data: { email: email, password: password, user2: user2},
+                        beforeSend: function(){
+                            mdLoader.show()
+                        },
+                        complete: function(){
+                            setTimeout(function () { mdLoader.hide() },500)
+                        },
                         success: function (response) {
-                            if (response.resultado) {
-                                // Mostrar modal solo si es exitoso
-                                mostrarModal();
 
-                                Swal.fire({
-                                    title: "Inicio de Sesión exitoso",
-                                    icon: "success",
-                                    draggable: true
-                                }).then(() => {
-                                    // Ocultar modal 1000 ms después de presionar OK
-                                    setTimeout(function () {
-                                        ocultarModal();
-                                        window.location.href = '@Url.Action("Panel", "Home")';
-                                    }, 1000);
-                                });
+                            if (response.resultado) {
+                                setTimeout(()=>{
+                                    Swal.fire({
+                                        title: "Inicio de Sesión exitoso",
+                                        icon: "success",
+                                        draggable: true
+                                    }).then(() => {
+                                        window.location.href = '@Url.Action("Index", "Home")';
+                                    });
+
+                                }, 500)
+                    
                             } else {
                                 // Manejo de error, no se muestra el modal
                                 Swal.fire({
@@ -158,6 +253,7 @@
                             }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
+                            FrmLogin.preventDefault();
                             // Manejo de error, no se muestra el modal
                             console.error("Error en la solicitud:", textStatus, errorThrown);
                             Swal.fire({
@@ -176,7 +272,83 @@
                 errorClass: 'alert-validate'
             });
 
+            // Jquery Validate para el registro
+            $("#FrmRegister").validate({
+                rules: {
+                    TCUserName: { required: true, minlength: 2 },
+                    TCName: { required: true, minlength: 2 },
+                    TCLastNameP: { required: true, minlength: 2 },
+                    TCLastNameM: { required: true, minlength: 2 },
+                    TCTelefono: {required: true, minlength:2},
+                    TCEmail: { required: true, email: true },
+                    TCPassword: { required: true, minlength: 8 },
+                    TCconfirmPassword: { required: true, minlength: 8, equalTo: "#TCPassword" },
+                },
+                messages: {
+                    TCUserName: { required: "Nombre de usuario requerido.", minlength: "Mínimo 2 caracteres." },
+                    TCName: { required: "Nombre requerido.", minlength: "Mínimo 2 caracteres." },
+                    TCLastNameP: { required: "Apellido paterno requerido.", minlength: "Mínimo 2 caracteres." },
+                    TCLastNameM: { required: "Apellido materno requerido.", minlength: "Mínimo 2 caracteres." },
+                    TCTelefono: {required: "Telefono requerido.", minlength: "Mínimo 10 caracteres."},
+                    TCEmail: { required: "Correo requerido.", email: "Correo no válido." },
+                    TCPassword: { required: "Contraseña requerida.", minlength: "Mínimo 8 caracteres." },
+                    TCconfirmPassword: { required: "Repite la contraseña.", equalTo: "Contraseñas no coinciden." }
+                },
+                submitHandler: function (form, event) {
+                    // event.preventDefault();
+                    var User = {
+                        Usuario: $('#TCUserName').val(),
+                        NombreUsuario: $('#TCName').val(),
+                        ApellidoPaternoUsuario: $('#TCLastNameP').val(),
+                        ApellidoMaternoUsuario: $('#TCLastNameM').val(),
+                        Telefono: $('#TCTelefono').val(),
+                        Correo: $('#TCEmail').val(),
+                        Contrasena: $('#TCPassword').val()
+                    };
 
+
+                    var url = '@Url.Action("RegistrarUsuario", "GestionProyectos")';
+                    console.log(User);
+                    // return;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        async:true,
+                        data: {
+                            User
+                        },
+                        beforeSend: function () {
+                            mdLoader.show()
+                        },
+                        complete: function () {
+                            setTimeout(function () { mdLoader.hide() }, 500)
+                        },
+                        success: function (response) {
+                            console.log("Respuesta del servidor:", response);
+                            if (response.resultado) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "¡Registro exitoso!",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                setTimeout(() => window.location.href = "/Login/Login", 1000);
+                            } else {
+                                Swal.fire({ icon: "error", title: "Error", text: response.mensaje });
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error("Error en la solicitud:", textStatus, errorThrown);
+                        }
+                    });
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
+                    error.insertAfter(element);
+                },
+                errorElement: 'div',
+                errorClass: 'alert-validate'
+            });
 
 
         });

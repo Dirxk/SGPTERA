@@ -3,60 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\login\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\login\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\wwwroot\\js\\navs\\navs.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\wwwroot\\js\\navs\\navs.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\shared\\_layoutlogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\shared\\_layoutlogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A45FEAFC-9A08-454C-AA96-0F132DED5B85}|TeracromModels\\TeracromModels.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracrommodels\\utilmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A45FEAFC-9A08-454C-AA96-0F132DED5B85}|TeracromModels\\TeracromModels.csproj|solutionrelative:teracrommodels\\utilmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracromcontroller\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|solutionrelative:teracromcontroller\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA48E4F5-7AB5-43E1-A25C-CA693D09CDFF}|TeracromDatabase\\TeracromDatabase.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracromdatabase\\dappercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CA48E4F5-7AB5-43E1-A25C-CA693D09CDFF}|TeracromDatabase\\TeracromDatabase.csproj|solutionrelative:teracromdatabase\\dappercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\controllers\\gestionproyectoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\controllers\\gestionproyectoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A45FEAFC-9A08-454C-AA96-0F132DED5B85}|TeracromModels\\TeracromModels.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracrommodels\\sgpmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A45FEAFC-9A08-454C-AA96-0F132DED5B85}|TeracromModels\\TeracromModels.csproj|solutionrelative:teracrommodels\\sgpmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracromcontroller\\teracromcontroller.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|solutionrelative:teracromcontroller\\teracromcontroller.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracromcontroller\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|solutionrelative:teracromcontroller\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,189 +38,95 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "navs.js",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\js\\Navs\\navs.js",
-              "RelativeDocumentMoniker": "SGPTERA\\wwwroot\\js\\Navs\\navs.js",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\js\\Navs\\navs.js",
-              "RelativeToolTip": "SGPTERA\\wwwroot\\js\\Navs\\navs.js",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAQwAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-02-12T19:20:04.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "SGPTERA\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "SGPTERA\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAABkAAAA",
+              "Title": "_LayoutLogin.cshtml",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Shared\\_LayoutLogin.cshtml",
+              "RelativeDocumentMoniker": "SGPTERA\\Views\\Shared\\_LayoutLogin.cshtml",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Shared\\_LayoutLogin.cshtml",
+              "RelativeToolTip": "SGPTERA\\Views\\Shared\\_LayoutLogin.cshtml",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAADQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-10T16:23:30.255Z",
+              "WhenOpened": "2025-02-17T23:34:19.557Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "SGPTERA\\Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "SGPTERA\\Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-10T22:43:25.183Z",
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "SGPTERA\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "SGPTERA\\wwwroot\\css\\site.css",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAowEQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-02-17T23:27:44.489Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "SGPTERA\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "SGPTERA\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAOABAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-17T23:23:32.17Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SGPModels.cs",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\SGPModels.cs",
+              "RelativeDocumentMoniker": "TeracromModels\\SGPModels.cs",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\SGPModels.cs",
+              "RelativeToolTip": "TeracromModels\\SGPModels.cs",
+              "ViewState": "AQIAACMAAAAAAAAAAAAhwCMAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T22:10:12.783Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GestionProyectosController.cs",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\GestionProyectosController.cs",
+              "RelativeDocumentMoniker": "SGPTERA\\Controllers\\GestionProyectosController.cs",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\GestionProyectosController.cs",
+              "RelativeToolTip": "SGPTERA\\Controllers\\GestionProyectosController.cs",
+              "ViewState": "AQIAABoAAAAAAAAAAAD4vyEAAABlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T21:34:56.352Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Login\\Login.cshtml",
               "RelativeDocumentMoniker": "SGPTERA\\Views\\Login\\Login.cshtml",
               "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Login\\Login.cshtml",
               "RelativeToolTip": "SGPTERA\\Views\\Login\\Login.cshtml",
-              "ViewState": "AQIAAEkAAAAAAAAAAAAAALoAAAAAAAAA",
+              "ViewState": "AQIAAD0BAAAAAAAAAAAqwEQBAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-02-10T16:16:03.418Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "LoginController.cs",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\LoginController.cs",
-              "RelativeDocumentMoniker": "SGPTERA\\Controllers\\LoginController.cs",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\LoginController.cs",
-              "RelativeToolTip": "SGPTERA\\Controllers\\LoginController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T16:15:34.122Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "SGPTERA\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "SGPTERA\\Controllers\\HomeController.cs",
-              "ViewState": "AQIAAAQAAAAAAAAAAAAAwA8AAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T16:12:31.072Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "SGPModels.cs",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\SGPModels.cs",
-              "RelativeDocumentMoniker": "TeracromModels\\SGPModels.cs",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\SGPModels.cs",
-              "RelativeToolTip": "TeracromModels\\SGPModels.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAA5wBsAAAAUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T17:34:48.674Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Program.cs",
-              "RelativeDocumentMoniker": "SGPTERA\\Program.cs",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Program.cs",
-              "RelativeToolTip": "SGPTERA\\Program.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAYwA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T17:50:36.944Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
               "Title": "Account.cs",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\Account.cs",
               "RelativeDocumentMoniker": "TeracromController\\Account.cs",
               "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\Account.cs",
               "RelativeToolTip": "TeracromController\\Account.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAA5AAAA",
+              "ViewState": "AQIAADUAAAAAAAAAAAAiwEMAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T19:06:17.894Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "SGPTERA\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "SGPTERA\\Controllers\\AuthController.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAA2wDoAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T18:29:42.927Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UtilModels.cs",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\UtilModels.cs",
-              "RelativeDocumentMoniker": "TeracromModels\\UtilModels.cs",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\UtilModels.cs",
-              "RelativeToolTip": "TeracromModels\\UtilModels.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T18:18:27.626Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "DapperContext.cs",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\DapperContext.cs",
-              "RelativeDocumentMoniker": "TeracromDatabase\\DapperContext.cs",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\DapperContext.cs",
-              "RelativeToolTip": "TeracromDatabase\\DapperContext.cs",
-              "ViewState": "AQIAADsAAAAAAAAAAADwvw8AAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T18:11:49.438Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "TeracromController.csproj",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\TeracromController.csproj",
-              "RelativeDocumentMoniker": "TeracromController\\TeracromController.csproj",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\TeracromController.csproj",
-              "RelativeToolTip": "TeracromController\\TeracromController.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-02-06T18:14:28.532Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\appsettings.json",
-              "RelativeDocumentMoniker": "SGPTERA\\appsettings.json",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\appsettings.json",
-              "RelativeToolTip": "SGPTERA\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-06T18:09:32.988Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-06T19:06:17.894Z"
             }
           ]
         }

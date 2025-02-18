@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Teracrom</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SGPTERA.styles.css" asp-append-version="true" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="~/lib/dashboard/assets/img/favicons/Teracrom.ico">
+    <link rel="manifest" href="~/lib/dashboard/assets/img/favicons/manifest.json">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Scripts -->
+    <script src="~/lib/dashboard/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/lib/dashboard/vendors/simplebar/simplebar.min.js"></script>
+    <script src="~/lib/dashboard/assets/js/config.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="~/lib/dashboard/vendors/simplebar/simplebar.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link href="~/lib/dashboard/assets/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl">
+    <link href="~/lib/dashboard/assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default">
+    <link href="~/lib/dashboard/assets/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl">
+    <link href="~/lib/dashboard/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default">
+</head>
+<body>
+    <main>
+        @RenderBody()
+    </main>
+    <div class="modal fade" id="mdLoader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: transparent !important; color:white; -webkit-box-shadow: none;box-shadow: none;border:none;">
+                <!-- From Uiverse.io by coding-masala -->
+                <div class="loader">
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts de Bootstrap y jQuery -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        var mdLoader = new bootstrap.Modal(document.getElementById('mdLoader'), {});
+
+        // toastr.options = {
+        //     closeButton: true,
+        //     debug: false,
+        //     newestOnTop: false,
+        //     progressBar: true,
+        //     positionClass: "toast-top-right",
+        //     preventDuplicates: false,
+        //     onclick: null,
+        //     showDuration: 300,
+        //     hideDuration: 1000,
+        //     timeOut: 3000,
+        //     extendedTimeOut: 1000,
+        //     showEasing: "swing",
+        //     hideEasing: "linear",
+        //     showMethod: "fadeIn",
+        //     hideMethod: "fadeOut"
+        // };
+
+        // function loaderGrid(grid, mensaje = 'Cargando datos, por favor espere...') {
+        //     if (document.getElementsByClassName(`wj-loader-${grid.hostElement.id}`).length == 0) {
+        //         let loader = document.createElement('div');
+        //         loader.className = `wj-loader-${grid.hostElement.id}`;
+        //         loader.innerHTML = `<div class="text-center text-white">
+        //                             <i class="fas fa-spinner fa-spin fa-5x"></i>
+        //                             <h5 class="text-white">${mensaje}</h5></h5>
+        //                         </div>`;
+        //         loader.style.position = 'absolute';
+        //         loader.style.top = '0';
+        //         loader.style.left = '0';
+        //         loader.style.width = '100%';
+        //         loader.style.height = '100%';
+        //         loader.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        //         loader.style.zIndex = '1000';
+        //         loader.style.display = 'flex';
+        //         loader.style.justifyContent = 'center';
+        //         loader.style.alignItems = 'center';
+        //         grid.hostElement.children[0].appendChild(loader);
+        //         grid.isReadOnly = true;
+        //     } else {
+        //         let loaders = document.querySelectorAll(`.wj-loader-${grid.hostElement.id}`);
+        //         loaders.forEach(element => element.remove());
+
+        //         grid.isReadOnly = false;
+        //     }
+        // }
+
+        function ConvertTimestamptoDateFormat(timestamp, format = 'MM/DD/YYYY', lang = '') {
+            switch (lang) {
+                case 'bg':
+                    format = 'MM/DD/YYYY';
+                    break;
+                case 'bgFull':
+                    format = 'MM/DD/YYYY HH:mm:ss';
+                    break;
+                case 'bgFull2':
+                    format = 'MM/DD/YYYY HH:mm:ss a';
+                    break;
+                case 'esp':
+                    format = 'DD/MM/YYYY';
+                    break;
+                case 'espFull':
+                    format = 'DD/MM/YYYY HH:mm:ss';
+                    break;
+                case 'eng':
+                    format = 'YYYY-MM-DD';
+                    break;
+                case 'engFull':
+                    format = 'YYYY-MM-DD HH:mm:ss';
+                    break;
+                case 'engFull2':
+                    format = 'YYYY-MM-DD HH:mm:ss a';
+                    break;
+            }
+            return timestamp == null ? '' : moment(new Date(parseInt(String(timestamp).replaceAll('/Date(', '').replaceAll(')/', '')))).format(format)
+        }
+
+        function ConvertTimestamptoDateJS(timestamp) {
+            return timestamp == null ? new Date() : new Date(parseInt(String(timestamp).replaceAll('/Date(', '').replaceAll(')/', '')));
+        }
+
+        function AjaxError(jqXHR, textStatus) {
+            if (jqXHR.status === 0) {
+                Swal.fire('Error', 'No hay conexión a Internet. Verifique la red y vuelva a intentar de nuevo.', 'error');
+            } else if (jqXHR.status == 404) {
+                Swal.fire('Error', 'No se encontró la página solicitada [Error: 404]', 'error');
+            } else if (jqXHR.status == 500) {
+                Swal.fire('Error', 'Error interno del servidor [Error: 500].', 'error');
+            } else if (textStatus === 'parsererror') {
+                Swal.fire('Error', 'Error de análisis JSON solicitado.', 'error');
+            } else if (textStatus === 'timeout') {
+                Swal.fire('Error', 'Error de tiempo de espera.', 'error');
+            } else if (textStatus === 'abort') {
+                Swal.fire('Error', 'Solicitud de Ajax cancelada.', 'error');
+            } else {
+                Swal.fire('Error', 'Error no detectado: ' + jqXHR.responseText, 'error');
+            }
+        }
+
+        function GetUrl(action, controller) {
+            return "@Url.Content("~")" + controller + '/' + action;
+        }
+
+        function resizeWidth(Func = true) {
+            //Custom Resizes
+            if (Func && typeof resize_func !== 'undefined') {
+                for (const func of resize_func) {
+                    func();
+                }
+            }
+        }
+
+        $(window).resize(function () {
+            resizeWidth();
+        });
+
+        resizeWidth(false);
+        $(document).ready(function () {
+            resizeWidth();
+        });
+    </script>
+</body>
+</html>

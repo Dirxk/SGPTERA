@@ -422,3 +422,4 @@ C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\obj\Debug\net8.0\SGPTERA.pdb
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\obj\Debug\net8.0\SGPTERA.genruntimeconfig.cache
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\obj\Debug\net8.0\ref\SGPTERA.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\obj\Debug\net8.0\SGPTERA.sourcelink.json
+C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\obj\Debug\net8.0\scopedcss\Views\Shared\_LayoutLogin.cshtml.rz.scp.css
