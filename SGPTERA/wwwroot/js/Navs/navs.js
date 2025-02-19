@@ -52,5 +52,5 @@ $(document).ready(function () {
     updateLogo();
 
     // Verificar cambios de fondo cada 500ms (por si el tema cambia dinámicamente)
-    setInterval(updateLogo, 50);
+    setInterval(updateLogo, 5000);
 });

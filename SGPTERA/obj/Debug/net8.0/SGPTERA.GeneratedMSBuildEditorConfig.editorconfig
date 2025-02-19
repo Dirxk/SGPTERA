@@ -18,6 +18,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Clientes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXENsaWVudGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

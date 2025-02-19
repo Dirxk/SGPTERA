@@ -59,20 +59,19 @@ namespace GestionProyectos.Models
         public bool FlgActivo { get; set; } = true;
     }
 
-    public class ClienteUsuarios
+    public class ClientesUsuarios
     {
         [Key]
         public int Id { get; set; }
-        public required string ClienteUsuario { get; set; }
-        public required string NombreClienteUsuario { get; set; }
-        public required string ApellidoPaternoClienteUsuario { get; set; }
-        public required string ApellidoMaternoClienteUsuario { get; set; }
+        public string ClienteUsuario { get; set; }
+        public string NombreClienteUsuario { get; set; }
+        public string ApellidoPaternoClienteUsuario { get; set; }
+        public string ApellidoMaternoClienteUsuario { get; set; }
         public int? IdPuesto { get; set; }
-        public required string Telefono { get; set; }
-        public required string Correo { get; set; }
-        [Required]
+        public string Telefono { get; set; }
+        public string Correo { get; set; }
+        public string Contrasena { get; set; }
         public int IdCliente { get; set; }
-
         public byte[] FotoPerfil { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;

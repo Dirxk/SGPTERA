@@ -37,7 +37,7 @@
                         <li class="nav-item">
                             <!-- parent pages-->
                             <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="#" role="button" data-bs-toggle="" aria-expanded="false">
+                                <a class="nav-link label-1" asp-action="Index" asp-controller="Home" role="button" data-bs-toggle="" aria-expanded="false">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-icon"><span data-feather="home"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Inicio</span></span>
                                     </div>
@@ -115,7 +115,7 @@
                                             Catálogos
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                            <a class="nav-link" asp-action="Clientes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
                                                 <div class="d-flex align-items-center">
                                                     <span class="nav-link-text">Clientes</span>
                                                 </div>
@@ -155,7 +155,7 @@
         <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault">
             <div class="collapse navbar-collapse">
                 <div class="navbar-logo d-flex justify-content-start">
-                    <a class="navbar-brand me-1 me-sm-3" href="#">
+                    <a class="navbar-brand me-1 me-sm-3" asp-action="Index" asp-controller="Home">
                         <picture>
                             <img class="logo-dark d-none" src="~/lib/dashboard/assets/img/icons/TeracromWhite.svg"
                                  alt="Teracrom Logo Dark" width="220" height="35">
@@ -295,11 +295,9 @@
 
         @* Contenido *@
         <div class="content">
-            <div class="container">
-                <main role="main" class="ml-1">
-                    @RenderBody()
-                </main>
-            </div>
+            <main role="main" class="ml-1">
+                @RenderBody()
+            </main>
         </div>
         <div class="modal fade" id="mdLoader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -351,8 +349,7 @@
         wijmo.setLicenseKey('mxirweb01,533856943256269#B0yWXmpjIyNHZisnOiwmbBJye0ICRiwiI34zdmtSa9o7Rzk6RM3kM09EWURndCBnWll7VKtWemJ4U5h4R8Z6QE9mQydzSnFWaSdXUp5GWitCS7w6Si9GNMx6bwpETDpXNNVDW0ZTQFdDZ7MFOLJFeuZGVMBjZJ5GdplGUNhzVrMTZhR4NpJHRRRlQyNmanh6MXxkNaFVMwUWe7pXdEdlV036YYp7MQpEN84kVwQTMRJTUOpWYHN6LTRESldTRC3WWqJGMhZnWsZUbjJVZ5NmM4dzaNlWODdDNxoHaQhHTHVkUplmWPhEavcWOHVXMZhGRz4WetVWRzpUNNpFRXZGcJNla4UkTwE6cvNHSip7d6dTR6NVOmlkcoRWdOFUYYBTeO5mTVRFMrw6aYFVUwVjVtVTVUV4RZ34TGNjV5MHZxsUe8JmNZtyTsNjYjZHNjV4TQlVbmRTNidTRzIEZ6AjZSxGUNVmYKxUd52CbWVWMvRkI0IyUiwiIzQTMxcTNBVjI0ICSiwSO7ITNzcDMzgTM0IicfJye&Qf35VfikEMyIlI0IyQiwiIu3Waz9WZ4hXRgACdlVGaThXZsZEIv5mapdlI0IiTisHL3JSNJ9UUiojIDJCLi86bpNnblRHeFBCIyV6dllmV4J7bwVmUg2Wbql6ViojIOJyes4nILdDOIJiOiMkIsIibvl6cuVGd8VEIgc7bSlGdsVXTg2Wbql6ViojIOJyes4nI4YkNEJiOiMkIsIibvl6cuVGd8VEIgAVQM3EIg2Wbql6ViojIOJyes4nIzMEMCJiOiMkIsISZy36Qg2Wbql6ViojIOJyes4nIVhzNBJiOiMkIsIibvl6cuVGd8VEIgQnchh6QsFWaj9WYulmRg2Wbql6ViojIOJyebpjIkJHUiwiI7UDOygDMgMjMxETMyAjMiojI4J7QiwiIxAjYldncphXbiojIz5GRiwiIvNWa8VWTgcmbpJXd4NWYmVnbh5EIzR6bvZEIHZiQiojIh94QiwiI9YjM6UjMzQTO6UDOzMTNiojIklkIs4XXbpjInxmZiwiIyYXMyAjMiojIyVmdizSWz');
     </script>
 
-    <!-- Referencia al archivo navs.js -->
-    <script src="~/js/Navs/navs.js"></script>
+   
 
     @await RenderSectionAsync("Scripts", required: false)
 
@@ -477,6 +474,27 @@
         resizeWidth(false);
         $(document).ready(function () {
             resizeWidth();
+        });
+
+        $(document).ready(function () {
+            setInterval(function () {
+                $.ajax({
+                    url: '@Url.Action("KeepSessionAlive", "Account")',
+                    type: 'GET',
+                    success: function (response) {
+                        if (!response.sessionActive) {
+                            Swal.fire({
+                                title: "Sesión Expirada",
+                                text: "Tu sesión ha expirado. Debes iniciar sesión nuevamente.",
+                                icon: "warning",
+                                allowOutsideClick: false
+                            }).then(() => {
+                                window.location.href = '@Url.Action("Index", "Login")';
+                            });
+                        }
+                    }
+                });
+            }, 60000); // Se verifica cada 60 segundos
         });
     </script>
 </body>

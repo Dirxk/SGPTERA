@@ -86,11 +86,12 @@ namespace TeracromController
                 // Si las credenciales son válidas
                 respuestaUser.Resultado = true;
                 respuestaUser.Mensaje = "Inicio de sesión exitoso.";
-                respuestaUser.Data = new
+                respuestaUser.Data = new Usuarios
                 {
-                    IdUsuario = user.Id,
-                    Nombre = user.NombreUsuario,
-                    Apellido = $"{user.ApellidoPaternoUsuario} {user.ApellidoMaternoUsuario}",
+                    Id = user.Id,
+                    NombreUsuario = user.NombreUsuario,
+                    ApellidoPaternoUsuario = user.ApellidoPaternoUsuario,
+                    ApellidoMaternoUsuario = user.ApellidoMaternoUsuario,
                     Correo = user.Correo
                 };
             }

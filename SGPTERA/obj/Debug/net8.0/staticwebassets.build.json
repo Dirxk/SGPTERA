@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "zdMsHhqR7pICf2jckMtBKH1Nr7h6kJptTzN0lvLJicY=",
+  "Hash": "Rk17hWRp0vh8mbAR9CmsY/+GM/cTBzL3I5SyBVj2soY=",
   "Source": "SGPTERA",
   "BasePath": "_content/SGPTERA",
   "Mode": "Default",
@@ -7843,6 +7843,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\dashboard\\assets\\img\\icons\\green.png"
+    },
+    {
+      "Identity": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\icons\\IconoRojo.svg",
+      "SourceId": "SGPTERA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\",
+      "BasePath": "_content/SGPTERA",
+      "RelativePath": "lib/dashboard/assets/img/icons/IconoRojo.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\dashboard\\assets\\img\\icons\\IconoRojo.svg"
     },
     {
       "Identity": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\icons\\illustrations\\10.png",

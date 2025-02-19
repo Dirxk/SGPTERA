@@ -1589,6 +1589,10 @@
       "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\generic\\vibrant.png"
     },
     {
+      "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\icons\\IconoRojo.svg",
+      "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\icons\\IconoRojo.svg"
+    },
+    {
       "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\icons\\TeracromBlack.png",
       "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\icons\\TeracromBlack.png"
     },

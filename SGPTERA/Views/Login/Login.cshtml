@@ -216,7 +216,7 @@
                     var password = $("#TCLoginPassword").val();
                     var user2 = $("#TCLoginEmail").val();
 
-                    var urlVerificarUsuario = '@Url.Action("VerificarUsuario", "GestionProyectos")';
+                    var urlVerificarUsuario = '@Url.Action("VerificarUsuario", "Login")';
 
                     $.ajax({
                         type: 'POST',
@@ -307,7 +307,7 @@
                     };
 
 
-                    var url = '@Url.Action("RegistrarUsuario", "GestionProyectos")';
+                    var url = '@Url.Action("RegistrarUsuario", "Login")';
                     console.log(User);
                     // return;
                     $.ajax({
