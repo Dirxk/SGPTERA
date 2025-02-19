@@ -300,638 +300,700 @@
 
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 
-        var gridVehiculos1 = null;
-        var dateRange;
-        const urlGetVehiculo = '@Url.Action("GetVehiculo", "ParkingSystem")';
-        function verVehiculos() {
-            $.ajax({
-                type: 'post',
-                data: {},
-                url: urlGetVehiculo,
-                success: function (datos) {
-                    gridVehiculos1.itemsSource = datos.data;
-                },
-                error: function () {
-                    console.error("Error al obtener los vehiculos.");
-                }
-            });
-        }
-        $(document).ready(function () {
+        // Variable global para almacenar la instancia de la grilla de clientes.
+        var gridClientes = null;
 
-            flexGrid = new wijmo.grid.FlexGrid('#GridClientes', {
-                autoGenerateColumns: false,
-                headersVisibility: 'Column',
-                columns: [
-                    { binding: 'idUsuario', header: '#', width: 50, align: 'center' }, // 10% del ancho total
-                    { binding: 'fullName', header: 'Razón Social', width: '*', align: 'center' }, // 25% del ancho total
-                    { binding: 'position', header: 'RFC', width: '*', align: 'center' }, // 25% del ancho total
-                    { binding: 'position', header: 'Prefijo', width: '*', align: 'center' }, // 15% del ancho total
-                    { binding: 'phoneNumber', header: 'Teléfono', width: '*', align: 'center' }, // 15% del ancho total
-                    { header: '', isReadOnly: true, width: '*', align: 'center' } // 10% del ancho total
-                ],
-                itemsSource: [], // Asignación de la fuente de datos
-                itemFormatter: function (panel, r, c, cell) {
-                    if (panel.cellType === wijmo.grid.CellType.Cell) {
-                        if (c === 0) {
-                            // Numeración de filas
-                            cell.textContent = (r + 1).toString();
-                        } else if (c === panel.columns.length - 1) {
-                            // Última columna con botones de acción
-                            const rowData = panel.rows[r].dataItem;
-                            cell.innerHTML = `
-                                            <div class="d-flex justify-content-center align-items-center gap-2">
-                                                <button style="height: 25px; width: 25px;" id="BtnEditarProyecto" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarUsuarioExt" onclick="EditarUsuarioExterno(${rowData.id})">
-                                                    <svg class="svg-inline--fa fa-pen-to-square" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                                        <path fill="currentColor" d="M490.3 40.4C512.2 62.27 512.2 97.73 490.3 119.6L460.3 149.7L362.3 51.72L392.4 21.66C414.3-.2135 449.7-.2135 471.6 21.66L490.3 40.4zM172.4 241.7L339.7 74.34L437.7 172.3L270.3 339.6C264.2 345.8 256.7 350.4 248.4 353.2L159.6 382.8C150.1 385.6 141.5 383.4 135 376.1C128.6 370.5 126.4 361 129.2 352.4L158.8 263.6C161.6 255.3 166.2 247.8 172.4 241.7V241.7zM192 63.1C209.7 63.1 224 78.33 224 95.1C224 113.7 209.7 127.1 192 127.1H96C78.33 127.1 64 142.3 64 159.1V416C64 433.7 78.33 448 96 448H352C369.7 448 384 433.7 384 416V319.1C384 302.3 398.3 287.1 416 287.1C433.7 287.1 448 302.3 448 319.1V416C448 469 405 512 352 512H96C42.98 512 0 469 0 416V159.1C0 106.1 42.98 63.1 96 63.1H192z"></path>
-                                                    </svg>
-                                                </button>
-                                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarUsuarioExt" data-nombre="${rowData.fullName}" onclick="EliminarUsuarioExterno(${rowData.id})">
-                                                    <svg class="svg-inline--fa fa-trash" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                                        <path fill="currentColor" d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"></path>
-                                                    </svg>
-                                                </button>
-                                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalInfoUsuarioExt" onclick="mostrarInfoUsuarioExt(${rowData.id})">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info">
-                                                        <circle cx="12" cy="12" r="10"></circle>
-                                                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        `;
+        // URL para obtener los clientes desde el servidor, generada dinámicamente usando Razor.
+        const urlGetClientes = '@Url.Action("GetClientes", "GestionProyectos")';
 
-                        }
+        // Función que realiza una solicitud AJAX para obtener los clientes desde el servidor.
+        function verClientes() {
+            return new Promise((resolve, reject) => {
+                // Registra el tiempo inicial para medir el tiempo de respuesta del servidor.
+                const startTime = performance.now();
 
-                    }
-                }
-            });
-            verVehiculos();
-            $('#btnReloadClientes').on('click', function () {
-                let timerInterval;
-                Swal.fire({
-                    title: "Recargando",
-                    timer: 2000,
-                    timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading();
-                        timerInterval = setInterval(() => { }, 100);
+                // Realiza una solicitud AJAX de tipo POST.
+                $.ajax({
+                    type: 'POST',
+                    data: {}, // No se envían datos adicionales en este caso.
+                    url: urlGetClientes, // URL de la acción que obtiene los clientes.
+                    success: function (datos) {
+                        // Registra el tiempo final y calcula el tiempo de respuesta del servidor.
+                        const endTime = performance.now();
+                        const serverResponseTime = endTime - startTime;
+
+                        // Asigna los datos obtenidos a la grilla de clientes.
+                        gridClientes.itemsSource = datos.data;
+
+                        // Resuelve la promesa con el tiempo de respuesta del servidor.
+                        resolve(serverResponseTime);
                     },
-                    willClose: () => {
-                        clearInterval(timerInterval);
-                    }
-                }).then((result) => {
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                        verVehiculos();
-                        console.log("Grid recargado");
+                    error: function () {
+                        // En caso de error, se registra en la consola y se rechaza la promesa.
+                        console.error("Error al obtener los clientes.");
+                        reject();
                     }
                 });
             });
+        }
+
+        // Cuando el documento está listo, se ejecuta este código.
+        $(document).ready(function () {
+            // Inicializa la grilla de clientes usando Wijmo FlexGrid.
+            gridClientes = new wijmo.grid.FlexGrid('#GridClientes', {
+                autoGenerateColumns: false, // No genera columnas automáticamente.
+                headersVisibility: 'Column', // Muestra solo los encabezados de las columnas.
+                itemsSource: [], // Inicializa la grilla sin datos.
+                columns: [
+                    // Define las columnas de la grilla manualmente.
+                    { binding: '', header: '#', width: 50, align: 'center' }, // Columna de índice.
+                    { binding: 'razonSocial', header: 'Razón Social', width: '*', align: 'center' }, // Columna de Razón Social.
+                    { binding: 'rfc', header: 'RFC', width: '*', align: 'center' }, // Columna de RFC.
+                    { binding: 'prefijo', header: 'Prefijo', width: '*', align: 'center' }, // Columna de Prefijo.
+                    { binding: 'telefono', header: 'Telefono', width: '*', align: 'center' }, // Columna de Teléfono.
+                    { header: '', isReadOnly: true, width: '*', align: 'center' } // Columna vacía para acciones.
+                ],
+                isReadOnly: true, // La grilla es de solo lectura.
+                itemFormatter: function (panel, r, c, cell) {
+                    // Formateador personalizado para las celdas de la grilla.
+                    if (panel.cellType === wijmo.grid.CellType.Cell) {
+                        if (c === 0) {
+                            // En la primera columna, muestra el número de fila.
+                            cell.textContent = (r + 1).toString();
+                        } else if (c === panel.columns.length - 1) {
+                            // En la última columna, muestra botones de acciones.
+                            const rowData = panel.rows[r].dataItem;
+                            cell.innerHTML = `
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <!-- Botón para editar el usuario externo -->
+                                    <button style="height: 25px; width: 25px;" id="BtnEditarProyecto" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarUsuarioExt" onclick="EditarUsuarioExterno(${rowData.id})">
+                                        <svg class="svg-inline--fa fa-pen-to-square" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path fill="currentColor" d="M490.3 40.4C512.2 62.27 512.2 97.73 490.3 119.6L460.3 149.7L362.3 51.72L392.4 21.66C414.3-.2135 449.7-.2135 471.6 21.66L490.3 40.4zM172.4 241.7L339.7 74.34L437.7 172.3L270.3 339.6C264.2 345.8 256.7 350.4 248.4 353.2L159.6 382.8C150.1 385.6 141.5 383.4 135 376.1C128.6 370.5 126.4 361 129.2 352.4L158.8 263.6C161.6 255.3 166.2 247.8 172.4 241.7V241.7z"></path>
+                                        </svg>
+                                    </button>
+                                    <!-- Botón para eliminar el usuario externo -->
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarUsuarioExt" data-nombre="${rowData.fullName}" onclick="EliminarUsuarioExterno(${rowData.id})">
+                                        <svg class="svg-inline--fa fa-trash" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path fill="currentColor" d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"></path>
+                                        </svg>
+                                    </button>
+                                    <!-- Botón para mostrar información del usuario externo -->
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalInfoUsuarioExt" onclick="mostrarInfoUsuarioExt(${rowData.id})">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                            `;
+                        }
+                    }
+                }
+            });
+
+            // Llama a la función para cargar los clientes al iniciar la página.
+            verClientes();
+
+            // Evento para recargar los clientes al hacer clic en el botón correspondiente.
+            $('#btnReloadClientes').on('click', function () {
+                // Muestra un mensaje de carga mientras se recargan los datos.
+                Swal.fire({
+                    title: 'Recargando',
+                    text: 'Por favor, espere...',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Llama a la función para obtener los clientes.
+                verClientes().then((serverResponseTime) => {
+                    // Calcula el tiempo total de recarga (tiempo de respuesta + 2 segundos adicionales).
+                    const totalRecargaTime = serverResponseTime + 2000;
+
+                    // Muestra un mensaje de éxito después de la recarga.
+                    setTimeout(() => {
+                        Swal.fire({
+                            title: 'Recarga completada',
+                            text: 'Los clientes se han recargado correctamente.',
+                            icon: 'success',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                            showConfirmButton: false
+                        });
+                    }, totalRecargaTime);
+                }).catch(() => {
+                    // Muestra un mensaje de error si la recarga falla.
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Hubo un error al recargar los clientes.',
+                        icon: 'error',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                        showConfirmButton: false
+                    });
+                });
+            });
         });
+        
 
        
 
-        var Empresas;
-        let coleccionUsuariosExt = [];
-        function cargarUsuariosExternos() {
-
-            $.ajax({
-                url: './getEmpresasExternas',
-                method: 'GET',
-                dataType: 'json',
-                success: function (respuesta) {
-                    Empresas = respuesta.empresasExternas.map(function (elemento) {
-                        return {
-                            id: elemento.id,
-                            empresa: elemento.nombre
-                        };
-                    });
-
-                    const autoComplete = new wijmo.input.AutoComplete('#InpAutoComplete', {
-                        displayMemberPath: 'empresa',
-                        itemsSource: Empresas,
-                        placeholder: 'Seleccione una empresa*',
-                        selectedIndex: -1
-                    });
-
-
-                    crearUsuarioExterno(autoComplete, Empresas);
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error('Error al cargar los datos:', textStatus, errorThrown);
-                }
-            });
-
-            $.ajax({
-                url: './getUsuariosExternos', // URL de tu API
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    let nuevosDatos = data.usuariosExternos;
-                    $('.ContClientes').empty();
-                    coleccionUsuariosExt = [...nuevosDatos];
-                    // Obtener el control FlexGrid existente
-                    flexGrid = wijmo.Control.getControl('#GridClientes');
-
-                    // Preparar los datos para el grid
-                    usersData = nuevosDatos.map(function (elemento) {
-                        return {
-                            id: elemento.id,
-                            fullName: (elemento.nombre || '') + ' ' + (elemento.apellidoPaterno || '') + ' ' + (elemento.apellidoMaterno || ''),
-                            userName: elemento.nombreUsuario || '',
-                            position: elemento.puesto || '',
-                            email: elemento.email || '',
-                            phoneNumber: elemento.telefono !== null && elemento.telefono !== undefined ? elemento.telefono : '',
-                            company: elemento.fkEmpresa || '',
-                        };
-                    });
-                    $(nuevosDatos).each(function (index, rowData) {
-
-                        //delegaciones de eventos para abrir modal eliminar usuario
-                        $(document).on('click', '.abrirModalEliminarUsuarioExt', function () {
-                            $('#ModalEliminarUsuarioExterno').modal('show'); // Mostramos el modal
-                        });
-                        //delegaciones de eventos para abrir modal eliminar usuario
-                        $(document).on('click', '.abrirModalInfoUsuarioExt', function () {
-                            $('#ModalInfoUsuarioExt').modal('show'); // Mostramos el modal
-                        });
-                        //delegaciones de eventos para abrir modal eliminar usuario
-                        $(document).on('click', '.abrirModalEditarUsuarioExt', function () {
-                            $('#ModalEditarUsuarioExterno').modal('show'); // Mostramos el modal
-                        });
-
-
-
-                        const EmpresasExterna = Empresas.map(function (elemento) {
-                            return {
-                                id: elemento.id,
-                                nombre: elemento.empresa
-                            };
-                        });
-
-                        let selectedIndex = -1;
-                        for (let i = 0; i < EmpresasExterna.length; i++) {
-                            if (EmpresasExterna[i].nombre === rowData.fkEmpresa) {
-                                selectedIndex = i;
-                                break;
-                            }
-                        }
-
-                        const element = document.querySelector(`#InpAutoCompleteEdit`);
-
-                        // Verificar que el elemento existe
-                        if (element) {
-                            const existingControl = wijmo.Control.getControl(element);
-
-                            if (existingControl) {
-                                existingControl.itemsSource = EmpresasExterna; // Usa EmpresasExterna
-                                existingControl.placeholder = 'Seleccione una empresa *';
-                                existingControl.selectedIndex = selectedIndex;
-                            } else {
-                                // Si no existe, crea una nueva instancia de AutoComplete
-                                const autoCompletee = new wijmo.input.AutoComplete(element, {
-                                    displayMemberPath: 'nombre',
-                                    itemsSource: EmpresasExterna, // Usa EmpresasExterna
-                                    placeholder: 'Seleccione una empresa *',
-                                    selectedIndex: selectedIndex
-                                });
-                            }
-
-                        } else {
-                            console.error(`No se encontró el elemento con ID: InpAutoCompleteEdit`);
-                        }
-                    })
-
-                    if (flexGrid) {
-                        // Si el FlexGrid ya existe, simplemente actualizar los datos
-                        flexGrid.itemsSource = usersData;
-                    } else {
-                        // Si no existe el FlexGrid, crearlo por primera vez
-                        flexGrid = new wijmo.grid.FlexGrid('#GridClientes', {
-                            autoGenerateColumns: false, // Desactivar generación automática de columnas
-                            headersVisibility: 'Column',
-                            selectionMode: 'None',
-                            columns: [
-                                { header: '#', isReadOnly: true, width: 50 }, // Columna de numeración
-                                { header: 'Nombre Completo', binding: 'fullName', width: 220 },
-                                { header: 'Puesto', binding: 'position', width: 180 },
-                                { header: 'Número de Teléfono', binding: 'phoneNumber', width: '*' },
-                                { header: 'Email', binding: 'email', width: '*' },
-                                { header: 'Empresa', binding: 'company', width: '*' },
-                                { header: 'Accion', isReadOnly: true } // Columna de botones
-                            ],
-                            itemsSource: usersData, // Asignación de la fuente de datos
-                            itemFormatter: function (panel, r, c, cell) {
-                                if (panel.cellType === wijmo.grid.CellType.Cell) {
-                                    if (c === 0) {
-
-                                        cell.textContent = (r + 1).toString();
-                                    } else if (c === panel.columns.length - 1) {
-                                        // Última columna con botones de acción
-                                        const rowData = panel.rows[r].dataItem;
-                                        cell.innerHTML = `
-                                                <ul style="padding-left:10px; padding-rigth:10px;" class="nav nav-links mx-n2 action-buttons">
-                                                    <li>
-                                                        <button style="height:25px; width:25px"  id="BtnEditarProyecto" class="btn btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0 abrirModalEditarUsuarioExt" onclick="EditarUsuarioExterno(${rowData.id})" >
-                                                            <svg class="svg-inline--fa fa-pen-to-square" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                                                <path fill="currentColor" d="M490.3 40.4C512.2 62.27 512.2 97.73 490.3 119.6L460.3 149.7L362.3 51.72L392.4 21.66C414.3-.2135 449.7-.2135 471.6 21.66L490.3 40.4zM172.4 241.7L339.7 74.34L437.7 172.3L270.3 339.6C264.2 345.8 256.7 350.4 248.4 353.2L159.6 382.8C150.1 385.6 141.5 383.4 135 376.1C128.6 370.5 126.4 361 129.2 352.4L158.8 263.6C161.6 255.3 166.2 247.8 172.4 241.7V241.7zM192 63.1C209.7 63.1 224 78.33 224 95.1C224 113.7 209.7 127.1 192 127.1H96C78.33 127.1 64 142.3 64 159.1V416C64 433.7 78.33 448 96 448H352C369.7 448 384 433.7 384 416V319.1C384 302.3 398.3 287.1 416 287.1C433.7 287.1 448 302.3 448 319.1V416C448 469 405 512 352 512H96C42.98 512 0 469 0 416V159.1C0 106.1 42.98 63.1 96 63.1H192z"></path>
-                                                            </svg>
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button style="height:25px; width:25px" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger px-0 abrirModalEliminarUsuarioExt" data-nombre="${rowData.nombre}" onclick="EliminarUsuarioExterno(${rowData.id})" >
-                                                            <svg class="svg-inline--fa fa-trash" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                                                <path fill="currentColor" d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"></path>
-                                                            </svg>
-                                                        </button>
-                                                    </li>
-                                                     <li>
-                                                        <button style="height:25px; width:25px; margin-left:4px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger px-0 abrirModalInfoUsuarioExt" onclick="mostrarInfoUsuarioExt(${rowData.id})"  >
-                                                           <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info text-900 fs-3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                            `;
-                                    }
-
-
-
-
-
-                                }
-                            }
-                        });
-                    }
-                },
-                error: function (error) {
-                    console.error('Error al cargar los datos:', error);
-                }
-            });
-        }
-
-        var resize_func = [];
-        resize_func.push(function () {
-            $('#GridClientes').height(window.innerHeight - $('.card').offset().top - 195);
-        });
-        $(document).ready(function () {
-            resizeWidth();
-        });
-
-
-
-        function limpiarTodosLosInputs() {
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach(input => {
-                if (input.name !== '_token') {
-                    input.value = '';
-                }
-            });
-        };
-
-
-
-
-        document.addEventListener('DOMContentLoaded', function () {
-            cargarUsuariosExternos();
-        });
-
-        function crearUsuarioExterno(autoComplete, Empresas) {
-            $("#InpEmailExterno").val('');
-            var Empresa = Empresas;
-            var imagenSeleccionada;
-
-            // Eliminar el evento previo en #InpImagenExt para evitar duplicación
-            $("#InpImagenExt").off("change").on("change", function () {
-                imagenSeleccionada = this.files[0];
-                console.log("Imagen seleccionada:", imagenSeleccionada || "Ninguna imagen seleccionada");
-            });
-
-            // Eliminar el evento previo en #BtnAgregarUsuarioExt para evitar duplicación
-            $(document).off('click', '#BtnAgregarUsuarioExt').on('click', '#BtnAgregarUsuarioExt', function () {
-                var token = $('input[name="_token"]').val();
-                const nombre = $("#InpNombresExterno").val();
-                const apellidoPaterno = $("#InpApellidoPaternoExterno").val();
-                const apellidoMaterno = $("#InpApellidoMaternoExterno").val();
-                const nombreUsuario = $("#InpNombreUsuarioExterno").val();
-                const email = $("#InpEmailExterno").val();
-                const telefono = $("#InpTelefonoExterno").val();
-                const puesto = $("#InpPuestoExterno").val();
-                const contrasenia = $("#InpContraseniaExterno").val();
-                const confirmarContrasenia = $("#InpConfirmarContraseniaExterno").val();
-
-                const formData = new FormData();
-                formData.append('_token', token);
-                formData.append('nombre', nombre);
-                formData.append('apellidoPaterno', apellidoPaterno);
-                formData.append('apellidoMaterno', apellidoMaterno);
-                formData.append('nombreUsuario', nombreUsuario);
-                formData.append('email', email);
-                formData.append('telefono', telefono);
-                formData.append('puesto', puesto);
-                formData.append('contrasenia', contrasenia);
-                formData.append('confirmar', confirmarContrasenia);
-
-                if (imagenSeleccionada) {
-                    formData.append('imagen', imagenSeleccionada);
-                } else {
-                    console.log("No se seleccionó ninguna imagen.");
-                }
-
-                if (!autoComplete) {
-                    console.error('Control AutoComplete no encontrado.');
-                    return;
-                }
-
-                const empresa = autoComplete.selectedItem ? autoComplete.selectedItem.empresa : null;
-                formData.append('empresa', empresa);
-
-                const esValido = validarYAgregarUsuario(nombre, apellidoPaterno, apellidoMaterno, nombreUsuario, email, telefono, contrasenia, confirmarContrasenia, puesto, empresa);
-                if (!esValido) {
-                    return;
-                }
-
-                // Realizar la solicitud AJAX
-                $.ajax({
-                    type: "POST",
-                    url: "./crearUsuariosExternos",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        cargarUsuariosExternos(Empresa);
-                        if (data.Codigo == 0) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Éxito',
-                                text: data.Mensaje
-                            });
-                        }
-                        $("#ModalCrearProyecto").modal('hide');
-
-                        // Limpiar los inputs manualmente
-                        $("#InpNombresExterno").val('');
-                        $("#InpApellidoPaternoExterno").val('');
-                        $("#InpApellidoMaternoExterno").val('');
-                        $("#InpNombreUsuarioExterno").val('');
-                        $("#InpEmailExterno").val('');
-                        $("#InpTelefonoExterno").val('');
-                        $("#InpPuestoExterno").val('');
-                        $("#InpContraseniaExterno").val('');
-                        $("#InpConfirmarContraseniaExterno").val('');
-                        $("#InpUsuarioIntImagen").val('');
-                        $('.ContAlerta').empty();
-                        imagenSeleccionada = null;
-                        $("#InpImagenExt").val('');
-                        $("#InpAutoComplete").val('');
-                        autoComplete.selectedIndex = -1;
-                    },
-                    error: function (error) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Error en la acción solicitada.'
-                        });
-                        $('.ContAlerta').empty();
-                        console.error('Error editando sistema:', error);
-                    }
-                });
-            });
-        }
-        // "@IdUsuario"
-
-        function EliminarUsuarioExterno(id) {
-
-            // Eliminar el evento previo en .BtnEliminarUsuarioExterno para evitar duplicación
-            $(document).off('click', '.BtnEliminarUsuarioExterno').on('click', '.BtnEliminarUsuarioExterno', function () {
-                var token = $('input[name="_token"]').val();
-                const modal = $(this).closest('.modal');
-
-                $.ajax({
-                    type: "post",
-                    url: "./EliminarUsuarioExterno",
-                    data: { _token: token, Id: id },
-                    success: function (data) {
-
-                        if (data.Codigo == 0) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Éxito',
-                                text: data.Mensaje
-                            });
-                        }
-                        modal.modal('hide');
-                        cargarUsuariosExternos();
-                    },
-                    error: function (error) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'No se pudo eliminar el usuario.'
-                        });
-                        console.error('Error eliminando usuario:', error);
-                    }
-                });
-            });
-        }
-
-
-        function buscar() {
-            // Añadir un evento para el filtrado dinámico
-            document.getElementById('buscador').addEventListener('input', function (e) {
-                var filter = e.target.value.toLowerCase();
-
-                // Aplicar el filtro a la colección de datos del grid actual
-                flexGrid.collectionView.filter = function (item) {
-                    // Ajustar aquí según la columna que quieras filtrar, en este caso "Name"
-                    return filter.length == 0 || item.fullName.toLowerCase().indexOf(filter) > -1;
-                };
-            });
-        }
-
-        function EditarUsuarioExterno(id) {
-            const UsuarioExt = coleccionUsuariosExt.find(item => item.id === id);
-            let img = UsuarioExt.imagenPerfil;
-            $('#InpNombresExternoEdit').val(UsuarioExt.nombre);
-            $('#InpApellidoPaternoExternoEdit').val(UsuarioExt.apellidoPaterno);
-            $('#InpApellidoMaternoExternoEdit').val(UsuarioExt.apellidoMaterno);
-            $('#InpNombreUsuarioExternoEdit').val(UsuarioExt.nombreUsuario);
-            $('#InpEmailExternoEdit').val(UsuarioExt.email);
-            $('#InpTelefonoExternoEdit').val(UsuarioExt.telefono);
-            $('#InpContrasenaExternoEdit').val(UsuarioExt.password);
-            $('#InpPuestoExternoEdit').val(UsuarioExt.puesto);
-            $(".previewImage").attr("src", img);
-            const fileName = img.split("\\").pop().split("/").pop();
-            $('.fileName2').text(fileName);
-
-            $('#InpConfirmarContrasenaExternoEdit').val(UsuarioExt.password);
-            $(".fullnameuser").text("Editar Usuario: " + UsuarioExt.nombre + " " + UsuarioExt.apellidoPaterno + " " + (UsuarioExt.apellidoMaterno || " "));
-            $(document).off('click', '.EditarUsuarioExterno').on('click', '.EditarUsuarioExterno', function () {
-                const nombreExterno = $(`#InpNombresExternoEdit`).val();
-                const apellidoPaterno = $(`#InpApellidoPaternoExternoEdit`).val();
-                var token = $('input[name="_token"]').val();
-                const apellidoMaterno = $(`#InpApellidoMaternoExternoEdit`).val();
-                const nombreUsuario = $(`#InpNombreUsuarioExternoEdit`).val();
-                const email = $(`#InpEmailExternoEdit`).val();
-                const telefono = $(`#InpTelefonoExternoEdit`).val();
-                const puesto = $(`#InpPuestoExternoEdit`).val();
-                const contrasena = $(`#InpContrasenaExternoEdit`).val();
-                const confirmarContrasena = $(`#InpConfirmarContrasenaExternoEdit`).val();
-                let imagenSeleccionada = $(`#InpUsuarioExtImagenEdit`)[0].files[0];
-
-                const empresaSeleccionada = wijmo.Control.getControl(`#InpAutoCompleteEdit`).text;
-
-                const formData = new FormData();
-                formData.append('_token', $('input[name="_token"]').val());
-                formData.append('id', id);
-                formData.append('nombre', nombreExterno);
-                formData.append('apellidoPaterno', apellidoPaterno);
-                formData.append('apellidoMaterno', apellidoMaterno);
-                formData.append('nombreUsuario', nombreUsuario);
-                formData.append('email', email);
-                formData.append('telefono', telefono);
-                formData.append('puesto', puesto);
-                formData.append('contrasenia', contrasena);
-                formData.append('confirmar', confirmarContrasena);
-
-                if (imagenSeleccionada) {
-                    formData.append('imagen', imagenSeleccionada);
-                }
-
-                formData.append('empresaSeleccionada', empresaSeleccionada);
-
-                const esValido = validarYAgregarUsuario(nombreExterno, apellidoPaterno, apellidoMaterno, nombreUsuario,
-                    email, telefono, contrasena, confirmarContrasena, puesto, empresaSeleccionada);
-                if (!esValido) {
-                    return;
-                }
-
-                // Realizar la solicitud AJAX
-                $.ajax({
-                    type: "POST",
-                    url: "./editarUsuarioExterno",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        cargarUsuariosExternos();
-                        $(`#ModalEditarUsuario${id}`).modal('hide'); // Cerrar el modal correcto
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Éxito',
-                            text: 'Éxito en la acción solicitada'
-                        });
-                        $('.ContAlerta').empty();
-                        $(`#ModalEditarUsuarioExterno`).modal('hide');
-                    },
-                    error: function (error) {
-                        if (data.Codigo == 0) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Éxito',
-                                text: data.Mensaje
-                            });
-                        }
-                        $('.ContAlerta').empty();
-                        console.error('Error editando sistema:', error);
-                    }
-                });
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            buscar();
-        });
-
-        $('#GridClientes').on('click', '.abrirModalEliminarUsuarioExt', function () {
-            // Encuentra el card asociado al botón que se hizo clic
-            const card = $(this).closest('.abrirModalEliminarUsuarioExt');
-            const nombreUsuario = card.data('nombre'); // Obtiene la descripción del card
-
-            // Actualiza el contenido del modal
-            $('.nombreUsuario').text(nombreUsuario);
-
-
-        });
-
-        function mostrarInfoUsuarioExt(id) {
-            const usuarioExt = coleccionUsuariosExt.find(item => item.id === id);
-            if (usuarioExt) {
-                let img = usuarioExt.imagenPerfil;
-                let imgEmp = usuarioExt.imagen;
-                $(".nombreCompletoUsuarioInt").text(usuarioExt.nombre + " " + usuarioExt.apellidoPaterno + " " + (usuarioExt.apellidoMaterno || " "));
-                $(".Activo").text(usuarioExt.activo);
-                $(".nombreUsuarioExt").text(usuarioExt.nombreUsuario);
-                $(".fechaIngresoUsuarioExt").text(usuarioExt.FechaDeIngreso);
-                $(".emailUsuarioExt").text(usuarioExt.email);
-                $(".telefonoUsuarioExt").text(usuarioExt.telefono);
-
-                $(".empresaUsuarioExt").text(usuarioExt.fkEmpresa);
-                $(".puestoUsuarioExt").text(usuarioExt.puesto);
-
-                $(".imagenEmpresa").attr("src", imgEmp);
-                $(".imagenPerfil").attr("src", img);
-            } else {
-                console.log("No se encontró ninguna actividad con el id:", id);
-            }
-        }
-
-        // para previsualizar la imagen que se carga
-        document.getElementById("InpImagenExt").addEventListener("change", function (event) {
-            const file = event.target.files[0];
-            const previewContainer = document.getElementById("previewContainer");
-            const previewImage = document.getElementById("previewImage");
-            const fileName = document.getElementById("fileName");
-            const fileSize = document.getElementById("fileSize");
-            const removePreview = document.getElementById("removePreview");
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    previewImage.src = e.target.result;
-                    fileName.textContent = file.name;
-                    fileSize.textContent = `${(file.size / 1024).toFixed(2)} KB`;
-                    previewContainer.classList.remove("d-none");
-                };
-
-                reader.readAsDataURL(file);
-            }
-
-            removePreview.addEventListener("click", function () {
-                previewContainer.classList.add("d-none");
-                previewImage.src = "";
-                fileName.textContent = "";
-                fileSize.textContent = "";
-                document.getElementById("InpImagenExt").value = "";
-            });
-        });
-
-        // para previsualizar la imagen que se carga en el modal de editar
-        $(document).ready(function () {
-            $('#InpUsuarioExtImagenEdit').change(function (event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#previewContainer2').removeClass('d-none');
-                        $('#previewImage2').attr('src', e.target.result);
-                        $('#fileName2').text(file.name);
-                        $('#fileSize2').text((file.size / 1024).toFixed(2) + ' KB');
-                    }
-
-                    reader.readAsDataURL(file); // Leer el archivo como URL de datos
-                }
-            });
-
-            $('#removePreview2').click(function () {
-                $('#previewContainer2').addClass('d-none');
-                $('#InpUsuarioExtImagenEdit').val('');
-                $('#previewImage2').attr('src', '');
-                $('#fileName2').text('');
-                $('#fileSize2').text('');
-            });
-        });
+        // var Empresas;
+        // let coleccionUsuariosExt = [];
+        // function cargarUsuariosExternos() {
+
+        //     $.ajax({
+        //         url: './getEmpresasExternas',
+        //         method: 'GET',
+        //         dataType: 'json',
+        //         success: function (respuesta) {
+        //             Empresas = respuesta.empresasExternas.map(function (elemento) {
+        //                 return {
+        //                     id: elemento.id,
+        //                     empresa: elemento.nombre
+        //                 };
+        //             });
+
+        //             const autoComplete = new wijmo.input.AutoComplete('#InpAutoComplete', {
+        //                 displayMemberPath: 'empresa',
+        //                 itemsSource: Empresas,
+        //                 placeholder: 'Seleccione una empresa*',
+        //                 selectedIndex: -1
+        //             });
+
+
+        //             crearUsuarioExterno(autoComplete, Empresas);
+
+
+        //         },
+        //         error: function (jqXHR, textStatus, errorThrown) {
+        //             console.error('Error al cargar los datos:', textStatus, errorThrown);
+        //         }
+        //     });
+
+        //     $.ajax({
+        //         url: './getUsuariosExternos', // URL de tu API
+        //         method: 'GET',
+        //         dataType: 'json',
+        //         success: function (data) {
+        //             let nuevosDatos = data.usuariosExternos;
+        //             $('.ContClientes').empty();
+        //             coleccionUsuariosExt = [...nuevosDatos];
+        //             // Obtener el control FlexGrid existente
+        //             flexGrid = wijmo.Control.getControl('#GridClientes');
+
+        //             // Preparar los datos para el grid
+        //             usersData = nuevosDatos.map(function (elemento) {
+        //                 return {
+        //                     id: elemento.id,
+        //                     fullName: (elemento.nombre || '') + ' ' + (elemento.apellidoPaterno || '') + ' ' + (elemento.apellidoMaterno || ''),
+        //                     userName: elemento.nombreUsuario || '',
+        //                     position: elemento.puesto || '',
+        //                     email: elemento.email || '',
+        //                     phoneNumber: elemento.telefono !== null && elemento.telefono !== undefined ? elemento.telefono : '',
+        //                     company: elemento.fkEmpresa || '',
+        //                 };
+        //             });
+        //             $(nuevosDatos).each(function (index, rowData) {
+
+        //                 //delegaciones de eventos para abrir modal eliminar usuario
+        //                 $(document).on('click', '.abrirModalEliminarUsuarioExt', function () {
+        //                     $('#ModalEliminarUsuarioExterno').modal('show'); // Mostramos el modal
+        //                 });
+        //                 //delegaciones de eventos para abrir modal eliminar usuario
+        //                 $(document).on('click', '.abrirModalInfoUsuarioExt', function () {
+        //                     $('#ModalInfoUsuarioExt').modal('show'); // Mostramos el modal
+        //                 });
+        //                 //delegaciones de eventos para abrir modal eliminar usuario
+        //                 $(document).on('click', '.abrirModalEditarUsuarioExt', function () {
+        //                     $('#ModalEditarUsuarioExterno').modal('show'); // Mostramos el modal
+        //                 });
+
+
+
+        //                 const EmpresasExterna = Empresas.map(function (elemento) {
+        //                     return {
+        //                         id: elemento.id,
+        //                         nombre: elemento.empresa
+        //                     };
+        //                 });
+
+        //                 let selectedIndex = -1;
+        //                 for (let i = 0; i < EmpresasExterna.length; i++) {
+        //                     if (EmpresasExterna[i].nombre === rowData.fkEmpresa) {
+        //                         selectedIndex = i;
+        //                         break;
+        //                     }
+        //                 }
+
+        //                 const element = document.querySelector(`#InpAutoCompleteEdit`);
+
+        //                 // Verificar que el elemento existe
+        //                 if (element) {
+        //                     const existingControl = wijmo.Control.getControl(element);
+
+        //                     if (existingControl) {
+        //                         existingControl.itemsSource = EmpresasExterna; // Usa EmpresasExterna
+        //                         existingControl.placeholder = 'Seleccione una empresa *';
+        //                         existingControl.selectedIndex = selectedIndex;
+        //                     } else {
+        //                         // Si no existe, crea una nueva instancia de AutoComplete
+        //                         const autoCompletee = new wijmo.input.AutoComplete(element, {
+        //                             displayMemberPath: 'nombre',
+        //                             itemsSource: EmpresasExterna, // Usa EmpresasExterna
+        //                             placeholder: 'Seleccione una empresa *',
+        //                             selectedIndex: selectedIndex
+        //                         });
+        //                     }
+
+        //                 } else {
+        //                     console.error(`No se encontró el elemento con ID: InpAutoCompleteEdit`);
+        //                 }
+        //             })
+
+        //             if (flexGrid) {
+        //                 // Si el FlexGrid ya existe, simplemente actualizar los datos
+        //                 flexGrid.itemsSource = usersData;
+        //             } else {
+        //                 // Si no existe el FlexGrid, crearlo por primera vez
+        //                 flexGrid = new wijmo.grid.FlexGrid('#GridClientes', {
+        //                     autoGenerateColumns: false, // Desactivar generación automática de columnas
+        //                     headersVisibility: 'Column',
+        //                     selectionMode: 'None',
+        //                     columns: [
+        //                         { header: '#', isReadOnly: true, width: 50 }, // Columna de numeración
+        //                         { header: 'Nombre Completo', binding: 'fullName', width: 220 },
+        //                         { header: 'Puesto', binding: 'position', width: 180 },
+        //                         { header: 'Número de Teléfono', binding: 'phoneNumber', width: '*' },
+        //                         { header: 'Email', binding: 'email', width: '*' },
+        //                         { header: 'Empresa', binding: 'company', width: '*' },
+        //                         { header: 'Accion', isReadOnly: true } // Columna de botones
+        //                     ],
+        //                     itemsSource: usersData, // Asignación de la fuente de datos
+        //                     itemFormatter: function (panel, r, c, cell) {
+        //                         if (panel.cellType === wijmo.grid.CellType.Cell) {
+        //                             if (c === 0) {
+
+        //                                 cell.textContent = (r + 1).toString();
+        //                             } else if (c === panel.columns.length - 1) {
+        //                                 // Última columna con botones de acción
+        //                                 const rowData = panel.rows[r].dataItem;
+        //                                 cell.innerHTML = `
+        //                                         <ul style="padding-left:10px; padding-rigth:10px;" class="nav nav-links mx-n2 action-buttons">
+        //                                             <li>
+        //                                                 <button style="height:25px; width:25px"  id="BtnEditarProyecto" class="btn btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0 abrirModalEditarUsuarioExt" onclick="EditarUsuarioExterno(${rowData.id})" >
+        //                                                     <svg class="svg-inline--fa fa-pen-to-square" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        //                                                         <path fill="currentColor" d="M490.3 40.4C512.2 62.27 512.2 97.73 490.3 119.6L460.3 149.7L362.3 51.72L392.4 21.66C414.3-.2135 449.7-.2135 471.6 21.66L490.3 40.4zM172.4 241.7L339.7 74.34L437.7 172.3L270.3 339.6C264.2 345.8 256.7 350.4 248.4 353.2L159.6 382.8C150.1 385.6 141.5 383.4 135 376.1C128.6 370.5 126.4 361 129.2 352.4L158.8 263.6C161.6 255.3 166.2 247.8 172.4 241.7V241.7zM192 63.1C209.7 63.1 224 78.33 224 95.1C224 113.7 209.7 127.1 192 127.1H96C78.33 127.1 64 142.3 64 159.1V416C64 433.7 78.33 448 96 448H352C369.7 448 384 433.7 384 416V319.1C384 302.3 398.3 287.1 416 287.1C433.7 287.1 448 302.3 448 319.1V416C448 469 405 512 352 512H96C42.98 512 0 469 0 416V159.1C0 106.1 42.98 63.1 96 63.1H192z"></path>
+        //                                                     </svg>
+        //                                                 </button>
+        //                                             </li>
+        //                                             <li>
+        //                                                 <button style="height:25px; width:25px" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger px-0 abrirModalEliminarUsuarioExt" data-nombre="${rowData.nombre}" onclick="EliminarUsuarioExterno(${rowData.id})" >
+        //                                                     <svg class="svg-inline--fa fa-trash" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        //                                                         <path fill="currentColor" d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"></path>
+        //                                                     </svg>
+        //                                                 </button>
+        //                                             </li>
+        //                                              <li>
+        //                                                 <button style="height:25px; width:25px; margin-left:4px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger px-0 abrirModalInfoUsuarioExt" onclick="mostrarInfoUsuarioExt(${rowData.id})"  >
+        //                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info text-900 fs-3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        //                                                 </button>
+        //                                             </li>
+        //                                         </ul>
+        //                                     `;
+        //                             }
+
+
+
+
+
+        //                         }
+        //                     }
+        //                 });
+        //             }
+        //         },
+        //         error: function (error) {
+        //             console.error('Error al cargar los datos:', error);
+        //         }
+        //     });
+        // }
+
+        // var resize_func = [];
+        // resize_func.push(function () {
+        //     $('#GridClientes').height(window.innerHeight - $('.card').offset().top - 195);
+        // });
+        // $(document).ready(function () {
+        //     resizeWidth();
+        // });
+
+
+
+        // function limpiarTodosLosInputs() {
+        //     const inputs = document.querySelectorAll('input');
+        //     inputs.forEach(input => {
+        //         if (input.name !== '_token') {
+        //             input.value = '';
+        //         }
+        //     });
+        // };
+
+
+
+
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     cargarUsuariosExternos();
+        // });
+
+        // function crearUsuarioExterno(autoComplete, Empresas) {
+        //     $("#InpEmailExterno").val('');
+        //     var Empresa = Empresas;
+        //     var imagenSeleccionada;
+
+        //     // Eliminar el evento previo en #InpImagenExt para evitar duplicación
+        //     $("#InpImagenExt").off("change").on("change", function () {
+        //         imagenSeleccionada = this.files[0];
+        //         console.log("Imagen seleccionada:", imagenSeleccionada || "Ninguna imagen seleccionada");
+        //     });
+
+        //     // Eliminar el evento previo en #BtnAgregarUsuarioExt para evitar duplicación
+        //     $(document).off('click', '#BtnAgregarUsuarioExt').on('click', '#BtnAgregarUsuarioExt', function () {
+        //         var token = $('input[name="_token"]').val();
+        //         const nombre = $("#InpNombresExterno").val();
+        //         const apellidoPaterno = $("#InpApellidoPaternoExterno").val();
+        //         const apellidoMaterno = $("#InpApellidoMaternoExterno").val();
+        //         const nombreUsuario = $("#InpNombreUsuarioExterno").val();
+        //         const email = $("#InpEmailExterno").val();
+        //         const telefono = $("#InpTelefonoExterno").val();
+        //         const puesto = $("#InpPuestoExterno").val();
+        //         const contrasenia = $("#InpContraseniaExterno").val();
+        //         const confirmarContrasenia = $("#InpConfirmarContraseniaExterno").val();
+
+        //         const formData = new FormData();
+        //         formData.append('_token', token);
+        //         formData.append('nombre', nombre);
+        //         formData.append('apellidoPaterno', apellidoPaterno);
+        //         formData.append('apellidoMaterno', apellidoMaterno);
+        //         formData.append('nombreUsuario', nombreUsuario);
+        //         formData.append('email', email);
+        //         formData.append('telefono', telefono);
+        //         formData.append('puesto', puesto);
+        //         formData.append('contrasenia', contrasenia);
+        //         formData.append('confirmar', confirmarContrasenia);
+
+        //         if (imagenSeleccionada) {
+        //             formData.append('imagen', imagenSeleccionada);
+        //         } else {
+        //             console.log("No se seleccionó ninguna imagen.");
+        //         }
+
+        //         if (!autoComplete) {
+        //             console.error('Control AutoComplete no encontrado.');
+        //             return;
+        //         }
+
+        //         const empresa = autoComplete.selectedItem ? autoComplete.selectedItem.empresa : null;
+        //         formData.append('empresa', empresa);
+
+        //         const esValido = validarYAgregarUsuario(nombre, apellidoPaterno, apellidoMaterno, nombreUsuario, email, telefono, contrasenia, confirmarContrasenia, puesto, empresa);
+        //         if (!esValido) {
+        //             return;
+        //         }
+
+        //         // Realizar la solicitud AJAX
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "./crearUsuariosExternos",
+        //             data: formData,
+        //             processData: false,
+        //             contentType: false,
+        //             success: function (data) {
+        //                 cargarUsuariosExternos(Empresa);
+        //                 if (data.Codigo == 0) {
+        //                     Swal.fire({
+        //                         icon: 'success',
+        //                         title: 'Éxito',
+        //                         text: data.Mensaje
+        //                     });
+        //                 }
+        //                 $("#ModalCrearProyecto").modal('hide');
+
+        //                 // Limpiar los inputs manualmente
+        //                 $("#InpNombresExterno").val('');
+        //                 $("#InpApellidoPaternoExterno").val('');
+        //                 $("#InpApellidoMaternoExterno").val('');
+        //                 $("#InpNombreUsuarioExterno").val('');
+        //                 $("#InpEmailExterno").val('');
+        //                 $("#InpTelefonoExterno").val('');
+        //                 $("#InpPuestoExterno").val('');
+        //                 $("#InpContraseniaExterno").val('');
+        //                 $("#InpConfirmarContraseniaExterno").val('');
+        //                 $("#InpUsuarioIntImagen").val('');
+        //                 $('.ContAlerta').empty();
+        //                 imagenSeleccionada = null;
+        //                 $("#InpImagenExt").val('');
+        //                 $("#InpAutoComplete").val('');
+        //                 autoComplete.selectedIndex = -1;
+        //             },
+        //             error: function (error) {
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title: 'Error',
+        //                     text: 'Error en la acción solicitada.'
+        //                 });
+        //                 $('.ContAlerta').empty();
+        //                 console.error('Error editando sistema:', error);
+        //             }
+        //         });
+        //     });
+        // }
+        // // "@IdUsuario"
+
+        // function EliminarUsuarioExterno(id) {
+
+        //     // Eliminar el evento previo en .BtnEliminarUsuarioExterno para evitar duplicación
+        //     $(document).off('click', '.BtnEliminarUsuarioExterno').on('click', '.BtnEliminarUsuarioExterno', function () {
+        //         var token = $('input[name="_token"]').val();
+        //         const modal = $(this).closest('.modal');
+
+        //         $.ajax({
+        //             type: "post",
+        //             url: "./EliminarUsuarioExterno",
+        //             data: { _token: token, Id: id },
+        //             success: function (data) {
+
+        //                 if (data.Codigo == 0) {
+        //                     Swal.fire({
+        //                         icon: 'success',
+        //                         title: 'Éxito',
+        //                         text: data.Mensaje
+        //                     });
+        //                 }
+        //                 modal.modal('hide');
+        //                 cargarUsuariosExternos();
+        //             },
+        //             error: function (error) {
+        //                 Swal.fire({
+        //                     icon: 'error',
+        //                     title: 'Error',
+        //                     text: 'No se pudo eliminar el usuario.'
+        //                 });
+        //                 console.error('Error eliminando usuario:', error);
+        //             }
+        //         });
+        //     });
+        // }
+
+
+        // function buscar() {
+        //     // Añadir un evento para el filtrado dinámico
+        //     document.getElementById('buscador').addEventListener('input', function (e) {
+        //         var filter = e.target.value.toLowerCase();
+
+        //         // Aplicar el filtro a la colección de datos del grid actual
+        //         flexGrid.collectionView.filter = function (item) {
+        //             // Ajustar aquí según la columna que quieras filtrar, en este caso "Name"
+        //             return filter.length == 0 || item.fullName.toLowerCase().indexOf(filter) > -1;
+        //         };
+        //     });
+        // }
+
+        // function EditarUsuarioExterno(id) {
+        //     const UsuarioExt = coleccionUsuariosExt.find(item => item.id === id);
+        //     let img = UsuarioExt.imagenPerfil;
+        //     $('#InpNombresExternoEdit').val(UsuarioExt.nombre);
+        //     $('#InpApellidoPaternoExternoEdit').val(UsuarioExt.apellidoPaterno);
+        //     $('#InpApellidoMaternoExternoEdit').val(UsuarioExt.apellidoMaterno);
+        //     $('#InpNombreUsuarioExternoEdit').val(UsuarioExt.nombreUsuario);
+        //     $('#InpEmailExternoEdit').val(UsuarioExt.email);
+        //     $('#InpTelefonoExternoEdit').val(UsuarioExt.telefono);
+        //     $('#InpContrasenaExternoEdit').val(UsuarioExt.password);
+        //     $('#InpPuestoExternoEdit').val(UsuarioExt.puesto);
+        //     $(".previewImage").attr("src", img);
+        //     const fileName = img.split("\\").pop().split("/").pop();
+        //     $('.fileName2').text(fileName);
+
+        //     $('#InpConfirmarContrasenaExternoEdit').val(UsuarioExt.password);
+        //     $(".fullnameuser").text("Editar Usuario: " + UsuarioExt.nombre + " " + UsuarioExt.apellidoPaterno + " " + (UsuarioExt.apellidoMaterno || " "));
+        //     $(document).off('click', '.EditarUsuarioExterno').on('click', '.EditarUsuarioExterno', function () {
+        //         const nombreExterno = $(`#InpNombresExternoEdit`).val();
+        //         const apellidoPaterno = $(`#InpApellidoPaternoExternoEdit`).val();
+        //         var token = $('input[name="_token"]').val();
+        //         const apellidoMaterno = $(`#InpApellidoMaternoExternoEdit`).val();
+        //         const nombreUsuario = $(`#InpNombreUsuarioExternoEdit`).val();
+        //         const email = $(`#InpEmailExternoEdit`).val();
+        //         const telefono = $(`#InpTelefonoExternoEdit`).val();
+        //         const puesto = $(`#InpPuestoExternoEdit`).val();
+        //         const contrasena = $(`#InpContrasenaExternoEdit`).val();
+        //         const confirmarContrasena = $(`#InpConfirmarContrasenaExternoEdit`).val();
+        //         let imagenSeleccionada = $(`#InpUsuarioExtImagenEdit`)[0].files[0];
+
+        //         const empresaSeleccionada = wijmo.Control.getControl(`#InpAutoCompleteEdit`).text;
+
+        //         const formData = new FormData();
+        //         formData.append('_token', $('input[name="_token"]').val());
+        //         formData.append('id', id);
+        //         formData.append('nombre', nombreExterno);
+        //         formData.append('apellidoPaterno', apellidoPaterno);
+        //         formData.append('apellidoMaterno', apellidoMaterno);
+        //         formData.append('nombreUsuario', nombreUsuario);
+        //         formData.append('email', email);
+        //         formData.append('telefono', telefono);
+        //         formData.append('puesto', puesto);
+        //         formData.append('contrasenia', contrasena);
+        //         formData.append('confirmar', confirmarContrasena);
+
+        //         if (imagenSeleccionada) {
+        //             formData.append('imagen', imagenSeleccionada);
+        //         }
+
+        //         formData.append('empresaSeleccionada', empresaSeleccionada);
+
+        //         const esValido = validarYAgregarUsuario(nombreExterno, apellidoPaterno, apellidoMaterno, nombreUsuario,
+        //             email, telefono, contrasena, confirmarContrasena, puesto, empresaSeleccionada);
+        //         if (!esValido) {
+        //             return;
+        //         }
+
+        //         // Realizar la solicitud AJAX
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "./editarUsuarioExterno",
+        //             data: formData,
+        //             processData: false,
+        //             contentType: false,
+        //             success: function (data) {
+        //                 cargarUsuariosExternos();
+        //                 $(`#ModalEditarUsuario${id}`).modal('hide'); // Cerrar el modal correcto
+        //                 Swal.fire({
+        //                     icon: 'success',
+        //                     title: 'Éxito',
+        //                     text: 'Éxito en la acción solicitada'
+        //                 });
+        //                 $('.ContAlerta').empty();
+        //                 $(`#ModalEditarUsuarioExterno`).modal('hide');
+        //             },
+        //             error: function (error) {
+        //                 if (data.Codigo == 0) {
+        //                     Swal.fire({
+        //                         icon: 'success',
+        //                         title: 'Éxito',
+        //                         text: data.Mensaje
+        //                     });
+        //                 }
+        //                 $('.ContAlerta').empty();
+        //                 console.error('Error editando sistema:', error);
+        //             }
+        //         });
+        //     });
+        // }
+
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     buscar();
+        // });
+
+        // $('#GridClientes').on('click', '.abrirModalEliminarUsuarioExt', function () {
+        //     // Encuentra el card asociado al botón que se hizo clic
+        //     const card = $(this).closest('.abrirModalEliminarUsuarioExt');
+        //     const nombreUsuario = card.data('nombre'); // Obtiene la descripción del card
+
+        //     // Actualiza el contenido del modal
+        //     $('.nombreUsuario').text(nombreUsuario);
+
+
+        // });
+
+        // function mostrarInfoUsuarioExt(id) {
+        //     const usuarioExt = coleccionUsuariosExt.find(item => item.id === id);
+        //     if (usuarioExt) {
+        //         let img = usuarioExt.imagenPerfil;
+        //         let imgEmp = usuarioExt.imagen;
+        //         $(".nombreCompletoUsuarioInt").text(usuarioExt.nombre + " " + usuarioExt.apellidoPaterno + " " + (usuarioExt.apellidoMaterno || " "));
+        //         $(".Activo").text(usuarioExt.activo);
+        //         $(".nombreUsuarioExt").text(usuarioExt.nombreUsuario);
+        //         $(".fechaIngresoUsuarioExt").text(usuarioExt.FechaDeIngreso);
+        //         $(".emailUsuarioExt").text(usuarioExt.email);
+        //         $(".telefonoUsuarioExt").text(usuarioExt.telefono);
+
+        //         $(".empresaUsuarioExt").text(usuarioExt.fkEmpresa);
+        //         $(".puestoUsuarioExt").text(usuarioExt.puesto);
+
+        //         $(".imagenEmpresa").attr("src", imgEmp);
+        //         $(".imagenPerfil").attr("src", img);
+        //     } else {
+        //         console.log("No se encontró ninguna actividad con el id:", id);
+        //     }
+        // }
+
+        // // para previsualizar la imagen que se carga
+        // document.getElementById("InpImagenExt").addEventListener("change", function (event) {
+        //     const file = event.target.files[0];
+        //     const previewContainer = document.getElementById("previewContainer");
+        //     const previewImage = document.getElementById("previewImage");
+        //     const fileName = document.getElementById("fileName");
+        //     const fileSize = document.getElementById("fileSize");
+        //     const removePreview = document.getElementById("removePreview");
+
+        //     if (file) {
+        //         const reader = new FileReader();
+        //         reader.onload = function (e) {
+        //             previewImage.src = e.target.result;
+        //             fileName.textContent = file.name;
+        //             fileSize.textContent = `${(file.size / 1024).toFixed(2)} KB`;
+        //             previewContainer.classList.remove("d-none");
+        //         };
+
+        //         reader.readAsDataURL(file);
+        //     }
+
+        //     removePreview.addEventListener("click", function () {
+        //         previewContainer.classList.add("d-none");
+        //         previewImage.src = "";
+        //         fileName.textContent = "";
+        //         fileSize.textContent = "";
+        //         document.getElementById("InpImagenExt").value = "";
+        //     });
+        // });
+
+        // // para previsualizar la imagen que se carga en el modal de editar
+        // $(document).ready(function () {
+        //     $('#InpUsuarioExtImagenEdit').change(function (event) {
+        //         const file = event.target.files[0];
+        //         if (file) {
+        //             const reader = new FileReader();
+        //             reader.onload = function (e) {
+        //                 $('#previewContainer2').removeClass('d-none');
+        //                 $('#previewImage2').attr('src', e.target.result);
+        //                 $('#fileName2').text(file.name);
+        //                 $('#fileSize2').text((file.size / 1024).toFixed(2) + ' KB');
+        //             }
+
+        //             reader.readAsDataURL(file); // Leer el archivo como URL de datos
+        //         }
+        //     });
+
+        //     $('#removePreview2').click(function () {
+        //         $('#previewContainer2').addClass('d-none');
+        //         $('#InpUsuarioExtImagenEdit').val('');
+        //         $('#previewImage2').attr('src', '');
+        //         $('#fileName2').text('');
+        //         $('#fileSize2').text('');
+        //     });
+        // });
     </script>
 }

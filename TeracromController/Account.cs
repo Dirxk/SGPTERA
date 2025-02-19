@@ -16,44 +16,6 @@ namespace TeracromController
             _dapperContext = dapperContext;
         }
 
-
-        //public async Task<Usuarios> GetUsuarios(string gid = "")
-        //{
-        //    Usuarios usuarios = new Usuarios();
-
-        //    using (var cnn = new DapperContext(_configuration))
-        //    {
-        //        try
-        //        {
-        //            cnn.AbrirConexion("SGP");
-
-        //            usuarios = await cnn.QueryFirstOrDefaultAsync<Usuarios>(
-        //                "SELECT * FROM Empleados WHERE Nombre = @gid;",
-        //                new { gid }
-        //            );
-
-        //            if (usuarios == null)
-        //            {
-        //                usuarios = new Usuarios
-        //                {
-        //                    usuarios = 0,
-        //                    Gid = new Gids { Gid = "" }
-        //                };
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            usuarios = new Usuarios
-        //            {
-        //                usuarios = 0,
-        //                Gid = new Gids { Gid = "" }
-        //            };
-        //        }
-        //    }
-
-        //    return usuarios;
-        //}
-
         public async Task<RespuestaJson> VerificarUsuario(string email, string password, string user2)
         {
             RespuestaJson respuestaUser = new RespuestaJson();
@@ -165,6 +127,48 @@ namespace TeracromController
                 _dapperContext.Dispose();
             }
 
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> GetClientes()
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir la conexión a la base de datos
+                _dapperContext.AbrirConexion("SGP");
+
+                string sql = "SELECT Id, RazonSocial, RFC, Prefijo, Telefono FROM Clientes WHERE FlgActivo = 1;";
+                var clientes = await _dapperContext.QueryAsync<Clientes>(sql);
+
+                if (clientes != null)
+                {
+                    respuesta.Resultado = true;
+                    respuesta.Data = clientes.Select(s => new Clientes
+                    {
+                        Id = s.Id,
+                        RazonSocial = s.RazonSocial,
+                        RFC = s.RFC,
+                        Prefijo = s.Prefijo,
+                        Telefono = s.Telefono
+                    }).ToList();
+                }
+                else
+                {
+                    respuesta.Mensaje = "No se encontraron clientes activos.";
+                    respuesta.Data = new List<Clientes>(); // Inicializar Data para evitar null
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los clientes." + ex.Message;
+                respuesta.Data = new List<Clientes>(); // Inicializar Data para evitar null
+            }
+            finally
+            {
+                // Cerrar o liberar la conexión (si es necesario)
+                _dapperContext.Dispose();
+            }
             return respuesta;
         }
     }

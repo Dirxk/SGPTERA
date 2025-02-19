@@ -23,9 +23,16 @@ namespace SGPTERA.Controllers
             return View();
         }
 
- 
+        [HttpPost]
+        public async Task<RespuestaJson> GetClientes()
+        {
+            RespuestaJson respuesta = await new Account(_dapperContext).GetClientes();
+            return respuesta;
+        }
 
-        
+
+
+
 
     }
 }
