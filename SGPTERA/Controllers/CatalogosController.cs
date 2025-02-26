@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GestionProyectos.Models;
+using Microsoft.AspNetCore.Mvc;
+using TeracromController;
 using TeracromDatabase;
+using TeracromModels;
 
 namespace SGPTERA.Controllers
 {
@@ -23,6 +26,45 @@ namespace SGPTERA.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        public async Task<RespuestaJson> GetClientes()
+        {
+            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetClientes();
+            return respuesta;
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> AgregarCliente(Clientes cliente)
+        {
+            cliente.IdUsuarioSet =  int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).AgregarCliente(cliente);
+
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> EditarCliente(Clientes cliente)
+        {
+            cliente.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).EditarCliente(cliente);
+
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> DesactivarCliente(Clientes cliente)
+        {
+            cliente.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarCliente(cliente);
+
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> ReactivarCliente(Clientes cliente)
+        {
+            cliente.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarCliente(cliente);
+
+        }
 
     }
 }

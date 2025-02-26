@@ -105,7 +105,6 @@ C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsof
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Configuration.KeyPerFile.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Configuration.UserSecrets.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Configuration.Xml.dll
-C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Diagnostics.Abstractions.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Diagnostics.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
@@ -126,7 +125,6 @@ C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsof
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Logging.Configuration.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Logging.Console.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Logging.Debug.dll
-C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Logging.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Logging.EventLog.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Logging.EventSource.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\Microsoft.Extensions.Logging.TraceSource.dll
@@ -178,7 +176,6 @@ C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\System.d
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\System.Drawing.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\System.Drawing.Primitives.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\System.Dynamic.Runtime.dll
-C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\System.Formats.Asn1.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\System.Formats.Tar.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\System.Globalization.Calendars.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\refs\System.Globalization.dll
@@ -318,10 +315,16 @@ C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Cod
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.CodeAnalysis.Razor.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Extensions.Features.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\Microsoft.Identity.Client.dll
@@ -337,6 +340,7 @@ C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\System.Client
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\System.Diagnostics.EventLog.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\System.DirectoryServices.Protocols.dll
+C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\System.Formats.Asn1.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\System.Memory.Data.dll
 C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll

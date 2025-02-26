@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -45,18 +46,35 @@ namespace GestionProyectos.Models
     {
         [Key]
         public int Id { get; set; }
-        public required string RazonSocial { get; set; }
-        public required string RFC { get; set; }
-        public required string Prefijo { get; set; }
-        public required string Telefono { get; set; }
+
+        public string RazonSocial { get; set; }
+
+        public string RFC { get; set; }
+
+        public string Prefijo { get; set; }
+        public string Telefono { get; set; }
+
         public byte[] Logotipo { get; set; }
-        public int? IdUsuarioSet { get; set; }
+
+        public int IdUsuarioSet { get; set; }
+
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
+
         public int? IdUsuarioUpd { get; set; }
+
         public DateTime? FechaUpd { get; set; }
+
         public int? IdUsuarioDel { get; set; }
+
         public DateTime? FechaDel { get; set; }
+
         public bool FlgActivo { get; set; } = true;
+
+        [NotMapped]
+        public IFormFile LogotipoFile { get; set; } // Para manejar la imagen como archivo
+
+        [NotMapped]
+        public string LogotipoBase64 { get; set; } // Para manejar la imagen existente en base64
     }
 
     public class ClientesUsuarios

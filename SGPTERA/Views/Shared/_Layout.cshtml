@@ -11,8 +11,11 @@
     <script src="~/lib/dashboard/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="~/lib/dashboard/vendors/simplebar/simplebar.min.js"></script>
     <script src="~/lib/dashboard/assets/js/config.js"></script>
+    <!-- CSS de Notiflix -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-3.2.6.min.css" />
 
-    <!-- Stylesheets -->
+    <!-- JavaScript de Notiflix -->
+    <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-3.2.6.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
@@ -24,6 +27,7 @@
     <link href="~/lib/wijmo/styles/wijmo.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SGPTERA.styles.css" asp-append-version="true" />
+
 </head>
 <body>
     <main class="main" id="top">
@@ -159,7 +163,8 @@
                         <picture>
                             <img class="logo-dark d-none" src="~/lib/dashboard/assets/img/icons/TeracromWhite.svg"
                                  alt="Teracrom Logo Dark" width="220" height="35">
-                            <img class="logo-light" src="~/lib/dashboard/assets/img/icons/TeracromBlack.svg"
+                            @* <img class="logo-light" src="~/lib/dashboard/assets/img/icons/TeracromBlack.svg" *@
+                            <img class="logo-light" src="~/lib/dashboard/assets/img/icons/TeracromWhite.svg"
                                  alt="Teracrom Logo Light" width="220" height="35">
                         </picture>
                     </a>
@@ -295,10 +300,9 @@
 
         @* Contenido *@
         <div class="content">
-            <main role="main" class="ml-1">
-                @RenderBody()
-            </main>
+            @RenderBody()
         </div>
+
         <div class="modal fade" id="mdLoader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content" style="background-color: transparent !important; color:white; -webkit-box-shadow: none;box-shadow: none;border:none;">
@@ -320,6 +324,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- jQuery UI CSS JQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
     <!-- Scripts adicionales -->
     <script src="~/lib/dashboard/vendors/popper/popper.min.js"></script>
@@ -345,6 +353,7 @@
     <script src="~/lib/wijmo/controls/wijmo.grid.xlsx.min.js"></script>
     <script src="~/lib/wijmo/controls/wijmo.xlsx.min.js"></script>
     <script src="~/lib/wijmo/controls/cultures/wijmo.culture.es-MX.min.js"></script>
+    <link href="~/lib/wijmo/styles/themes/wijmo.theme.midnight.min.css" rel="stylesheet" />
     <script type="text/javascript">
         wijmo.setLicenseKey('mxirweb01,533856943256269#B0yWXmpjIyNHZisnOiwmbBJye0ICRiwiI34zdmtSa9o7Rzk6RM3kM09EWURndCBnWll7VKtWemJ4U5h4R8Z6QE9mQydzSnFWaSdXUp5GWitCS7w6Si9GNMx6bwpETDpXNNVDW0ZTQFdDZ7MFOLJFeuZGVMBjZJ5GdplGUNhzVrMTZhR4NpJHRRRlQyNmanh6MXxkNaFVMwUWe7pXdEdlV036YYp7MQpEN84kVwQTMRJTUOpWYHN6LTRESldTRC3WWqJGMhZnWsZUbjJVZ5NmM4dzaNlWODdDNxoHaQhHTHVkUplmWPhEavcWOHVXMZhGRz4WetVWRzpUNNpFRXZGcJNla4UkTwE6cvNHSip7d6dTR6NVOmlkcoRWdOFUYYBTeO5mTVRFMrw6aYFVUwVjVtVTVUV4RZ34TGNjV5MHZxsUe8JmNZtyTsNjYjZHNjV4TQlVbmRTNidTRzIEZ6AjZSxGUNVmYKxUd52CbWVWMvRkI0IyUiwiIzQTMxcTNBVjI0ICSiwSO7ITNzcDMzgTM0IicfJye&Qf35VfikEMyIlI0IyQiwiIu3Waz9WZ4hXRgACdlVGaThXZsZEIv5mapdlI0IiTisHL3JSNJ9UUiojIDJCLi86bpNnblRHeFBCIyV6dllmV4J7bwVmUg2Wbql6ViojIOJyes4nILdDOIJiOiMkIsIibvl6cuVGd8VEIgc7bSlGdsVXTg2Wbql6ViojIOJyes4nI4YkNEJiOiMkIsIibvl6cuVGd8VEIgAVQM3EIg2Wbql6ViojIOJyes4nIzMEMCJiOiMkIsISZy36Qg2Wbql6ViojIOJyes4nIVhzNBJiOiMkIsIibvl6cuVGd8VEIgQnchh6QsFWaj9WYulmRg2Wbql6ViojIOJyebpjIkJHUiwiI7UDOygDMgMjMxETMyAjMiojI4J7QiwiIxAjYldncphXbiojIz5GRiwiIvNWa8VWTgcmbpJXd4NWYmVnbh5EIzR6bvZEIHZiQiojIh94QiwiI9YjM6UjMzQTO6UDOzMTNiojIklkIs4XXbpjInxmZiwiIyYXMyAjMiojIyVmdizSWz');
     </script>

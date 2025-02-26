@@ -66,3 +66,102 @@ body {
         transform: translateY(-30px);
     }
 }
+
+
+/* Estilos base para el contenedor de sugerencias */
+.ui-autocomplete {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 325px; /* Ancho máximo */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    font-size: 14px;
+    text-align: left;
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: none; /* Sin sombra */
+}
+
+/* Estilos para cada elemento de la lista */
+.ui-autocomplete .ui-menu-item {
+    cursor: pointer;
+    color: #333333; /* Color de texto */
+    background-color: #ffffff; /* Fondo blanco */
+    border-bottom: 1px solid #eeeeee; /* Línea divisoria entre elementos */
+}
+
+/* Estilos para el elemento seleccionado o hover */
+.ui-autocomplete .ui-menu-item:hover,
+.ui-autocomplete .ui-state-focus {
+    color: #ffffff; /* Texto blanco */
+    background-color: #007bff; /* Fondo azul */
+    border-bottom: 1px solid #007bff; /* Línea divisoria azul */
+}
+
+/* Media Queries para pantallas pequeñas (móviles) */
+@media (max-width: 325px) {
+    .ui-autocomplete {
+        width: 100%; /* Ocupa todo el ancho en móviles */
+        max-width: none; /* Elimina el límite de ancho */
+        font-size: 16px; /* Aumenta el tamaño de la fuente para mejor legibilidad */
+    }
+}
+
+/* Media Queries para pantallas medianas (tablets) */
+@media (min-width: 125px) and (max-width: 225px) {
+    .ui-autocomplete {
+        width: 80%; /* Reduce el ancho para tablets */
+        max-width: 400px; /* Ajusta el ancho máximo */
+    }
+}
+
+/* Media Queries para pantallas grandes (escritorio) */
+@media (min-width: 1024px) {
+    .ui-autocomplete {
+        width: 225px; /* Mantén el ancho original para pantallas grandes */
+    }
+}
+
+/* Cambiar el color de fondo y texto de las celdas seleccionadas */
+.wj-flexgrid .wj-cell.wj-state-selected {
+    background-color: #8899ac !important; /* Naranja */
+    color: #000000 !important; /* Texto negro */
+}
+
+/* Cambiar el color de fondo y texto de las celdas seleccionadas sin foco */
+.wj-flexgrid .wj-cell.wj-state-multi-selected {
+    background-color: #8899ac !important; /* Naranja claro */
+    color: #000000 !important; /* Texto negro */
+}
+
+
+.wj-header {
+    background: #0f1822 !important;
+    background-image: none !important;
+    color: #fff !important;
+}
+
+/* Celdas normales */
+.wj-flexgrid .wj-cell {
+    background-color: #22303c; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+}
+
+/* Celdas alternas */
+.wj-flexgrid .wj-cell.wj-alt {
+    background-color: #22303c; /* Color de fondo alterno */
+    color: #ffffff; /* Color del texto */
+}
+
+/* Celdas congeladas */
+.wj-flexgrid .wj-cell.wj-cell-frz {
+    background-color: #22303c; /* Color de fondo congelado */
+    color: #ffffff; /* Color del texto */
+}
+
+/* Celdas congeladas alternas */
+.wj-flexgrid .wj-cell.wj-cell-frz.wj-alt {
+    background-color: #22303c; /* Color de fondo congelado alterno */
+    color: #ffffff; /* Color del texto */
+}
+

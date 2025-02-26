@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\lib\notiflix\notiflix-Notiflix-67ba12d\.dev\.eslintrc.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\notiflix\notiflix-Notiflix-67ba12d\.dev\.eslintrc.js" />
+    <None Include="wwwroot\lib\notiflix\notiflix-Notiflix-67ba12d\.dev\notiflix-dev-builder.js" />
+    <None Include="wwwroot\lib\notiflix\notiflix-Notiflix-67ba12d\.dev\notiflix-dev-constants.js" />
+    <None Include="wwwroot\lib\notiflix\notiflix-Notiflix-67ba12d\.dev\notiflix-dev-minifier.js" />
+    <None Include="wwwroot\lib\notiflix\notiflix-Notiflix-67ba12d\.github\FUNDING.yml" />
+    <None Include="wwwroot\lib\notiflix\notiflix-Notiflix-67ba12d\.github\ISSUE_TEMPLATE\bugreport.md" />
+    <None Include="wwwroot\lib\notiflix\notiflix-Notiflix-67ba12d\.github\ISSUE_TEMPLATE\featurerequest.md" />
+    <None Include="wwwroot\lib\notiflix\notiflix-Notiflix-67ba12d\.github\workflows\dependency-review.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="8.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.12" />
   </ItemGroup>
