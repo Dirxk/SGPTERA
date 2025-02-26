@@ -20,12 +20,25 @@ namespace SGPTERA.Controllers
             _dapperContext = dapperContext;
         }
 
-        public  IActionResult Clientes()
+        //============================================================================================================================\\
+        //=================================================   Vistas de los Catálogos  =============================================== \\
+        //==============================================================================================================================\\
+
+        public IActionResult Clientes()
         {
             ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
             return View();
         }
 
+        public IActionResult Puestos()
+        {
+            ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
+            return View();
+        }
+
+        //============================================================================================================================\\
+        //================================================   Controlador de Clientes   =============================================== \\
+        //==============================================================================================================================\\
 
         [HttpPost]
         public async Task<RespuestaJson> GetClientes()
@@ -66,5 +79,43 @@ namespace SGPTERA.Controllers
 
         }
 
+        //============================================================================================================================\\
+        //=================================================   Controlador de Puestos   =============================================== \\
+        //==============================================================================================================================\\
+
+        [HttpPost]
+        public async Task<RespuestaJson> GetPuestos()
+        {
+            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetPuestos();
+            return respuesta;
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> AgregarPuesto(Puestos puesto)
+        {
+            puesto.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).AgregarPuesto(puesto);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> EditarPuesto(Puestos puesto)
+        {
+            puesto.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).EditarPuesto(puesto);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> DesactivarPuesto(Puestos puesto)
+        {
+            puesto.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarPuesto(puesto);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> ReactivarPuesto(Puestos puesto)
+        {
+            puesto.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarPuesto(puesto);
+        }
     }
 }

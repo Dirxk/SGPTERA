@@ -9,8 +9,8 @@ namespace GestionProyectos.Models
     {
         [Key]
         public int Id { get; set; }
-        public required string Descripcion { get; set; }
-        public int Tipo { get; set; }
+        public string Descripcion { get; set; }
+        public string  Tipo { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
         public int? IdUsuarioUpd { get; set; }

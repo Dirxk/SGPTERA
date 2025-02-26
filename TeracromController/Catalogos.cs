@@ -17,6 +17,10 @@ namespace TeracromController
             _dapperContext = dapperContext;
         }
 
+        //============================================================================================================================\\
+        //====================================================   Modelo Clientes   =================================================== \\
+        //==============================================================================================================================\\
+
         public async Task<RespuestaJson> GetClientes()
         {
             RespuestaJson respuesta = new RespuestaJson();
@@ -359,6 +363,264 @@ namespace TeracromController
             catch (Exception ex)
             {
                 respuesta.Mensaje = "Ocurrió un error al reactivar el cliente: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        //============================================================================================================================\\
+        //====================================================   Modelo Puestos   =================================================== \\
+        //==============================================================================================================================\\
+
+        public async Task<RespuestaJson> GetPuestos()
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir la conexión a la base de datos
+                _dapperContext.AbrirConexion("SGP");
+
+                string sql = "SELECT Id, Descripcion, Tipo, FlgActivo FROM Puestos";
+                var puestos = await _dapperContext.QueryAsync<Puestos>(sql);
+                if (puestos != null)
+                {
+                    respuesta.Resultado = true;
+                    respuesta.Data = puestos.Select(s => new Puestos
+                    {
+                        Id = s.Id,
+                        Descripcion = s.Descripcion,
+                        Tipo = s.Tipo,
+                        FlgActivo = s.FlgActivo
+                    }).ToList();
+                }
+                else
+                {
+                    respuesta.Mensaje = "No se encontraron puestos activos.";
+                    respuesta.Data = new List<Puestos>(); // Inicializar Data para evitar null
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los puestos." + ex.Message;
+                respuesta.Data = new List<Puestos>(); // Inicializar Data para evitar null
+            }
+            finally
+            {
+                // Cerrar o liberar la conexión (si es necesario)
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> AgregarPuesto(Puestos puesto)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+
+                    // Validar si la Descripcion ya existe en la base de datos
+                    string sqlValidarDescripcion = "SELECT COUNT(*) FROM Puestos WHERE Descripcion = @Descripcion;";
+                    var parametrosValidarDescripcion = new DynamicParameters();
+                    parametrosValidarDescripcion.Add("@Descripcion", puesto.Descripcion, DbType.String);
+
+                    int DescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarDescripcion, parametrosValidarDescripcion);
+
+                    if (DescripcionExistente > 0)
+                    {
+                        respuesta.Mensaje = "El prefijo ya existe en la base de datos.";
+                        return respuesta;
+                    }
+
+                    // Consulta SQL para insertar el puesto
+                    string sqlInsertar = @"
+                    INSERT INTO Puestos 
+                    (Descripcion, Tipo, IdUsuarioSet) 
+                    VALUES 
+                    (@Descripcion, @Tipo, @IdUsuarioSet);";
+
+                    var parametrosInsertar = new DynamicParameters();
+                    parametrosInsertar.Add("@Descripcion", puesto.Descripcion, DbType.String);
+                    parametrosInsertar.Add("@Tipo", puesto.Tipo, DbType.String);
+                    parametrosInsertar.Add("@IdUsuarioSet", puesto.IdUsuarioSet, DbType.Int32);
+
+                    // Ejecutar la consulta de inserción
+                    int filasAfectadas = await connection.ExecuteAsync(sqlInsertar, parametrosInsertar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Puesto agregado exitosamente.";
+                        respuesta.Data = new { PuestoId = puesto.Id }; // Puedes devolver el ID del puesto si lo necesitas
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se pudo agregar el puesto.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al agregar el puesto: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> EditarPuesto(Puestos puesto)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+
+                // Obtener la fecha y hora actual
+                puesto.FechaUpd = DateTime.Now;
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para actualizar el puesto
+                    string sqlActualizar = @"
+                    UPDATE Puestos 
+                    SET Descripcion = @Descripcion, 
+                        Tipo = @Tipo, 
+                        IdUsuarioUpd = @IdUsuarioUpd,
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id;";
+
+                    var parametrosActualizar = new DynamicParameters();
+                    parametrosActualizar.Add("@Id", puesto.Id, DbType.Int32);
+                    parametrosActualizar.Add("@Descripcion", puesto.Descripcion, DbType.String);
+                    parametrosActualizar.Add("@Tipo", puesto.Tipo, DbType.String);
+                    parametrosActualizar.Add("@IdUsuarioUpd", puesto.IdUsuarioUpd, DbType.Int32);
+                    parametrosActualizar.Add("@FechaUpd", puesto.FechaUpd, DbType.DateTime);
+
+                    // Ejecutar la consulta de actualización
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Puesto actualizado exitosamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se pudo actualizar el puesto.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al actualizar el puesto: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> DesactivarPuesto(Puestos puesto)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                puesto.FechaDel = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para desactivar el puesto
+                    string sql = @"
+                    UPDATE Puestos 
+                    SET FlgActivo = 0, 
+                        IdUsuarioDel = @IdUsuarioDel, 
+                        FechaDel = @FechaDel 
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", puesto.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioDel", puesto.IdUsuarioDel, DbType.Int32);
+                    parametros.Add("@FechaDel", puesto.FechaDel, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Puesto desactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el puesto o ya está desactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al desactivar el puesto: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> ReactivarPuesto(Puestos puesto)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                puesto.FechaUpd = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para reactivar el puesto
+                    string sql = @"
+                    UPDATE Puestos 
+                    SET FlgActivo = 1, 
+                        IdUsuarioUpd = @IdUsuarioUpd, 
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", puesto.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioUpd", puesto.IdUsuarioUpd, DbType.Int32);
+                    parametros.Add("@FechaUpd", puesto.FechaUpd, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Puesto reactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el puesto o ya está reactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al reactivar el puesto: " + ex.Message;
             }
             finally
             {

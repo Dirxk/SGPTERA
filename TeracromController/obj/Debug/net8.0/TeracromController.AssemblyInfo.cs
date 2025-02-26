@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TeracromController")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a85f988efb99b7b6a009c293ecf2201eebdba4b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+60ed59c2d55517bdeef23817e2475973d8a4831c")]
 [assembly: System.Reflection.AssemblyProductAttribute("TeracromController")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TeracromController")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
