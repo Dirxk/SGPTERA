@@ -22,8 +22,20 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXENsaWVudGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/ClientesUsuarios.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXENsaWVudGVzVXN1YXJpb3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Puestos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXFB1ZXN0b3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Sistemas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXFNpc3RlbWFzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Usuarios.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXFVzdWFyaW9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Home/Index.cshtml]

@@ -165,3 +165,12 @@ body {
     color: #ffffff; /* Color del texto */
 }
 
+/* Estilo para el enlace de teléfono */
+.enlace-telefono:hover {
+    color: #61C181 !important; /* Verde */
+}
+
+/* Estilo para el enlace de correo */
+.enlace-correo:hover {
+    color: #0D7685 !important; /* Azul */
+}

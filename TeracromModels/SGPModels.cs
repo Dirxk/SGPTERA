@@ -28,6 +28,7 @@ namespace GestionProyectos.Models
         public  string NombreUsuario { get; set; }
         public  string ApellidoPaternoUsuario { get; set; }
         public  string ApellidoMaternoUsuario { get; set; }
+        public string Descripcion { get; set; }
         public int? IdPuesto { get; set; }
         public string Telefono { get; set; }
         public  string Correo { get; set; }
@@ -40,6 +41,12 @@ namespace GestionProyectos.Models
         public int? IdUsuarioDel { get; set; }
         public DateTime? FechaDel { get; set; }
         public bool FlgActivo { get; set; } = true;
+
+        [NotMapped]
+        public IFormFile FotoFile { get; set; } // Para manejar la imagen como archivo
+
+        [NotMapped]
+        public string FotoBase64 { get; set; } // Para manejar la imagen existente en base64
     }
 
     public class Clientes
@@ -85,10 +92,12 @@ namespace GestionProyectos.Models
         public string NombreClienteUsuario { get; set; }
         public string ApellidoPaternoClienteUsuario { get; set; }
         public string ApellidoMaternoClienteUsuario { get; set; }
+        public string Descripcion { get; set; }
         public int? IdPuesto { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }
         public string Contrasena { get; set; }
+        public string RazonSocial { get; set; }
         public int IdCliente { get; set; }
         public byte[] FotoPerfil { get; set; }
         public int? IdUsuarioSet { get; set; }
@@ -98,6 +107,11 @@ namespace GestionProyectos.Models
         public int? IdUsuarioDel { get; set; }
         public DateTime? FechaDel { get; set; }
         public bool FlgActivo { get; set; } = true;
+        [NotMapped]
+        public IFormFile FotoFile { get; set; } // Para manejar la imagen como archivo
+
+        [NotMapped]
+        public string FotoBase64 { get; set; } // Para manejar la imagen existente en base64
     }
 
     public class Sistemas
@@ -105,11 +119,9 @@ namespace GestionProyectos.Models
         [Key]
         public int Id { get; set; }
         public required string Descripcion { get; set; }
-        [Required]
+        public string RazonSocial { get; set; }
         public int IdCliente { get; set; }
-        [MaxLength(255)]
         public string Repositorio { get; set; }
-        [MaxLength(20)]
         public string Prefijo { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;

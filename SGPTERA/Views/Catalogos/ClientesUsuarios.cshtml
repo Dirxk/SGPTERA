@@ -1,0 +1,1372 @@
+﻿@{
+    ViewData["Title"] = "ClientesUsuarios";
+    var IdUsuario = ViewBag.IdUsuario;
+
+}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
+
+<!-- ================================================================================================= -->
+<!-- ======================================== Codigo Principal ======================================= -->
+<!-- ================================================================================================= -->
+<div class="card d-flex flex-column">
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between">
+        <!-- Primera columna: Título -->
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start mb-3 mb-md-0">
+            <i class="fa-solid fa-users fa-lg me-2 d-none d-md-block"></i>
+            <i class="fa-solid fa-users me-2 mb-2 d-block d-md-none"></i>
+            <h3 class="m-0 d-none d-md-block" style="font-family: 'Rubik', sans-serif; font-size: 1.25rem;">Clientes Usuarios</h3>
+            <h6 class="m-0 d-block d-md-none mb-1" style="font-family: 'Rubik', sans-serif; font-size: 1rem;">Clientes Usuarios</h6>
+        </div>
+
+        <!-- Segunda columna: Búsqueda y botones -->
+        <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end gap-2 mt-2 mt-md-0">
+            <!-- Input de búsqueda -->
+            <input id="inputBusqueda" class="form-control form-control-sm w-50" type="search" placeholder="Buscar" aria-label="Search">
+            <!-- Botón de búsqueda -->
+            <button id="btnBuscar" class="btn btn-info btn-sm" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+            <!-- Botón de recargar -->
+            <button type="button" id="btnReloadClientesUsuarios" name="btnReloadClientesUsuarios" class="btn btn-warning btn-sm">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <!-- Botón de agregar cliente usuario -->
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ClienteUsuarioModal">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-3 flex-grow-1">
+        <div class="table-responsive scrollbar h-100">
+            <!-- Grilla de clientes usuarios -->
+            <div id="GridClientesUsuarios" style="width: 100%; height: 74vh;"></div>
+            <!-- Mensaje de "Cliente usuario no encontrado" -->
+            <div id="mensajeNoEncontrado" class="text-danger mt-2" style="display: none;">Cliente usuario no encontrado</div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ======================================= Modal nuevo cliente ===================================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="UserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form id="FormCrearUsuario">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo usuario</h3>
+                    <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Campo: Usuario -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpUsuario" name="InpUsuario" type="text" placeholder="Usuario" required autocomplete="off" />
+                                <label for="InpUsuario">Nombre de usuario <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: NombreUsuario -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpNombreUsuario" name="InpNombreUsuario" type="text" placeholder="Nombre" required autocomplete="off" />
+                                <label for="InpNombreUsuario">Nombre(s) <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: ApellidoPaternoUsuario -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpApellidoPaternoUsuario" name="InpApellidoPaternoUsuario" type="text" placeholder="Apellido Paterno" required autocomplete="off" />
+                                <label for="InpApellidoPaternoUsuario">Apellido paterno <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: ApellidoMaternoUsuario -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpApellidoMaternoUsuario" name="InpApellidoMaternoUsuario" type="text" placeholder="Apellido Materno" required autocomplete="off" />
+                                <label for="InpApellidoMaternoUsuario">Apellido materno <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: IdPuesto -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" id="InpPuesto" name="InpPuesto">
+                                    <option value="">Seleccione una opción</option>
+                                    <!-- Las opciones se llenarán dinámicamente aquí -->
+                                </select>
+                                <label for="InpPuesto">Puesto <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Teléfono -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpTelefono" name="InpTelefono" type="text" placeholder="Teléfono" maxlength="15" required autocomplete="off" />
+                                <label for="InpTelefono">Teléfono <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Correo -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpCorreo" name="InpCorreo" type="email" placeholder="Correo" required autocomplete="off" />
+                                <label for="InpCorreo">Correo <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Contraseña -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpContrasena" name="InpContrasena" type="password" placeholder="Contraseña" maxlength="15" required autocomplete="off" />
+                                <label for="InpContrasena">Contraseña <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Repetir Contraseña -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpRepetirContrasena" name="InpRepetirContrasena" type="password" placeholder="Repetir Contraseña" maxlength="15" required autocomplete="off" />
+                                <label for="InpRepetirContrasena">Repite la contraseña <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Imagen -->
+                        <div class="col-12 mb-3">
+                            <label class="fw-bold mb-2" style="font-size: 1rem;">Imagen para el usuario:</label>
+                            <input class="form-control" id="InpImagenExt" name="InpImagenExt" type="file" accept="image/*" required />
+                        </div>
+                        <!-- Previsualización de la imagen -->
+                        <div class="col-12 mb-3">
+                            <div id="previewContainer" class="d-none border rounded p-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img id="previewImage" src="" alt="Previsualización" class="img-thumbnail me-3" style="max-width: 150px; max-height: 150px; object-fit: contain;">
+                                    <div>
+                                        <p id="fileName" class="mb-0 fw-bold"></p>
+                                        <small id="fileSize" class="text-muted"></small>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-link text-danger p-0" id="removePreview" aria-label="Eliminar previsualización">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Contenedor para alertas -->
+                        <div class="col-12">
+                            <div class="ContAlerta"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger cerrarModal" data-bs-dismiss="modal">
+                        <i class="fas fa-ban me-2"></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success px-5" id="BtnAgregarUsuarioExt">
+                        <i class="fas fa-user-plus me-2"></i>Agregar usuario
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ====================================== Modal editar cliente usuario ============================= -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" id="ModalEditarClienteUsuario" tabindex="-1" aria-labelledby="ModalEditarClienteUsuarioLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form id="FormEditarClienteUsuario">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalEditarClienteUsuarioLabel">Editar Cliente Usuario</h5>
+                    <button type="button" class="btn-close cerrarModalEditarClienteUsuario" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Campo: ClienteUsuario -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpClienteUsuarioEdit" name="InpClienteUsuarioEdit" type="text" placeholder="Cliente Usuario" required autocomplete="off" />
+                                <label for="InpClienteUsuarioEdit">Nombre de cliente usuario <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: NombreClienteUsuario -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpNombreClienteUsuarioEdit" name="InpNombreClienteUsuarioEdit" type="text" placeholder="Nombre" required autocomplete="off" />
+                                <label for="InpNombreClienteUsuarioEdit">Nombre(s) <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: ApellidoPaternoClienteUsuario -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpApellidoPaternoClienteUsuarioEdit" name="InpApellidoPaternoClienteUsuarioEdit" type="text" placeholder="Apellido Paterno" required autocomplete="off" />
+                                <label for="InpApellidoPaternoClienteUsuarioEdit">Apellido paterno <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: ApellidoMaternoClienteUsuario -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpApellidoMaternoClienteUsuarioEdit" name="InpApellidoMaternoClienteUsuarioEdit" type="text" placeholder="Apellido Materno" required autocomplete="off" />
+                                <label for="InpApellidoMaternoClienteUsuarioEdit">Apellido materno <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: IdPuesto -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" id="InpPuestoEdit" name="InpPuestoEdit">
+                                    <option value="">Seleccione una opción</option>
+                                    <!-- Las opciones se llenarán dinámicamente aquí -->
+                                </select>
+                                <label for="InpPuestoEdit">Puesto <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Teléfono -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpTelefonoEdit" name="InpTelefonoEdit" type="text" placeholder="Teléfono" maxlength="15" required autocomplete="off" />
+                                <label for="InpTelefonoEdit">Teléfono <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Correo -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpCorreoEdit" name="InpCorreoEdit" type="email" placeholder="Correo" required autocomplete="off" />
+                                <label for="InpCorreoEdit">Correo <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Contraseña -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpContrasenaEdit" name="InpContrasenaEdit" type="password" placeholder="Contraseña" maxlength="15" required autocomplete="off" />
+                                <label for="InpContrasenaEdit">Nueva Contraseña <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Imagen -->
+                        <div class="col-sm-12 mt-4">
+                            <label class="fw-bold mb-2" style="font-size: 1rem;">Logotipo del cliente usuario:</label>
+                            <input class="form-control" id="InpClienteUsuarioImagenEdit" name="imagen" type="file" accept="image/*" />
+                        </div>
+                        <div class="col-12 mt-3">
+                            <div id="previewContainerEdit" class="border rounded p-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img id="previewImageEdit" src="" alt="Previsualización" class="img-thumbnail me-3 previewImage" style="max-width: 150px; max-height: 150px; object-fit: contain;">
+                                    <div>
+                                        <p id="fileNameEdit" class="mb-0 fw-bold"></p>
+                                        <small id="fileSizeEdit" class="text-muted"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ContAlertaEdit" class="col-12"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger cerrarModalEditarClienteUsuario">Cancelar</button>
+                    <button type="button" class="btn btn-success EditarClienteUsuario" id="btnActualizarClienteUsuario">Actualizar Cliente Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ====================================== Modal eliminar cliente usuario =========================== -->
+<!-- ================================================================================================= -->
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalEliminarClienteUsuario" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="FormEliminarClienteUsuario">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar Cliente Usuario</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="fas fa-times fs--1"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-700 lh-lg mb-0">
+                        ¿Deseas eliminar el cliente usuario <strong class="nombreClienteUsuario"></strong>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-auto">
+                        <button class="btn btn-primary me-1 mb-1" type="button" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-danger me-1 mb-1" type="submit" id="BtnEliminarClienteUsuario">Eliminar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ====================================== Modal reactivar cliente usuario ========================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalConfirmarClienteUsuario" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="FormConfirmarClienteUsuario">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar Cliente Usuario</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="fas fa-times fs--1"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-700 lh-lg mb-0">
+                        ¿Deseas reactivar el cliente usuario <strong class="nombreConfirmarClienteUsuario"></strong>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-auto">
+                        <button class="btn btn-primary me-1 mb-1" type="button" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success me-1 mb-1" type="submit" id="BtnConfirmarClienteUsuario">Reactivar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        //============================================================================================================================\\
+        //====================================================  Variables Globales  ===================================================\\
+        //==============================================================================================================================\\
+        // Variable global para almacenar la instancia de la grilla de clientes usuarios.
+        var gridClientesUsuarios = null;
+
+
+        // Función que realiza una solicitud AJAX para obtener los clientes usuarios desde el servidor.
+        function verClientesUsuarios() {
+            return new Promise((resolve, reject) => {
+                const startTime = performance.now(); // Inicia el contador para medir el tiempo de respuesta.
+
+                $.ajax({
+                    type: 'POST', // Método HTTP utilizado para la solicitud.
+                    data: {}, // Datos enviados al servidor (en este caso, vacío).
+                    url: '@Url.Action("GetClientesUsuarios", "Catalogos")', // URL de la acción para obtener clientes usuarios.
+                    success: function (datos) {
+                        const endTime = performance.now(); // Finaliza el contador de tiempo.
+                        const serverResponseTime = endTime - startTime; // Calcula el tiempo de respuesta del servidor.
+                        gridClientesUsuarios.itemsSource = datos.data; // Asigna los datos recibidos a la grilla de clientes usuarios.
+                        resolve(serverResponseTime); // Resuelve la promesa con el tiempo de respuesta.
+                    },
+                    error: function () {
+                        console.error("Error al obtener los clientes usuarios."); // Maneja errores en la solicitud.
+                        reject(); // Rechaza la promesa en caso de error.
+                    }
+                });
+            });
+        }
+
+        //============================================================================================================================\\
+        //================================  Función para editar un cliente usuario específico basado en su ID  =========================\\
+        //==============================================================================================================================\\
+
+        let valoresIniciales = {}; // Almacena los valores iniciales del cliente usuario
+        const camposEdicion = ['#InpClienteUsuarioEdit', '#InpNombreClienteUsuarioEdit', '#InpApellidoPaternoClienteUsuarioEdit', '#InpApellidoMaternoClienteUsuarioEdit', '#InpTelefonoEdit', '#InpCorreoEdit', '#InpClienteUsuarioImagenEdit'];
+
+        function EditarClienteUsuario(id) {
+            const clienteusuario = gridClientesUsuarios.itemsSource.find(u => u.id === id); // Busca el cliente usuario en la grilla.
+            if (clienteusuario) {
+                // Guardar los valores iniciales del cliente usuario
+                valoresIniciales = {
+                    clienteusuario: clienteusuario.clienteusuario || '',
+                    nombreClienteUsuario: clienteusuario.nombreClienteUsuario || '',
+                    apellidoPaternoClienteUsuario: clienteusuario.apellidoPaternoClienteUsuario || '',
+                    apellidoMaternoClienteUsuario: clienteusuario.apellidoMaternoClienteUsuario || '',
+                    telefono: clienteusuario.telefono || '',
+                    correo: clienteusuario.correo || '',
+                    fotoPerfil: clienteusuario.fotoPerfil || ''
+                };
+
+                // Asigna los valores del cliente usuario a los campos del formulario de edición.
+                $('#InpClienteUsuarioEdit').val(valoresIniciales.clienteusuario);
+                $('#InpNombreClienteUsuarioEdit').val(valoresIniciales.nombreClienteUsuario);
+                $('#InpApellidoPaternoClienteUsuarioEdit').val(valoresIniciales.apellidoPaternoClienteUsuario);
+                $('#InpApellidoMaternoClienteUsuarioEdit').val(valoresIniciales.apellidoMaternoClienteUsuario);
+                $('#InpTelefonoEdit').val(valoresIniciales.telefono);
+                $('#InpCorreoEdit').val(valoresIniciales.correo);
+
+                // Muestra la imagen del cliente usuario si está disponible.
+                if (clienteusuario.fotoPerfil && typeof clienteusuario.fotoPerfil === 'string') {
+                    $('#previewImageEdit').attr('src', `data:image/png;base64,${clienteusuario.fotoPerfil}`);
+                    $('#previewContainerEdit').css('display', 'flex');
+                } else {
+                    $('#previewContainerEdit').hide();
+                }
+
+                llenarComboClientesUsuarios(true);
+
+                // Deshabilitar el botón de actualizar inicialmente
+                $('#btnActualizarClienteUsuario').prop('disabled', true);
+
+                // Muestra el modal de edición de cliente usuario.
+                const modalEditarClienteUsuario = new bootstrap.Modal($('#ModalEditarClienteUsuario')[0]);
+                modalEditarClienteUsuario.show();
+                $('#btnActualizarClienteUsuario').data('id', id); // Asigna el ID del cliente usuario al botón de actualizar.
+            } else {
+                console.error("Cliente usuario no encontrado."); // Maneja el caso en que el cliente usuario no existe.
+            }
+        }
+
+        // Función para habilitar el botón si algún campo ha cambiado
+        function habilitarBotonActualizar() {
+            let algunCampoCambiado = false;
+
+            // Comparar los valores actuales con los valores iniciales
+            if ($('#InpClienteUsuarioEdit').val() !== valoresIniciales.clienteusuario ||
+                $('#InpNombreClienteUsuarioEdit').val() !== valoresIniciales.nombreClienteUsuario ||
+                $('#InpApellidoPaternoClienteUsuarioEdit').val() !== valoresIniciales.apellidoPaternoClienteUsuario ||
+                $('#InpApellidoMaternoClienteUsuarioEdit').val() !== valoresIniciales.apellidoMaternoClienteUsuario ||
+                $('#InpTelefonoEdit').val() !== valoresIniciales.telefono ||
+                $('#InpContrasenaEdit').val() !== valoresIniciales.telefono ||
+                $('#InpClienteUsuarioImagenEdit')[0].files.length > 0) {
+                algunCampoCambiado = true;
+            }
+
+            // Habilita el botón si algún campo ha cambiado
+            $('#btnActualizarClienteUsuario').prop('disabled', !algunCampoCambiado);
+        }
+
+        // Captura el evento de cambio o entrada en cualquier campo dentro de un contenedor (por ejemplo, un formulario)
+        $('#FormEditarClienteUsuario').on('input change', function () {
+            habilitarBotonActualizar();
+        });
+
+        // También puedes capturar el clic en cualquier botón dentro del formulario
+        $('#FormEditarClienteUsuario').on('click', 'button', function () {
+            habilitarBotonActualizar();
+        });
+        // Escucha los cambios en los campos del formulario
+        camposEdicion.forEach(function (campo) {
+            $(campo).on('input change', function () {
+                habilitarBotonActualizar();
+            });
+        });
+
+        // Escucha el evento de cambio en el input de la imagen
+        $('#InpClienteUsuarioImagenEdit').on('change', function (event) {
+            const file = event.target.files[0]; // Obtiene el archivo seleccionado.
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#previewImageEdit').attr('src', e.target.result); // Muestra la imagen.
+                    $('#fileNameEdit').text(file.name); // Muestra el nombre del archivo.
+                    $('#fileSizeEdit').text((file.size / 1024).toFixed(2) + ' KB'); // Muestra el tamaño del archivo.
+                    $('#previewContainerEdit').removeClass('d-none'); // Muestra el contenedor de previsualización.
+                };
+                reader.readAsDataURL(file); // Lee el archivo como URL.
+            }
+            habilitarBotonActualizar();
+        });
+
+        // Evento para limpiar el formulario al cerrar el modal
+        $('#ModalEditarClienteUsuario').on('hidden.bs.modal', function () {
+            $('#FormEditarClienteUsuario')[0].reset(); // Restablece el formulario.
+            $('#previewImageEdit').attr('src', ''); // Limpia la imagen.
+            $('#fileNameEdit').text(''); // Limpia el nombre del archivo.
+            $('#fileSizeEdit').text(''); // Limpia el tamaño del archivo.
+            $('#btnActualizarClienteUsuario').prop('disabled', true); // Bloquea el botón de actualizar.
+        });
+
+        //============================================================================================================================\\
+        //===============================  Inicialización del GRID Clientes Usuarios y Configuración de Eventos  ======================\\
+        //==============================================================================================================================\\
+
+        function llenarComboClientesUsuarios(esEdicion = false) {
+            $.ajax({
+                type: 'POST', // Método HTTP
+                url: '@Url.Action("GetClientesUsuariosPuestos", "Catalogos")', // Ruta del servidor
+                success: function (response) {
+                    console.log("Respuesta del servidor:", response); // Verifica la estructura de la respuesta
+
+                    if (response.resultado && response.data && response.data.length > 0) {
+                        // Selecciona el combo box según el parámetro esEdicion
+                        var combo = esEdicion ? $('#InpPuestoEdit') : $('#InpPuesto');
+                        combo.empty(); // Limpiar el combo box
+                        combo.append('<option value="">Seleccione una opción</option>'); // Opción por defecto
+
+                        // Llenar el combo box con las razones sociales
+                        response.data.forEach(function (puesto) {
+                            console.log("Puesto:", puesto); // Verifica cada cliente
+                            combo.append('<option value="' + puesto.id + '">' + puesto.descripcion + '</option>');
+                        });
+                    } else {
+                        console.error("No se pudieron obtener los puestos o la respuesta está vacía.");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error al obtener los puestos:", textStatus, errorThrown);
+                }
+            });
+        }
+
+        //============================================================================================================================\\
+        //===============================  Inicialización del GRID Clientes Usuarios y Configuración de Eventos  ======================\\
+        //==============================================================================================================================\\
+
+        $(document).ready(function () {
+
+            //============================================================================================================================\\
+            //==========================================               GRID Principal                ======================================\\
+            //==============================================================================================================================\\
+            gridClientesUsuarios = new wijmo.grid.FlexGrid('#GridClientesUsuarios', {
+                autoGenerateColumns: false,
+                headersVisibility: 'Column',
+                itemsSource: [],
+                selectionMode: wijmo.grid.SelectionMode.Row,
+                columns: [
+                    { binding: '', header: '#', width: 50, align: 'center' },
+                    { binding: 'clienteUsuario', header: 'Nombre de cliente usuario', width: '*', align: 'center' },
+                    {
+                        binding: 'nombreCompleto',
+                        header: 'Nombre Completo',
+                        width: '*',
+                        align: 'center',
+                        isReadOnly: true
+                    },
+                    { binding: 'descripcion', header: 'Puesto', width: 180, align: 'center' },
+                    { binding: 'telefono', header: 'Telefono', width: 180, align: 'center' },
+                    { binding: 'correo', header: 'Correo', width: '*', align: 'center' },
+                    { binding: 'razonSocial', header: 'Razon Social', width: '*', align: 'center' },
+                    { header: '', isReadOnly: true, width: 80, align: 'center' }
+                ],
+                isReadOnly: true,
+                itemFormatter: function (panel, r, c, cell) {
+                    if (panel.cellType === wijmo.grid.CellType.Cell) {
+                        const rowData = panel.rows[r].dataItem; // Obtiene los datos de la fila.
+                        const flgActivo = rowData.flgActivo; // Verificar el valor de FlgActivo.
+
+                        // Combinar nombre, apellido paterno y apellido materno en la columna "Nombre Completo"
+                        if (panel.columns[c].binding === 'nombreCompleto') {
+                            const nombreCompleto = `${rowData.nombreClienteUsuario} ${rowData.apellidoPaternoClienteUsuario} ${rowData.apellidoMaternoClienteUsuario}`;
+                            cell.textContent = nombreCompleto;
+                        }
+
+                        // Enlace para teléfono
+                        if (panel.columns[c].binding === 'telefono' && rowData.telefono) {
+                            cell.innerHTML = `<a href="tel:${rowData.telefono}" class="enlace-telefono" style="text-decoration: none; color: inherit;">${rowData.telefono}</a>`;
+                        }
+
+                        // Enlace para correo
+                        if (panel.columns[c].binding === 'correo' && rowData.correo) {
+                            cell.innerHTML = `<a href="mailto:${rowData.correo}" class="enlace-correo" style="text-decoration: none; color: inherit;">${rowData.correo}</a>`;
+                        }
+
+                        // Cambiar el color de fondo de la fila si flgActivo es false
+                        // if (flgActivo === false) {
+                        //     cell.style.backgroundColor = '#BE3144'; // Color rojo
+                        //     cell.style.color = '#FFFFFF'; // Texto blanco para mejor contraste
+                        // }
+
+                        if (c === 0) {
+                            cell.textContent = (r + 1).toString(); // Muestra el número de fila.
+                        } else if (c === panel.columns.length - 1) {
+                            // Crear los botones según el valor de FlgActivo
+                            let botones = '';
+                            if (flgActivo === true) {
+                                botones = `
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarClienteUsuario" onclick="EditarClienteUsuario(${rowData.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                            <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarClienteUsuario" data-id="${rowData.id}" data-nombre="${rowData.clienteusuario}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>`;
+                            } else if (flgActivo === false) {
+                                botones = `
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                            <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarClienteUsuario" data-id="${rowData.id}" data-nombre="${rowData.clienteusuario}">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </div>`;
+                            }
+
+                            // Insertar los botones en la celda
+                            cell.innerHTML = botones;
+                        }
+                    }
+                }
+            });
+
+            verClientesUsuarios();
+            //============================================================================================================================\\
+            //==========================================  Funcionalidad de Búsqueda y Autocompletar   =====================================\\
+            //==============================================================================================================================\\
+            $('#inputBusqueda').autocomplete({
+                source: function (request, response) {
+                    const term = request.term.toLowerCase(); // Obtiene el término de búsqueda.
+                    const clientesusuarios = gridClientesUsuarios.itemsSource; // Obtiene la lista de clientes usuarios.
+                    const resultados = clientesusuarios.filter(clienteusuario =>
+                        clienteusuario.clienteusuario.toLowerCase().includes(term) || // Busca por nombre de cliente usuario.
+                        clienteusuario.nombreClienteUsuario.toLowerCase().includes(term) || // Busca por nombre.
+                        clienteusuario.apellidoPaternoClienteUsuario.toLowerCase().includes(term) || // Busca por apellido paterno.
+                        clienteusuario.apellidoMaternoClienteUsuario.toLowerCase().includes(term) ||
+                        clienteusuario.descripcion.toLowerCase().includes(term) ||
+                        clienteusuario.telefono.toLowerCase().includes(term) || // Busca por teléfono.
+                        clienteusuario.correo.toLowerCase().includes(term)
+                    );
+                    response(resultados.map(clienteusuario => ({
+                        label: `${clienteusuario.clienteusuario} (${clienteusuario.correo})`, // Muestra el nombre de cliente usuario y correo.
+                        value: clienteusuario.clienteusuario // Asigna el ID del cliente usuario como valor.
+                    })));
+                },
+                select: function (event, ui) {
+                    const clienteusuarioId = ui.item.value; // Obtiene el ID del cliente usuario seleccionado.
+                    const clienteusuario = gridClientesUsuarios.itemsSource.find(u => u.id === clienteusuarioId); // Busca el cliente usuario en la grilla.
+                    if (clienteusuario) {
+                        gridClientesUsuarios.itemsSource = [clienteusuario]; // Filtra la grilla para mostrar solo el cliente usuario seleccionado.
+                    }
+                }
+            });
+
+            // Evento para buscar al hacer clic en el botón de búsqueda.
+            $('#btnBuscar').on('click', function () {
+                const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda.
+                const clientesusuarios = gridClientesUsuarios.itemsSource; // Obtiene la lista de clientes usuarios.
+                const resultados = clientesusuarios.filter(clienteusuario =>
+                    clienteusuario.clienteusuario.toLowerCase().includes(term) || // Busca por nombre de cliente usuario.
+                    clienteusuario.nombreClienteUsuario.toLowerCase().includes(term) || // Busca por nombre.
+                    clienteusuario.apellidoPaternoClienteUsuario.toLowerCase().includes(term) || // Busca por apellido paterno.
+                    clienteusuario.apellidoMaternoClienteUsuario.toLowerCase().includes(term) ||
+                    clienteusuario.descripcion.toLowerCase().includes(term) ||
+                    clienteusuario.telefono.toLowerCase().includes(term) || // Busca por teléfono.
+                    clienteusuario.correo.toLowerCase().includes(term)
+                );
+
+                if (resultados.length > 0) {
+                    gridClientesUsuarios.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Cliente usuario no encontrado".
+                } else {
+                    gridClientesUsuarios.itemsSource = []; // Limpia la grilla si no hay resultados.
+                    $('#mensajeNoEncontrado').text('Cliente usuario no encontrado').show(); // Muestra un mensaje de "Cliente usuario no encontrado".
+                }
+            });
+
+            // Evento para limpiar la búsqueda y mostrar todos los clientes usuarios.
+            $('#inputBusqueda').on('input', function () {
+                if ($(this).val() === '') {
+                    verClientesUsuarios(); // Recarga todos los clientes usuarios.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Cliente usuario no encontrado".
+                }
+            });
+
+            //============================================================================================================================\\
+            //==========================================      Funcionalidad del botón Recargar       ======================================\\
+            //==============================================================================================================================\\
+
+            $('#btnReloadClientesUsuarios').on('click', function () {
+                // Ocultar el grid de clientes usuarios
+                document.getElementById('GridClientesUsuarios').style.visibility = 'hidden';
+
+                // Bloquear el contenido principal con el estilo "arrows"
+                Notiflix.Block.arrows('.card', 'Actualizando datos...', {
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                    svgSize: '50px', // Tamaño del ícono de flechas
+                    messageFontSize: '16px', // Tamaño del mensaje
+                });
+
+                // Llamar a la función verClientesUsuarios para recargar el grid
+                verClientesUsuarios().then((serverResponseTime) => {
+                    // Tiempo adicional de 500 ms después de la respuesta del servidor
+                    setTimeout(() => {
+                        // Desbloquear el contenido principal
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar el grid después de que termine la animación de éxito
+                        document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                    }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                }).catch(() => {
+                    // En caso de error, desbloquear el contenido principal
+                    Notiflix.Block.remove('.card');
+
+                    // Mostrar un mensaje de error con SweetAlert2 (puedes cambiarlo por Notiflix si prefieres)
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Hubo un error al recargar los clientes usuarios.',
+                        icon: 'error',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false
+                    });
+
+                    // Mostrar el grid incluso si hay un error
+                    document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                });
+            });
+
+            //============================================================================================================================\\
+            //========================================== Funcionalidad del boton de Agregar Cliente Usuario  ==============================\\
+            //==============================================================================================================================\\
+            llenarComboClientesUsuarios();
+
+            $('#ClienteUsuarioModal').on('shown.bs.modal', function () {
+                llenarComboClientesUsuarios();
+            });
+
+            $("#InpTelefono").on("input", function () {
+                $(this).val($(this).val().replace(/[^0-9+ ]/g, ""));
+            });
+
+            // Validación del formulario
+            $("#FormCrearClienteUsuario").validate({
+                rules: {
+                    InpClienteUsuario: { required: true, minlength: 2 },
+                    InpNombreClienteUsuario: { required: true, minlength: 2 },
+                    InpApellidoPaternoClienteUsuario: { required: true, minlength: 2 },
+                    InpApellidoMaternoClienteUsuario: { required: true, minlength: 2 },
+                    InpTelefono: { required: true, maxlength: 15 },
+                    InpCorreo: { required: true, email: true }, // Validar que sea un correo válido
+                    InpContrasena: { required: true, minlength: 8 }, // Mínimo 8 caracteres
+                    InpRepetirContrasena: { required: true, minlength: 8, equalTo: "#InpContrasena" }, // Mínimo 8 caracteres y debe ser igual a InpContrasena
+                    InpImagenExt: { required: true }
+                },
+                messages: {
+                    InpClienteUsuario: { required: "El nombre de cliente usuario es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpNombreClienteUsuario: { required: "El nombre es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpApellidoPaternoClienteUsuario: { required: "El apellido paterno es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpApellidoMaternoClienteUsuario: { required: "El apellido materno es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpTelefono: { required: "El teléfono es requerido.", maxlength: "El teléfono no puede tener más de 15 caracteres." },
+                    InpCorreo: { required: "El correo es requerido.", email: "Por favor, introduce un correo válido." }, // Mensaje para correo inválido
+                    InpContrasena: { required: "La contraseña es requerida.", minlength: "La contraseña debe tener al menos 8 caracteres." }, // Mensaje para contraseña corta
+                    InpRepetirContrasena: { required: "Por favor repite correctamente la contraseña.", minlength: "La contraseña debe tener al menos 8 caracteres.", equalTo: "Las contraseñas no coinciden." }, // Mensaje para contraseñas no coincidentes
+                    InpImagenExt: { required: "La fotografía es requerida." }
+                },
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+                    agregarClienteUsuario(); // Llamar a la función sin pasar IdClienteUsuario
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
+                    error.insertAfter(element);
+                },
+                errorElement: 'div',
+                errorClass: 'alert-validate'
+            });
+
+            // Evento para previsualizar una imagen seleccionada
+            $('#InpImagenExt').on('change', function (event) {
+                const file = event.target.files[0]; // Obtiene el archivo seleccionado.
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#previewImage').attr('src', e.target.result); // Muestra la imagen.
+                        $('#fileName').text(file.name); // Muestra el nombre del archivo.
+                        $('#fileSize').text((file.size / 1024).toFixed(2) + ' KB'); // Muestra el tamaño del archivo.
+                        $('#previewContainer').removeClass('d-none'); // Muestra el contenedor de previsualización.
+                    };
+                    reader.readAsDataURL(file); // Lee el archivo como URL.
+                }
+            });
+
+            // Evento para eliminar la previsualización de la imagen
+            $('#removePreview').on('click', function () {
+                $('#previewImage').attr('src', ''); // Limpia la imagen.
+                $('#fileName').text(''); // Limpia el nombre del archivo.
+                $('#fileSize').text(''); // Limpia el tamaño del archivo.
+                $('#previewContainer').addClass('d-none'); // Oculta el contenedor de previsualización.
+                $('#InpImagenExt').val(''); // Limpia el input de archivo.
+            });
+
+            // Evento para limpiar el formulario al cerrar el modal
+            $('#ClienteUsuarioModal').on('hidden.bs.modal', function () {
+                $('#FormCrearClienteUsuario')[0].reset(); // Restablece el formulario.
+                $('#FormCrearClienteUsuario').validate().resetForm();
+                $('#previewImage').attr('src', ''); // Limpia la imagen.
+                $('#fileName').text(''); // Limpia el nombre del archivo.
+                $('#fileSize').text(''); // Limpia el tamaño del archivo.
+                $('#previewContainer').addClass('d-none'); // Oculta el contenedor de previsualización.
+            });
+
+            // Función para enviar los datos del formulario mediante AJAX
+            function agregarClienteUsuario() {
+                var formData = new FormData();
+                formData.append('ClienteUsuario', $('#InpClienteUsuario').val()); // Enviar el nombre de cliente usuario.
+                formData.append('NombreClienteUsuario', $('#InpNombreClienteUsuario').val());
+                formData.append('ApellidoPaternoClienteUsuario', $('#InpApellidoPaternoClienteUsuario').val());
+                formData.append('ApellidoMaternoClienteUsuario', $('#InpApellidoMaternoClienteUsuario').val());
+                formData.append('IdPuesto', $('#InpPuesto').val()); // Enviar el ID del puesto.
+                formData.append('Telefono', $('#InpTelefono').val());
+                formData.append('Correo', $('#InpCorreo').val());
+                formData.append('Contrasena', $('#InpContrasena').val());
+                formData.append('FotoFile', $('#InpImagenExt')[0].files[0]); // Cambiado a FotoFile para coincidir con el backend.
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AgregarClienteUsuario", "Catalogos")',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        // Ocultar el grid de clientes usuarios
+                        document.getElementById('GridClientesUsuarios').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.circle('.card', 'Agregando cliente usuario...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verClientesUsuarios para recargar el grid
+                            verClientesUsuarios().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los clientes usuarios.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al agregar el cliente usuario."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                const ClienteUsuarioModal = bootstrap.Modal.getInstance(document.getElementById('ClienteUsuarioModal'));
+                ClienteUsuarioModal.hide();
+            }
+
+            //============================================================================================================================\\
+            //==========================================   Funcionalidad del botón Editar Cliente Usuario    ==============================\\
+            //==============================================================================================================================\\
+
+            $('#ModalEditarClienteUsuario').on('shown.bs.modal', function () {
+                llenarComboClientesUsuarios();
+            });
+
+            $('.cerrarModalEditarClienteUsuario').on('click', function () {
+                const modalEditarClienteUsuario = bootstrap.Modal.getInstance(document.getElementById('ModalEditarClienteUsuario'));
+                modalEditarClienteUsuario.hide();
+            });
+
+            $("#InpTelefonoEdit").on("input", function () {
+                $(this).val($(this).val().replace(/[^0-9+ ]/g, ""));
+            });
+
+            // Validación del formulario
+            $("#FormEditarClienteUsuario").validate({
+                rules: {
+                    InpClienteUsuarioEdit: { required: true, minlength: 2 },
+                    InpNombreClienteUsuarioEdit: { required: true, minlength: 2 },
+                    InpApellidoPaternoClienteUsuarioEdit: { required: true, minlength: 2 },
+                    InpApellidoMaternoClienteUsuarioEdit: { required: true, minlength: 2 },
+                    InpTelefonoEdit: { required: true, maxlength: 15 },
+                    InpCorreoEdit: { required: true, email: true }, // Validar que sea un correo válido
+                    InpContrasenaEdit: { required: true, minlength: 8 }, // Mínimo 8 caracteres
+                },
+                messages: {
+                    InpClienteUsuarioEdit: { required: "El nombre de cliente usuario es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpNombreClienteUsuarioEdit: { required: "El nombre es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpApellidoPaternoClienteUsuarioEdit: { required: "El apellido paterno es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpApellidoMaternoClienteUsuarioEdit: { required: "El apellido materno es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpTelefonoEdit: { required: "El teléfono es requerido.", maxlength: "El teléfono no puede tener más de 15 caracteres." },
+                    InpCorreoEdit: { required: "El correo es requerido.", email: "Por favor, introduce un correo válido." }, // Mensaje para correo inválido
+                    InpContrasenaEdit: { required: "La contraseña es requerida.", minlength: "La contraseña debe tener al menos 8 caracteres." }, // Mensaje para contraseña corta
+                },
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+                    actualizarClienteUsuario(); // Llamar a la función sin pasar IdClienteUsuario
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
+                    error.insertAfter(element);
+                },
+                errorElement: 'div',
+                errorClass: 'alert-validate'
+            });
+
+            // Selecciona todos los campos del formulario de edición
+            const camposEdicion = ['#InpClienteUsuarioEdit', '#InpNombreClienteUsuarioEdit', '#InpApellidoPaternoClienteUsuarioEdit', '#InpApellidoMaternoClienteUsuarioEdit', '#InpTelefonoEdit', '#InpClienteUsuarioImagenEdit'];
+
+            // Función para habilitar el botón si algún campo ha cambiado
+            function habilitarBotonActualizar() {
+                let algunCampoCambiado = false;
+
+                camposEdicion.forEach(function (campo) {
+                    if ($(campo).val() !== '') {
+                        algunCampoCambiado = true;
+                    }
+                });
+
+                // Habilita el botón si algún campo ha cambiado
+                if (algunCampoCambiado) {
+                    $('#btnActualizarClienteUsuario').prop('disabled', false);
+                } else {
+                    $('#btnActualizarClienteUsuario').prop('disabled', true);
+                }
+            }
+
+            // Escucha los cambios en los campos del formulario
+            camposEdicion.forEach(function (campo) {
+                $(campo).on('input change', function () {
+                    habilitarBotonActualizar();
+                });
+            });
+
+            // Escucha el evento de cambio en el input de la imagen
+            $('#InpClienteUsuarioImagenEdit').on('change', function (event) {
+                const file = event.target.files[0]; // Obtiene el archivo seleccionado.
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#previewImageEdit').attr('src', e.target.result); // Muestra la imagen.
+                        $('#fileNameEdit').text(file.name); // Muestra el nombre del archivo.
+                        $('#fileSizeEdit').text((file.size / 1024).toFixed(2) + ' KB'); // Muestra el tamaño del archivo.
+                        $('#previewContainerEdit').removeClass('d-none'); // Muestra el contenedor de previsualización.
+                    };
+                    reader.readAsDataURL(file); // Lee el archivo como URL.
+                }
+                habilitarBotonActualizar();
+            });
+
+            $('#btnActualizarClienteUsuario').on('click', function () {
+                const id = $(this).data('id'); // Obtiene el ID del cliente usuario.
+                const clienteusuario = $('#InpClienteUsuarioEdit').val(); // Obtiene el nombre de cliente usuario.
+                const nombreClienteUsuario = $('#InpNombreClienteUsuarioEdit').val(); // Obtiene el nombre.
+                const apellidoPaternoClienteUsuario = $('#InpApellidoPaternoClienteUsuarioEdit').val(); // Obtiene el apellido paterno.
+                const apellidoMaternoClienteUsuario = $('#InpApellidoMaternoClienteUsuarioEdit').val(); // Obtiene el apellido materno.
+                const telefono = $('#InpTelefonoEdit').val(); // Obtiene el teléfono.
+                const correo = $('#InpCorreoEdit').val();
+                const imagen = $('#InpClienteUsuarioImagenEdit')[0].files[0]; // Obtiene la imagen seleccionada.
+                const imagenExistente = $('#previewImageEdit').attr('src'); // Obtiene la imagen existente en base64.
+
+                const formData = new FormData();
+                formData.append('Id', id);
+                formData.append('ClienteUsuario', clienteusuario);
+                formData.append('NombreClienteUsuario', nombreClienteUsuario);
+                formData.append('ApellidoPaternoClienteUsuario', apellidoPaternoClienteUsuario);
+                formData.append('ApellidoMaternoClienteUsuario', apellidoMaternoClienteUsuario);
+                formData.append('IdPuesto', $('#InpPuestoEdit').val()); // Enviar el ID del puesto.
+                formData.append('Telefono', telefono);
+                formData.append('Correo', correo);
+                formData.append('Contrasena', $('#InpContrasenaEdit').val());
+
+                // Si no se selecciona una nueva imagen, envía la imagen existente en base64.
+                if (!imagen && imagenExistente) {
+                    formData.append('FotoBase64', imagenExistente); // Envía la imagen existente en base64.
+                } else if (imagen) {
+                    formData.append('FotoFile', imagen); // Envía la nueva imagen seleccionada.
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("EditarClienteUsuario", "Catalogos")', // Asegúrate de que esta ruta sea correcta.
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        // Ocultar el grid de clientes usuarios
+                        document.getElementById('GridClientesUsuarios').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verClientesUsuarios para recargar el grid
+                            verClientesUsuarios().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los clientes usuarios.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({ icon: "error", title: "Error", text: response.mensaje });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Hubo un error en la solicitud al servidor.',
+                            icon: 'error',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                const modalEditarClienteUsuario = bootstrap.Modal.getInstance(document.getElementById('ModalEditarClienteUsuario'));
+                modalEditarClienteUsuario.hide(); // Cierra el modal.
+            });
+
+            $('#InpClienteUsuarioImagenEdit').on('change', function (event) {
+                const file = event.target.files[0]; // Obtiene el archivo seleccionado.
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#previewImageEdit').attr('src', e.target.result); // Muestra la imagen.
+                        $('#fileNameEdit').text(file.name); // Muestra el nombre del archivo.
+                        $('#fileSizeEdit').text((file.size / 1024).toFixed(2) + ' KB'); // Muestra el tamaño del archivo.
+                        $('#previewContainerEdit').removeClass('d-none'); // Muestra el contenedor de previsualización.
+                    };
+                    reader.readAsDataURL(file); // Lee el archivo como URL.
+                }
+            });
+
+            // Evento para limpiar el formulario al cerrar el modal
+            $('#ModalEditarClienteUsuario').on('hidden.bs.modal', function () {
+                $('#FormEditarClienteUsuario')[0].reset(); // Restablece el formulario.
+                $('#FormEditarClienteUsuario').validate().resetForm();
+                $('#previewImageEdit').attr('src', ''); // Limpia la imagen.
+                $('#fileNameEdit').text(''); // Limpia el nombre del archivo.
+                $('#fileSizeEdit').text(''); // Limpia el tamaño del archivo.
+            });
+
+            //============================================================================================================================\\
+            //==========================================   Funcionalidad del botón Eliminar Cliente Usuario  ==============================\\
+            //==============================================================================================================================\\
+            // Función para abrir el modal de eliminación de cliente usuario.
+            function EliminarClienteUsuario(id, clienteusuario) {
+                $(".nombreClienteUsuario").text(clienteusuario); // Muestra el nombre del cliente usuario en el modal.
+                $("#BtnEliminarClienteUsuario").data("id", id); // Asigna el ID al botón de eliminar.
+                const modalEliminar = new bootstrap.Modal(document.getElementById("ModalEliminarClienteUsuario"));
+                modalEliminar.show(); // Muestra el modal.
+            }
+
+            // Evento para abrir el modal de eliminación.
+            $(document).on("click", ".abrirModalEliminarClienteUsuario", function () {
+                let id = $(this).data("id"); // Extrae el ID del cliente usuario usando un atributo data-*.
+                let clienteusuario = $(this).data("nombre"); // Obtiene el nombre del cliente usuario.
+                EliminarClienteUsuario(id, clienteusuario); // Llama a la función para abrir el modal.
+            });
+
+            // Evento para cerrar el modal de eliminación.
+            $(".cerrarModalEliminarClienteUsuario").on("click", function () {
+                const modalEliminar = bootstrap.Modal.getInstance(document.getElementById("ModalEliminarClienteUsuario"));
+                modalEliminar.hide(); // Cierra el modal.
+            });
+
+            // Evento para manejar la eliminación del cliente usuario.
+            $("#FormEliminarClienteUsuario").on("submit", function (e) {
+                e.preventDefault(); // Prevenir el envío del formulario por defecto.
+
+                const id = $("#BtnEliminarClienteUsuario").data("id"); // Obtiene el ID del cliente usuario.
+                console.log("Eliminando cliente usuario con ID:", id); // Registra el ID en consola.
+
+                const formData = new FormData();
+                formData.append('Id', id);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DesactivarClienteUsuario", "Catalogos")', // Asegúrate de que la ruta sea correcta.
+                    data: formData,
+                    contentType: false, // Importante para FormData
+                    processData: false, // Importante para FormData
+                    beforeSend: function () {
+                        // Ocultar el grid de clientes usuarios
+                        document.getElementById('GridClientesUsuarios').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verClientesUsuarios para recargar el grid
+                            verClientesUsuarios().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los clientes usuarios.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al desactivar el cliente usuario."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                // Cierra el modal después de iniciar la solicitud AJAX
+                const modalEliminar = bootstrap.Modal.getInstance(document.getElementById('ModalEliminarClienteUsuario'));
+                modalEliminar.hide();
+            });
+
+            //============================================================================================================================\\
+            //==========================================  Funcionalidad del botón Reactivar Cliente Usuario  ==============================\\
+            //==============================================================================================================================\\
+            // Función para abrir el modal de confirmación de reactivación de cliente usuario.
+            function ConfirmarClienteUsuario(id, clienteusuario) {
+                $(".nombreConfirmarClienteUsuario").text(clienteusuario); // Muestra el nombre del cliente usuario en el modal.
+                $("#BtnConfirmarClienteUsuario").data("id", id); // Asigna el ID del cliente usuario al botón de confirmación.
+                const modalConfirmar = new bootstrap.Modal(document.getElementById("ModalConfirmarClienteUsuario"));
+                modalConfirmar.show(); // Muestra el modal de confirmación.
+            }
+
+            // Evento para abrir el modal de confirmación al hacer clic en un botón específico.
+            $(document).on("click", ".abrirModalConfirmarClienteUsuario", function () {
+                let id = $(this).data("id"); // Obtiene el ID del cliente usuario desde el atributo data-id.
+                let clienteusuario = $(this).data("nombre"); // Obtiene el nombre del cliente usuario desde el atributo data-nombre.
+                ConfirmarClienteUsuario(id, clienteusuario); // Llama a la función para abrir el modal de confirmación.
+            });
+
+            // Evento para cerrar el modal de confirmación al hacer clic en un botón de cierre.
+            $(".cerrarModalConfirmarClienteUsuario").on("click", function () {
+                const modalConfirmar = bootstrap.Modal.getInstance(document.getElementById("ModalConfirmarClienteUsuario"));
+                modalConfirmar.hide(); // Cierra el modal de confirmación.
+            });
+
+            // Evento para manejar el envío del formulario de confirmación de reactivación de cliente usuario.
+            $("#FormConfirmarClienteUsuario").on("submit", function (e) {
+                e.preventDefault(); // Evita el envío tradicional del formulario.
+
+                const id = $("#BtnConfirmarClienteUsuario").data("id"); // Obtiene el ID del cliente usuario desde el botón de confirmación.
+                console.log("Reactivando cliente usuario con ID:", id); // Muestra el ID del cliente usuario en la consola para depuración.
+
+                const formData = new FormData();
+                formData.append('Id', id); // Agrega el ID del cliente usuario al FormData.
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ReactivarClienteUsuario", "Catalogos")', // URL de la acción que reactiva al cliente usuario.
+                    data: formData,
+                    contentType: false, // Importante para FormData.
+                    processData: false, // Importante para FormData.
+                    beforeSend: function () {
+                        // Ocultar el grid de clientes usuarios
+                        document.getElementById('GridClientesUsuarios').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verClientesUsuarios para recargar el grid
+                            verClientesUsuarios().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los clientes usuarios.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al reactivar el cliente usuario."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                // Cierra el modal de confirmación después de iniciar la solicitud AJAX.
+                const modalConfirmar = bootstrap.Modal.getInstance(document.getElementById('ModalConfirmarClienteUsuario'));
+                modalConfirmar.hide();
+            });
+
+        });
+
+    </script>
+}

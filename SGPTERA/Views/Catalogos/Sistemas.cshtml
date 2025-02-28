@@ -1,0 +1,1106 @@
+﻿@{
+    ViewData["Title"] = "Sistemas";
+    var IdUsuario = ViewBag.IdUsuario;
+
+}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
+
+<!-- ================================================================================================= -->
+<!-- ======================================== Codigo Principal ======================================= -->
+<!-- ================================================================================================= -->
+<div class="card d-flex flex-column">
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between">
+        <!-- Primera columna: Título -->
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start mb-3 mb-md-0">
+            <i class="fa-solid far fa-window-restore fa-lg me-2 d-none d-md-block"></i>
+            <i class="fa-solid far fa-window-restore me-2 mb-2 d-block d-md-none"></i>
+            <h3 class="m-0 d-none d-md-block" style="font-family: 'Rubik', sans-serif; font-size: 1.25rem;">Sistemas</h3>
+            <h6 class="m-0 d-block d-md-none mb-1" style="font-family: 'Rubik', sans-serif; font-size: 1rem;">Sistemas</h6>
+        </div>
+
+        <!-- Segunda columna: Búsqueda y botones -->
+        <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end gap-2 mt-2 mt-md-0">
+            <!-- Input de búsqueda -->
+            <input id="inputBusqueda" class="form-control form-control-sm w-50" type="search" placeholder="Buscar" aria-label="Search">
+            <!-- Botón de búsqueda -->
+            <button id="btnBuscar" class="btn btn-info btn-sm" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+            <!-- Botón de recargar -->
+            <button type="button" id="btnReloadSistemas" name="btnReloadSistemas" class="btn btn-warning btn-sm">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <!-- Botón de agregar sistema -->
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#UserModal">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-3 flex-grow-1">
+        <div class="table-responsive scrollbar h-100">
+            <!-- Grilla de sistemas -->
+            <div id="GridSistemas" style="width: 100%; height: 74vh;"></div>
+            <!-- Mensaje de "Sistema no encontrado" -->
+            <div id="mensajeNoEncontrado" class="text-danger mt-2" style="display: none;">Sistema no encontrado</div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ======================================= Modal nuevo cliente ===================================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="UserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form id="FormCrearSistema">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo sistema</h3>
+                    <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Campo: Descripcion -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpDescripcion" name="InpDescripcion" type="text" placeholder="Descripcion" maxlength="50" required autocomplete="off" />
+                                <label for="InpDescripcion">Descripcion <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Razon Social -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" id="InpRazonSocial" name="InpRazonSocial">
+                                    <option value="">Seleccione una opción</option>
+                                    <!-- Las opciones se llenarán dinámicamente aquí -->
+                                </select>
+                                <label for="InpRazonSocial">Razon Social<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Repositorio -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpRepositorio" name="InpRepositorio" type="text" placeholder="Repositorio" required autocomplete="off" />
+                                <label for="InpRepositorio">Repositorio <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Prefijo -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control text-uppercase" id="InpPrefijo" name="InpPrefijo" type="text" placeholder="Prefijo" required autocomplete="off" />
+                                <label for="InpPrefijo">Prefijo <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger cerrarModal" data-bs-dismiss="modal">
+                        <i class="fas fa-ban me-2"></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success px-5" id="BtnAgregarSistema">
+                        <i class="fas fa-plus me-2"></i>Agregar Sistema
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ====================================== Modal editar cliente ===================================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" id="ModalEditarSistema" tabindex="-1" aria-labelledby="ModalEditarSistemaLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form id="FormEditarSistema">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalEditarSistemaLabel">Editar Sistema</h5>
+                    <button type="button" class="btn-close cerrarModalEditarSistema" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Campo: Descripcion -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpDescripcionEdit" name="InpDescripcionEdit" type="text" placeholder="Descripcion" maxlength="50" required autocomplete="off" />
+                                <label for="InpDescripcionEdit">Descripcion <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Razon Social -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" id="InpRazonSocialEdit" name="InpRazonSocialEdit" required>
+                                    <option value="">Seleccione una opción</option>
+                                    <!-- Las opciones se llenarán dinámicamente aquí -->
+                                </select>
+                                <label for="InpRazonSocialEdit">Razon Social<span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Repositorio -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpRepositorioEdit" name="InpRepositorioEdit" type="text" placeholder="Repositorio" required autocomplete="off" />
+                                <label for="InpRepositorioEdit">Repositorio <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Prefijo -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control text-uppercase" id="InpPrefijoEdit" name="InpPrefijoEdit" type="text" placeholder="Prefijo" required autocomplete="off" />
+                                <label for="InpPrefijoEdit">Prefijo <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger cerrarModalEditarSistema">Cancelar</button>
+                    <button type="button" class="btn btn-success EditarSistema" id="btnActualizarSistema">Actualizar Sistema</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ====================================== Modal eliminar cliente =================================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalEliminarSistema" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="FormEliminarSistema">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar Sistema</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="fas fa-times fs--1"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-700 lh-lg mb-0">
+                        ¿Deseas eliminar el sistema <strong class="nombreSistema"></strong>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-auto">
+                        <button class="btn btn-primary me-1 mb-1" type="button" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-danger me-1 mb-1" type="submit" id="BtnEliminarSistema">Eliminar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ====================================== Modal reactivar cliente ================================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalConfirmarSistema" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="FormConfirmarSistema">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar Sistema</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="fas fa-times fs--1"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-700 lh-lg mb-0">
+                        ¿Deseas reactivar el sistema <strong class="nombreConfirmarSistema"></strong>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-auto">
+                        <button class="btn btn-primary me-1 mb-1" type="button" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success me-1 mb-1" type="submit" id="BtnConfirmarSistema">Reactivar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        //============================================================================================================================\\
+        //====================================================  Variables Globales  ===================================================\\
+        //==============================================================================================================================\\
+        // Variable global para almacenar la instancia de la grilla de sistemas.
+        var gridSistemas = null;
+
+        // Función que realiza una solicitud AJAX para obtener los sistemas desde el servidor.
+        function verSistemas() {
+            return new Promise((resolve, reject) => {
+                const startTime = performance.now(); // Inicia el contador para medir el tiempo de respuesta.
+
+                $.ajax({
+                    type: 'POST', // Método HTTP utilizado para la solicitud.
+                    data: {}, // Datos enviados al servidor (en este caso, vacío).
+                    url: '@Url.Action("GetSistemas", "Catalogos")',
+                    success: function (datos) {
+                        const endTime = performance.now(); // Finaliza el contador de tiempo.
+                        const serverResponseTime = endTime - startTime; // Calcula el tiempo de respuesta del servidor.
+                        gridSistemas.itemsSource = datos.data; // Asigna los datos recibidos a la grilla de sistemas.
+                        resolve(serverResponseTime); // Resuelve la promesa con el tiempo de respuesta.
+                    },
+                    error: function () {
+                        console.error("Error al obtener los sistemas."); // Maneja errores en la solicitud.
+                        reject(); // Rechaza la promesa en caso de error.
+                    }
+                });
+            });
+        }
+
+        //============================================================================================================================\\
+        //================================  Función para editar un Puesto específico basado en su ID  ================================\\
+        //==============================================================================================================================\\
+
+        function EditarSistema(id) {
+            const sistema = gridSistemas.itemsSource.find(c => c.id === id); // Busca el sistema en la grilla.
+            if (sistema) {
+                // Guardar los valores iniciales del sistema
+                valoresIniciales = {
+                    descripcion: sistema.descripcion || '',
+                    razonSocial: sistema.razonSocial || '',
+                    repositorio: sistema.repositorio || '',
+                    prefijo: sistema.prefijo || ''
+                };
+
+                // Asigna los valores del sistema a los campos del formulario de edición.
+                $('#InpDescripcionEdit').val(valoresIniciales.descripcion);
+                $('#InpRazonSocialEdit').val(valoresIniciales.razonSocial);
+                $('#InpRepositorioEdit').val(valoresIniciales.repositorio);
+                $('#InpPrefijoEdit').val(valoresIniciales.prefijo);
+
+                // Llenar el combo box de edición con las razones sociales
+                llenarComboClientes(true); // true indica que es para el modal de edición
+
+                // Deshabilitar el botón de actualizar inicialmente
+                $('#btnActualizarSistema').prop('disabled', true);
+
+                // Muestra el modal de edición de sistema.
+                const modalEditarSistema = new bootstrap.Modal($('#ModalEditarSistema')[0]);
+                modalEditarSistema.show();
+                $('#btnActualizarSistema').data('id', id); // Asigna el ID del sistema al botón de actualizar.
+            } else {
+                console.error("Sistema no encontrado."); // Maneja el caso en que el sistema no existe.
+            }
+        }
+
+        //============================================================================================================================\\
+        //===============================  Inicialización del GRID Clientes y Configuración de Eventos  ===============================\\
+        //==============================================================================================================================\\
+
+        function llenarComboClientes(esEdicion = false) {
+            $.ajax({
+                type: 'POST', // Método HTTP
+                url: '@Url.Action("GetSistemasClientes", "Catalogos")', // Ruta del servidor
+                success: function (response) {
+                    console.log("Respuesta del servidor:", response); // Verifica la estructura de la respuesta
+
+                    if (response.resultado && response.data && response.data.length > 0) {
+                        // Selecciona el combo box según el parámetro esEdicion
+                        var combo = esEdicion ? $('#InpRazonSocialEdit') : $('#InpRazonSocial');
+                        combo.empty(); // Limpiar el combo box
+                        combo.append('<option value="">Seleccione una opción</option>'); // Opción por defecto
+
+                        // Llenar el combo box con las razones sociales
+                        response.data.forEach(function (cliente) {
+                            console.log("Cliente:", cliente); // Verifica cada cliente
+                            combo.append('<option value="' + cliente.id + '">' + cliente.razonSocial + '</option>');
+                        });
+                    } else {
+                        console.error("No se pudieron obtener los clientes o la respuesta está vacía.");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error al obtener los clientes:", textStatus, errorThrown);
+                }
+            });
+        }
+
+        //============================================================================================================================\\
+        //===============================  Inicialización del GRID Clientes y Configuración de Eventos  ===============================\\
+        //==============================================================================================================================\\
+
+        $(document).ready(function () {
+
+            //============================================================================================================================\\
+            //==========================================               GRID Principal                ======================================\\
+            //==============================================================================================================================\\
+            // Inicializa la grilla antes de llamar a verSistemas()
+            gridSistemas = new wijmo.grid.FlexGrid('#GridSistemas', {
+                autoGenerateColumns: false,
+                headersVisibility: 'Column',
+                itemsSource: [],
+                selectionMode: wijmo.grid.SelectionMode.Row,
+                columns: [
+                    { binding: '', header: '#', width: 50, align: 'center' },
+                    { binding: 'descripcion', header: 'Descripcion', width: '*', align: 'center' },
+                    { binding: 'razonSocial', header: 'Razon Social', width: '*', align: 'center' },
+                    { binding: 'repositorio', header: 'Repositorio', width: 300, align: 'center' },
+                    { binding: 'prefijo', header: 'Prefijo', width: 200, align: 'center' },
+                    { header: '', isReadOnly: true, width: 80, align: 'center' }
+                ],
+                isReadOnly: true,
+                itemFormatter: function (panel, r, c, cell) {
+                    if (panel.cellType === wijmo.grid.CellType.Cell) {
+                        const rowData = panel.rows[r].dataItem; // Obtiene los datos de la fila.
+                        const flgActivo = rowData.flgActivo; // Verificar el valor de FlgActivo.
+
+                        if (c === 0) {
+                            cell.textContent = (r + 1).toString(); // Muestra el número de fila.
+                        } else if (c === 3) { // Columna de Repositorio (índice 3)
+                            const repositorioUrl = rowData.repositorio; // Obtiene el valor del repositorio.
+                            if (repositorioUrl) { // Si hay un valor en el repositorio
+                                cell.innerHTML = `
+                            <a href="${repositorioUrl}"
+                               target="_blank"
+                               style="color: #ffffff; text-decoration: none; transition: color 0.3s ease;"
+                               onmouseover="this.style.color='blue'"
+                               onmouseout="this.style.color='#ffffff'">
+                                ${repositorioUrl}
+                            </a>`; // Crea un enlace con estilos.
+                            } else {
+                                cell.textContent = ''; // Si no hay valor, deja la celda vacía.
+                            }
+                        } else if (c === panel.columns.length - 1) { // Última columna (botones)
+                            // Crear los botones según el valor de FlgActivo
+                            let botones = '';
+                            if (flgActivo === true) {
+                                botones = `
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarSistema" onclick="EditarSistema(${rowData.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarSistema" data-id="${rowData.id}" data-nombre="${rowData.descripcion}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>`;
+                            } else if (flgActivo === false) {
+                                botones = `
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarSistema" data-id="${rowData.id}" data-nombre="${rowData.descripcion}">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </div>`;
+                            }
+
+                            // Insertar los botones en la celda
+                            cell.innerHTML = botones;
+                        }
+                    }
+                }
+            });
+
+            // Llama a verSistemas() después de inicializar la grilla
+            verSistemas();
+
+            //============================================================================================================================\\
+            //==========================================  Funcionalidad de Búsqueda y Autocompletar   =====================================\\
+            //==============================================================================================================================\\
+            $('#inputBusqueda').autocomplete({
+                source: function (request, response) {
+                    const term = request.term.toLowerCase(); // Obtiene el término de búsqueda.
+                    const sistemas = gridSistemas.itemsSource; // Obtiene la lista de sistemas.
+                    const resultados = sistemas.filter(sistema =>
+                        sistema.descripcion.toLowerCase().includes(term) ||
+                        sistema.razonSocial.toLowerCase().includes(term) ||
+                        sistema.repositorio.toLowerCase().includes(term) ||
+                        sistema.prefijo.toLowerCase().includes(term) // Busca por tipo.
+                    );
+                    response(resultados.map(sistema => ({
+                        label: `${sistema.descripcion} (${sistema.razonSocial})`, // Muestra la descripción y tipo.
+                        value: sistema.id // Asigna el ID del sistema como valor.
+                    })));
+                },
+                select: function (event, ui) {
+                    const sistemaId = ui.item.value; // Obtiene el ID del sistema seleccionado.
+                    const sistema = gridSistemas.itemsSource.find(s => s.id === sistemaId); // Busca el sistema en la grilla.
+                    if (sistema) {
+                        gridSistemas.itemsSource = [sistema]; // Filtra la grilla para mostrar solo el sistema seleccionado.
+                    }
+                }
+            });
+
+            // Evento para buscar al hacer clic en el botón de búsqueda.
+            $('#btnBuscar').on('click', function () {
+                const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda.
+                const sistemas = gridSistemas.itemsSource; // Obtiene la lista de sistemas.
+                const resultados = sistemas.filter(sistema =>
+                    sistema.descripcion.toLowerCase().includes(term) ||
+                    sistema.razonSocial.toLowerCase().includes(term) ||
+                    sistema.repositorio.toLowerCase().includes(term) ||
+                    sistema.prefijo.toLowerCase().includes(term) 
+                );
+
+                if (resultados.length > 0) {
+                    gridSistemas.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Sistema no encontrado".
+                } else {
+                    gridSistemas.itemsSource = []; // Limpia la grilla si no hay resultados.
+                    $('#mensajeNoEncontrado').text('Sistema no encontrado').show(); // Muestra un mensaje de "Sistema no encontrado".
+                }
+            });
+
+            // Evento para limpiar la búsqueda y mostrar todos los sistemas.
+            $('#inputBusqueda').on('input', function () {
+                if ($(this).val() === '') {
+                    verSistemas(); // Recarga todos los sistemas.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Sistema no encontrado".
+                }
+            });
+
+            //============================================================================================================================\\
+            //==========================================      Funcionalidad del botón Recargar       ======================================\\
+            //==============================================================================================================================\\
+
+            $('#btnReloadSistemas').on('click', function () {
+                // Ocultar el grid de sistemas
+                document.getElementById('GridSistemas').style.visibility = 'hidden';
+
+                // Bloquear el contenido principal con el estilo "arrows"
+                Notiflix.Block.arrows('.card', 'Actualizando datos...', {
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                    svgSize: '50px', // Tamaño del ícono de flechas
+                    messageFontSize: '16px', // Tamaño del mensaje
+                });
+
+                // Llamar a la función verSistemas para recargar el grid
+                verSistemas().then((serverResponseTime) => {
+                    // Tiempo adicional de 500 ms después de la respuesta del servidor
+                    setTimeout(() => {
+                        // Desbloquear el contenido principal
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar el grid después de que termine la animación de éxito
+                        document.getElementById('GridSistemas').style.visibility = 'visible';
+                    }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                }).catch(() => {
+                    // En caso de error, desbloquear el contenido principal
+                    Notiflix.Block.remove('.card');
+
+                    // Mostrar un mensaje de error con SweetAlert2 (puedes cambiarlo por Notiflix si prefieres)
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Hubo un error al recargar los sistemas.',
+                        icon: 'error',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false
+                    });
+
+                    // Mostrar el grid incluso si hay un error
+                    document.getElementById('GridSistemas').style.visibility = 'visible';
+                });
+            });
+
+            //============================================================================================================================\\
+            //========================================== Funcionalidad del boton de Agregar Puesto  =======================================\\
+            //==============================================================================================================================\\
+           
+            llenarComboClientes();
+
+            $('#UserModal').on('shown.bs.modal', function () {
+                llenarComboClientes();
+            });
+
+            // Agregar una regla personalizada para validar URLs
+            $.validator.addMethod("validUrl", function (value, element) {
+                // Expresión regular para validar URLs
+                var urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+                return this.optional(element) || urlRegex.test(value);
+            }, "Por favor, introduce una URL válida.");
+
+            // Validación del formulario
+            $("#FormCrearSistema").validate({
+                rules: {
+                    InpDescripcion: { required: true, minlength: 2 },
+                    InpRazonSocial: { required: true },
+                    InpRepositorio: {
+                        required: true,
+                        validUrl: true // Aplicar la regla personalizada
+                    },
+                    InpPrefijo: { required: true, minlength: 2 }
+                },
+                messages: {
+                    InpDescripcion: { required: "La descripción es requerida.", minlength: "Mínimo 2 caracteres." },
+                    InpRazonSocial: { required: "La razon social es requerida." },
+                    InpRepositorio: {
+                        required: "El repositorio es requerido.",
+                        validUrl: "Por favor, introduce una URL válida." // Mensaje personalizado
+                    },
+                    InpPrefijo: { required: "El prefijo es requerido." }
+                },
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+                    agregarSistema(); // Llamar a la función sin pasar IdUsuario
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
+                    error.insertAfter(element);
+                },
+                errorElement: 'div',
+                errorClass: 'alert-validate'
+            });
+
+            // Evento para limpiar el formulario al cerrar el modal
+            $('#UserModal').on('hidden.bs.modal', function () {
+                $('#FormCrearSistema')[0].reset(); // Restablece el formulario.
+                $('#FormCrearSistema').validate().resetForm();
+            });
+
+            // Función para enviar los datos del formulario mediante AJAX
+            function agregarSistema() {
+                var formData = new FormData();
+                formData.append('Descripcion', $('#InpDescripcion').val());
+                formData.append('IdCliente', $('#InpRazonSocial').val()); // Enviar el IdCliente
+                formData.append('Repositorio', $('#InpRepositorio').val());
+                formData.append('Prefijo', $('#InpPrefijo').val());
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AgregarSistema", "Catalogos")',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        // Ocultar el grid de sistemas
+                        document.getElementById('GridSistemas').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.circle('.card', 'Agregando sistema...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verSistemas para recargar el grid
+                            verSistemas().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridSistemas').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los sistemas.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridSistemas').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+                            // Mostrar el grid después de que termine la animación de éxito
+                            document.getElementById('GridSistemas').style.visibility = 'visible';
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+                        // Mostrar el grid después de que termine la animación de éxito
+                        document.getElementById('GridSistemas').style.visibility = 'visible';
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al agregar el sistema."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                const UserModal = bootstrap.Modal.getInstance(document.getElementById('UserModal'));
+                UserModal.hide();
+            }
+
+            //============================================================================================================================\\
+            //==========================================   Funcionalidad del botón Editar Cliente    ======================================\\
+            //==============================================================================================================================\\
+
+            $('#ModalEditarSistema').on('shown.bs.modal', function () {
+                llenarComboClientes();
+            });
+
+            $('.cerrarModalEditarSistema').on('click', function () {
+                const modalEditarSistema = bootstrap.Modal.getInstance(document.getElementById('ModalEditarSistema'));
+                modalEditarSistema.hide();
+            });
+
+            // Agregar una regla personalizada para validar URLs
+            $.validator.addMethod("validUrl", function (value, element) {
+                // Expresión regular para validar URLs
+                var urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+                return this.optional(element) || urlRegex.test(value);
+            }, "Por favor, introduce una URL válida.");
+
+            // Validación del formulario
+            $("#FormEditarSistema").validate({
+                rules: {
+                    InpDescripcionEdit: { required: true, minlength: 2 },
+                    InpRepositorioEdit: {
+                        required: true,
+                        validUrl: true // Aplicar la regla personalizada
+                    },
+                    InpPrefijoEdit: { required: true, minlength: 2 }
+                },
+                messages: {
+                    InpDescripcion: { required: "La descripción es requerida.", minlength: "Mínimo 2 caracteres." },
+                    InpRepositorio: {
+                        required: "El repositorio es requerido.",
+                        validUrl: "Por favor, introduce una URL válida." // Mensaje personalizado
+                    },
+                    InpPrefijo: { required: "El prefijo es requerido." }
+                },
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+                    agregarSistema(); // Llamar a la función sin pasar IdUsuario
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
+                    error.insertAfter(element);
+                },
+                errorElement: 'div',
+                errorClass: 'alert-validate'
+            });
+
+            // Selecciona todos los campos del formulario de edición
+            const camposEdicion = ['#InpDescripcionEdit', '#InpRazonSocialEdit', '#InpRepositorioEdit', '#InpPrefijoEdit'];
+
+            // Función para habilitar el botón si algún campo ha cambiado
+            function habilitarBotonActualizar() {
+                let algunCampoCambiado = false;
+
+                camposEdicion.forEach(function (campo) {
+                    if ($(campo).val() !== '') {
+                        algunCampoCambiado = true;
+                    }
+                });
+
+                // Habilita el botón si algún campo ha cambiado
+                if (algunCampoCambiado) {
+                    $('#btnActualizarSistema').prop('disabled', false);
+                } else {
+                    $('#btnActualizarSistema').prop('disabled', true);
+                }
+            }
+
+            // Escucha los cambios en los campos del formulario
+            camposEdicion.forEach(function (campo) {
+                $(campo).on('input change', function () {
+                    habilitarBotonActualizar();
+                });
+            });
+
+            $('#btnActualizarSistema').on('click', function () {
+                const id = $(this).data('id'); // Obtiene el ID del sistema.
+                const descripcion = $('#InpDescripcionEdit').val(); // Obtiene la descripción.
+                const repositorio = $('#InpRepositorioEdit').val(); // Obtiene el repositorio.
+                const prefijo = $('#InpPrefijoEdit').val(); // Obtiene el prefijo.
+
+                const formData = new FormData();
+                formData.append('Id', id);
+                formData.append('Descripcion', descripcion);
+                formData.append('IdCliente', $('#InpRazonSocialEdit').val()); // Enviar el IdCliente
+                formData.append('Repositorio', repositorio);
+                formData.append('Prefijo', prefijo);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("EditarSistema", "Catalogos")', // Asegúrate de que esta ruta sea correcta.
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        // Ocultar el grid de sistemas
+                        document.getElementById('GridSistemas').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verSistemas para recargar el grid
+                            verSistemas().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridSistemas').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los sistemas.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridSistemas').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({ icon: "error", title: "Error", text: response.mensaje });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar el grid después de que termine la animación de éxito
+                        document.getElementById('GridSistemas').style.visibility = 'visible';
+
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Hubo un error en la solicitud al servidor.',
+                            icon: 'error',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                const modalEditarSistema = bootstrap.Modal.getInstance(document.getElementById('ModalEditarSistema'));
+                modalEditarSistema.hide(); // Cierra el modal.
+            });
+
+            // Evento para limpiar el formulario al cerrar el modal
+            $('#ModalEditarSistema').on('hidden.bs.modal', function () {
+                $('#FormEditarSistema')[0].reset(); // Restablece el formulario.
+                $('#FormEditarSistema').validate().resetForm();
+            });
+
+            //============================================================================================================================\\
+            //==========================================   Funcionalidad del botón Eliminar Cliente  ======================================\\
+            //==============================================================================================================================\\
+            // Función para abrir el modal de eliminación de sistema.
+            function EliminarSistema(id, descripcion) {
+                $(".nombreSistema").text(descripcion); // Muestra la descripción del sistema en el modal.
+                $("#BtnEliminarSistema").data("id", id); // Asigna el ID al botón de eliminar.
+                const modalEliminar = new bootstrap.Modal(document.getElementById("ModalEliminarSistema"));
+                modalEliminar.show(); // Muestra el modal.
+            }
+
+            // Evento para abrir el modal de eliminación.
+            $(document).on("click", ".abrirModalEliminarSistema", function () {
+                let id = $(this).data("id"); // Extrae el ID del sistema usando un atributo data-*.
+                let descripcion = $(this).data("nombre"); // Obtiene la descripción.
+                EliminarSistema(id, descripcion); // Llama a la función para abrir el modal.
+            });
+
+            // Evento para cerrar el modal de eliminación.
+            $(".cerrarModalEliminarSistema").on("click", function () {
+                const modalEliminar = bootstrap.Modal.getInstance(document.getElementById("ModalEliminarSistema"));
+                modalEliminar.hide(); // Cierra el modal.
+            });
+
+            // Evento para manejar la eliminación del sistema.
+            $("#FormEliminarSistema").on("submit", function (e) {
+                e.preventDefault(); // Prevenir el envío del formulario por defecto.
+
+                const id = $("#BtnEliminarSistema").data("id"); // Obtiene el ID del sistema.
+                console.log("Eliminando sistema con ID:", id); // Registra el ID en consola.
+
+                const formData = new FormData();
+                formData.append('Id', id);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DesactivarSistema", "Catalogos")', // Asegúrate de que la ruta sea correcta.
+                    data: formData,
+                    contentType: false, // Importante para FormData
+                    processData: false, // Importante para FormData
+                    beforeSend: function () {
+                        // Ocultar el grid de sistemas
+                        document.getElementById('GridSistemas').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verSistemas para recargar el grid
+                            verSistemas().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridSistemas').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los sistemas.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridSistemas').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+
+                            // Mostrar el grid después de que termine la animación de éxito
+                            document.getElementById('GridSistemas').style.visibility = 'visible';
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+                        // Mostrar el grid después de que termine la animación de éxito
+                        document.getElementById('GridSistemas').style.visibility = 'visible';
+
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al desactivar el sistema."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                // Cierra el modal después de iniciar la solicitud AJAX
+                const modalEliminar = bootstrap.Modal.getInstance(document.getElementById('ModalEliminarSistema'));
+                modalEliminar.hide();
+            });
+
+            //============================================================================================================================\\
+            //==========================================  Funcionalidad del botón Reactivar Cliente  ======================================\\
+            //==============================================================================================================================\\
+            // Función para abrir el modal de confirmación de reactivación de sistema.
+            function ConfirmarSistema(id, descripcion) {
+                $(".nombreConfirmarSistema").text(descripcion); // Muestra la descripción del sistema en el modal.
+                $("#BtnConfirmarSistema").data("id", id); // Asigna el ID del sistema al botón de confirmación.
+                const modalConfirmar = new bootstrap.Modal(document.getElementById("ModalConfirmarSistema"));
+                modalConfirmar.show(); // Muestra el modal de confirmación.
+            }
+
+            // Evento para abrir el modal de confirmación al hacer clic en un botón específico.
+            $(document).on("click", ".abrirModalConfirmarSistema", function () {
+                let id = $(this).data("id"); // Obtiene el ID del sistema desde el atributo data-id.
+                let descripcion = $(this).data("nombre"); // Obtiene la descripción del sistema desde el atributo data-descripcion.
+                ConfirmarSistema(id, descripcion); // Llama a la función para abrir el modal de confirmación.
+            });
+
+            // Evento para cerrar el modal de confirmación al hacer clic en un botón de cierre.
+            $(".cerrarModalConfirmarSistema").on("click", function () {
+                const modalConfirmar = bootstrap.Modal.getInstance(document.getElementById("ModalConfirmarSistema"));
+                modalConfirmar.hide(); // Cierra el modal de confirmación.
+            });
+
+            // Evento para manejar el envío del formulario de confirmación de reactivación de sistema.
+            $("#FormConfirmarSistema").on("submit", function (e) {
+                e.preventDefault(); // Evita el envío tradicional del formulario.
+
+                const id = $("#BtnConfirmarSistema").data("id"); // Obtiene el ID del sistema desde el botón de confirmación.
+                console.log("Reactivando sistema con ID:", id); // Muestra el ID del sistema en la consola para depuración.
+
+                const formData = new FormData();
+                formData.append('Id', id); // Agrega el ID del sistema al FormData.
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ReactivarSistema", "Catalogos")', // URL de la acción que reactiva al sistema.
+                    data: formData,
+                    contentType: false, // Importante para FormData.
+                    processData: false, // Importante para FormData.
+                    beforeSend: function () {
+                        // Ocultar el grid de sistemas
+                        document.getElementById('GridSistemas').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verSistemas para recargar el grid
+                            verSistemas().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridSistemas').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los sistemas.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridSistemas').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+                            // Mostrar el grid después de que termine la animación de éxito
+                            document.getElementById('GridSistemas').style.visibility = 'visible';
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+                        // Mostrar el grid después de que termine la animación de éxito
+                        document.getElementById('GridSistemas').style.visibility = 'visible';
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al reactivar el sistema."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                // Cierra el modal de confirmación después de iniciar la solicitud AJAX.
+                const modalConfirmar = bootstrap.Modal.getInstance(document.getElementById('ModalConfirmarSistema'));
+                modalConfirmar.hide();
+            });
+        });
+
+    </script>
+}
