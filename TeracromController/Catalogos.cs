@@ -1493,7 +1493,7 @@ namespace TeracromController
                     Id, 
                     Descripcion 
                 FROM 
-                    Puestos WHERE Tipo = 1";
+                    Puestos WHERE Tipo = 2";
 
                 var puestos = await _dapperContext.QueryAsync<Puestos>(sql);
                 if (puestos != null)
@@ -1524,6 +1524,7 @@ namespace TeracromController
             return respuesta;
         }
 
+
         public async Task<RespuestaJson> AgregarClienteUsuario(ClientesUsuarios clienteusuario)
         {
             RespuestaJson respuesta = new RespuestaJson();
@@ -1549,9 +1550,9 @@ namespace TeracromController
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
                     // Validar si el ClienteUsuario ya existe en la base de datos
-                    string sqlValidarClienteUsuario = "SELECT COUNT(*) FROM ClientesUsuarios WHERE Usuario = @Usuario;";
+                    string sqlValidarClienteUsuario = "SELECT COUNT(*) FROM ClientesUsuarios WHERE ClienteUsuario = @ClienteUsuario;";
                     var parametrosValidarClienteUsuario = new DynamicParameters();
-                    parametrosValidarClienteUsuario.Add("@Usuario", clienteusuario.ClienteUsuario, DbType.String);
+                    parametrosValidarClienteUsuario.Add("@ClienteUsuario", clienteusuario.ClienteUsuario, DbType.String);
 
                     int clienteusuarioExistente = await connection.ExecuteScalarAsync<int>(sqlValidarClienteUsuario, parametrosValidarClienteUsuario);
 
@@ -1589,21 +1590,22 @@ namespace TeracromController
 
                     // Consulta SQL para insertar el cliente usuario
                     string sqlInsertar = @"
-            INSERT INTO ClientesUsuarios 
-            (Usuario, NombreUsuario, ApellidoPaternoUsuario, ApellidoMaternoUsuario, IdPuesto, Telefono, Correo, Contrasena, FotoPerfil, IdUsuarioSet) 
-            VALUES 
-            (@Usuario, @NombreUsuario, @ApellidoPaternoUsuario, @ApellidoMaternoUsuario, @IdPuesto, @Telefono, @Correo, 
-            HASHBYTES('SHA2_256', CONVERT(NVARCHAR(50), @Contrasena)), @FotoPerfil, @IdUsuarioSet);";
+                    INSERT INTO ClientesUsuarios 
+                    (ClienteUsuario, NombreClienteUsuario, ApellidoPaternoClienteUsuario, ApellidoMaternoClienteUsuario, IdPuesto, Telefono, Correo, Contrasena, IdCliente, FotoPerfil, IdUsuarioSet) 
+                    VALUES 
+                    (@ClienteUsuario, @NombreClienteUsuario, @ApellidoPaternoClienteUsuario, @ApellidoMaternoClienteUsuario, @IdPuesto, @Telefono, @Correo, 
+                    HASHBYTES('SHA2_256', CONVERT(NVARCHAR(50), @Contrasena)), @IdCliente, @FotoPerfil, @IdUsuarioSet);";
 
                     var parametrosInsertar = new DynamicParameters();
-                    parametrosInsertar.Add("@Usuario", clienteusuario.ClienteUsuario, DbType.String);
-                    parametrosInsertar.Add("@NombreUsuario", clienteusuario.NombreClienteUsuario, DbType.String);
-                    parametrosInsertar.Add("@ApellidoPaternoUsuario", clienteusuario.ApellidoPaternoClienteUsuario, DbType.String);
-                    parametrosInsertar.Add("@ApellidoMaternoUsuario", clienteusuario.ApellidoMaternoClienteUsuario, DbType.String);
+                    parametrosInsertar.Add("@ClienteUsuario", clienteusuario.ClienteUsuario, DbType.String);
+                    parametrosInsertar.Add("@NombreClienteUsuario", clienteusuario.NombreClienteUsuario, DbType.String);
+                    parametrosInsertar.Add("@ApellidoPaternoClienteUsuario", clienteusuario.ApellidoPaternoClienteUsuario, DbType.String);
+                    parametrosInsertar.Add("@ApellidoMaternoClienteUsuario", clienteusuario.ApellidoMaternoClienteUsuario, DbType.String);
                     parametrosInsertar.Add("@IdPuesto", clienteusuario.IdPuesto, DbType.String);
                     parametrosInsertar.Add("@Telefono", clienteusuario.Telefono, DbType.String);
                     parametrosInsertar.Add("@Correo", clienteusuario.Correo, DbType.String);
                     parametrosInsertar.Add("@Contrasena", clienteusuario.Contrasena, DbType.String);
+                    parametrosInsertar.Add("@IdCliente", clienteusuario.IdCliente, DbType.String);
                     parametrosInsertar.Add("@FotoPerfil", clienteusuario.FotoPerfil, DbType.Binary);
                     parametrosInsertar.Add("@IdUsuarioSet", clienteusuario.IdUsuarioSet, DbType.Int32);
 
@@ -1669,21 +1671,25 @@ namespace TeracromController
                 {
                     // Consulta SQL base para actualizar el cliente usuario
                     string sqlActualizar = @"
-            UPDATE ClientesUsuarios 
-            SET Usuario = @Usuario, 
-                NombreUsuario = @NombreUsuario, 
-                ApellidoPaternoUsuario = @ApellidoPaternoUsuario, 
-                ApellidoMaternoUsuario = @ApellidoMaternoUsuario,
-                Telefono = @Telefono,
-                Correo = @Correo,
-                FotoPerfil = @FotoPerfil,
-                IdUsuarioUpd = @IdUsuarioUpd,
-                FechaUpd = @FechaUpd";
+                    UPDATE ClientesUsuarios 
+                    SET ClienteUsuario = @ClienteUsuario, 
+                        NombreClienteUsuario = @NombreClienteUsuario, 
+                        ApellidoPaternoClienteUsuario = @ApellidoPaternoClienteUsuario, 
+                        ApellidoMaternoClienteUsuario = @ApellidoMaternoClienteUsuario,
+                        Telefono = @Telefono,
+                        Correo = @Correo,
+                        FotoPerfil = @FotoPerfil,
+                        IdUsuarioUpd = @IdUsuarioUpd,
+                        FechaUpd = @FechaUpd";
 
                     // Agregar IdPuesto a la consulta si tiene un valor válido (> 0)
                     if (clienteusuario.IdPuesto > 0)
                     {
                         sqlActualizar += ", IdPuesto = @IdPuesto";
+                    }
+                    if (clienteusuario.IdCliente > 0)
+                    {
+                        sqlActualizar += ", IdCliente = @IdCliente";
                     }
 
                     // Agregar Contrasena a la consulta si no es nula o vacía
@@ -1696,10 +1702,10 @@ namespace TeracromController
 
                     var parametrosActualizar = new DynamicParameters();
                     parametrosActualizar.Add("@Id", clienteusuario.Id, DbType.Int32);
-                    parametrosActualizar.Add("@Usuario", clienteusuario.ClienteUsuario, DbType.String);
-                    parametrosActualizar.Add("@NombreUsuario", clienteusuario.NombreClienteUsuario, DbType.String);
-                    parametrosActualizar.Add("@ApellidoPaternoUsuario", clienteusuario.ApellidoPaternoClienteUsuario, DbType.String);
-                    parametrosActualizar.Add("@ApellidoMaternoUsuario", clienteusuario.ApellidoMaternoClienteUsuario, DbType.String);
+                    parametrosActualizar.Add("@ClienteUsuario", clienteusuario.ClienteUsuario, DbType.String);
+                    parametrosActualizar.Add("@NombreClienteUsuario", clienteusuario.NombreClienteUsuario, DbType.String);
+                    parametrosActualizar.Add("@ApellidoPaternoClienteUsuario", clienteusuario.ApellidoPaternoClienteUsuario, DbType.String);
+                    parametrosActualizar.Add("@ApellidoMaternoClienteUsuario", clienteusuario.ApellidoMaternoClienteUsuario, DbType.String);
                     parametrosActualizar.Add("@Telefono", clienteusuario.Telefono, DbType.String);
                     parametrosActualizar.Add("@Correo", clienteusuario.Correo, DbType.String);
                     parametrosActualizar.Add("@FotoPerfil", clienteusuario.FotoPerfil, DbType.Binary);
@@ -1710,6 +1716,10 @@ namespace TeracromController
                     if (clienteusuario.IdPuesto > 0)
                     {
                         parametrosActualizar.Add("@IdPuesto", clienteusuario.IdPuesto, DbType.Int32);
+                    }
+                    if (clienteusuario.IdCliente > 0)
+                    {
+                        parametrosActualizar.Add("@IdCliente", clienteusuario.IdCliente, DbType.Int32);
                     }
 
                     // Agregar Contrasena a los parámetros si no es nula o vacía
@@ -1833,6 +1843,1331 @@ namespace TeracromController
             catch (Exception ex)
             {
                 respuesta.Mensaje = "Ocurrió un error al reactivar el cliente usuario: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        //============================================================================================================================\\
+        //=================================================   Modelo ModuloSistemas   =================================================\\
+        //==============================================================================================================================\\
+
+        public async Task<RespuestaJson> GetModuloSistemas()
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir la conexión a la base de datos
+                _dapperContext.AbrirConexion("SGP");
+
+                string sql = "SELECT Id, ModuloSistemaDescripcion, FlgActivo FROM ModuloSistemas";
+
+                var modulosistemas = await _dapperContext.QueryAsync<ModuloSistemas>(sql);
+                if (modulosistemas != null)
+                {
+                    respuesta.Resultado = true;
+                    respuesta.Data = modulosistemas.Select(s => new ModuloSistemas
+                    {
+                        Id = s.Id,
+                        ModuloSistemaDescripcion = s.ModuloSistemaDescripcion,
+                        FlgActivo = s.FlgActivo
+                    }).ToList();
+                }
+                else
+                {
+                    respuesta.Mensaje = "No se encontraron modulosistemas activos.";
+                    respuesta.Data = new List<ModuloSistemas>(); // Inicializar Data para evitar null
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los modulosistemas." + ex.Message;
+                respuesta.Data = new List<ModuloSistemas>(); // Inicializar Data para evitar null
+            }
+            finally
+            {
+                // Cerrar o liberar la conexión (si es necesario)
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> AgregarModuloSistema(ModuloSistemas modulosistema)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+
+                    // Validar si ya existe un registro con el mismo IdSistema en la base de datos
+                    string sqlValidarModuloSistemasDescripcion = "SELECT COUNT(*) FROM ModuloSistemas WHERE ModuloSistemaDescripcion = @ModuloSistemaDescripcion;";
+                    var parametrosValidarModuloSistemasDescripcion = new DynamicParameters();
+                    parametrosValidarModuloSistemasDescripcion.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
+
+
+                    int ModuloSistemasDescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarModuloSistemasDescripcion, parametrosValidarModuloSistemasDescripcion);
+
+                    if (ModuloSistemasDescripcionExistente > 0)
+                    {
+                        respuesta.Mensaje = "Los sistemas ya cuentan con este módulo.";
+                        return respuesta;
+                    }
+
+                    // Consulta SQL para insertar el modulosistema
+                    string sqlInsertar = @"
+                    INSERT INTO ModuloSistemas 
+                    (ModuloSistemaDescripcion, IdUsuarioSet) 
+                    VALUES 
+                    (@ModuloSistemaDescripcion, @IdUsuarioSet);";
+
+                    var parametrosInsertar = new DynamicParameters();
+                    parametrosInsertar.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
+                    parametrosInsertar.Add("@IdUsuarioSet", modulosistema.IdUsuarioSet, DbType.Int32);
+
+                    // Ejecutar la consulta de inserción
+                    int filasAfectadas = await connection.ExecuteAsync(sqlInsertar, parametrosInsertar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "El módulo del sistema se agregó exitosamente.";
+                        respuesta.Data = new { ModuloSistemaId = modulosistema.Id }; // Puedes devolver el ID del modulosistema si lo necesitas
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "Hubo un error al agregar el módulo del sistema.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al intentar agregar el módulo del sistema: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> EditarModuloSistema(ModuloSistemas modulosistema)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                modulosistema.FechaUpd = DateTime.Now;
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    string sqlValidarModuloSistemasDescripcion = "SELECT COUNT(*) FROM ModuloSistemas WHERE ModuloSistemaDescripcion = @ModuloSistemaDescripcion";
+                    var parametrosValidar = new DynamicParameters();
+                    parametrosValidar.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
+
+                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarModuloSistemasDescripcion, parametrosValidar);
+
+                    if (existeDescripcion > 0)
+                    {
+                        respuesta.Mensaje = "Los sistemas ya cuentan con este módulo.";
+                        return respuesta;
+                    }
+
+                    string sqlActualizar = @"
+                    UPDATE ModuloSistemas 
+                    SET ModuloSistemaDescripcion = @ModuloSistemaDescripcion,
+                        IdUsuarioUpd = @IdUsuarioUpd,
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id;";
+
+                    var parametrosActualizar = new DynamicParameters();
+                    parametrosActualizar.Add("@Id", modulosistema.Id, DbType.Int32);
+                    parametrosActualizar.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
+                    parametrosActualizar.Add("@IdUsuarioUpd", modulosistema.IdUsuarioUpd, DbType.Int32);
+                    parametrosActualizar.Add("@FechaUpd", modulosistema.FechaUpd, DbType.DateTime);
+
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Módulo del sistema actualizado con éxito.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No fue posible actualizar el módulo del sistema.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al actualizar el módulo del sistema: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> DesactivarModuloSistema(ModuloSistemas modulosistema)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                modulosistema.FechaDel = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para desactivar el modulosistema
+                    string sql = @"
+                    UPDATE ModuloSistemas 
+                    SET FlgActivo = 0, 
+                        IdUsuarioDel = @IdUsuarioDel, 
+                        FechaDel = @FechaDel 
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", modulosistema.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioDel", modulosistema.IdUsuarioDel, DbType.Int32);
+                    parametros.Add("@FechaDel", modulosistema.FechaDel, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "ModuloSistema desactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el modulosistema o ya está desactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al desactivar el modulosistema: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> ReactivarModuloSistema(ModuloSistemas modulosistema)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                modulosistema.FechaUpd = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para reactivar el modulosistema
+                    string sql = @"
+                    UPDATE ModuloSistemas 
+                    SET FlgActivo = 1, 
+                        IdUsuarioUpd = @IdUsuarioUpd, 
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", modulosistema.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioUpd", modulosistema.IdUsuarioUpd, DbType.Int32);
+                    parametros.Add("@FechaUpd", modulosistema.FechaUpd, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "ModuloSistema reactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el modulosistema o ya está reactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al reactivar el modulosistema: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        //============================================================================================================================\\
+        //================================================   Modelo EstatusProyectos   ================================================\\
+        //==============================================================================================================================\\
+
+        public async Task<RespuestaJson> GetEstatusProyectos()
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir la conexión a la base de datos
+                _dapperContext.AbrirConexion("SGP");
+
+                string sql = "SELECT Id, EstatusProyectosDescripcion, FlgActivo FROM EstatusProyectos";
+
+                var estatusproyectos = await _dapperContext.QueryAsync<EstatusProyectos>(sql);
+                if (estatusproyectos != null)
+                {
+                    respuesta.Resultado = true;
+                    respuesta.Data = estatusproyectos.Select(s => new EstatusProyectos
+                    {
+                        Id = s.Id,
+                        EstatusProyectosDescripcion = s.EstatusProyectosDescripcion,
+                        FlgActivo = s.FlgActivo
+                    }).ToList();
+                }
+                else
+                {
+                    respuesta.Mensaje = "No se encontraron estatusproyectos activos.";
+                    respuesta.Data = new List<EstatusProyectos>(); // Inicializar Data para evitar null
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los estatusproyectos." + ex.Message;
+                respuesta.Data = new List<EstatusProyectos>(); // Inicializar Data para evitar null
+            }
+            finally
+            {
+                // Cerrar o liberar la conexión (si es necesario)
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> AgregarEstatusProyecto(EstatusProyectos estatusproyecto)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+
+                    // Validar si ya existe un registro con el mismo IdSistema en la base de datos
+                    string sqlValidarEstatusProyectosDescripcion = "SELECT COUNT(*) FROM EstatusProyectos WHERE EstatusProyectosDescripcion = @EstatusProyectosDescripcion;";
+                    var parametrosValidarEstatusProyectosDescripcion = new DynamicParameters();
+                    parametrosValidarEstatusProyectosDescripcion.Add("@EstatusProyectosDescripcion", estatusproyecto.EstatusProyectosDescripcion, DbType.String);
+
+
+                    int EstatusProyectosDescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusProyectosDescripcion, parametrosValidarEstatusProyectosDescripcion);
+
+                    if (EstatusProyectosDescripcionExistente > 0)
+                    {
+                        respuesta.Mensaje = "Los proyectos ya cuentan con este estatus.";
+                        return respuesta;
+                    }
+
+                    // Consulta SQL para insertar el estatusproyecto
+                    string sqlInsertar = @"
+                    INSERT INTO EstatusProyectos 
+                    (EstatusProyectosDescripcion, IdUsuarioSet) 
+                    VALUES 
+                    (@EstatusProyectosDescripcion, @IdUsuarioSet);";
+
+                    var parametrosInsertar = new DynamicParameters();
+                    parametrosInsertar.Add("@EstatusProyectosDescripcion", estatusproyecto.EstatusProyectosDescripcion, DbType.String);
+                    parametrosInsertar.Add("@IdUsuarioSet", estatusproyecto.IdUsuarioSet, DbType.Int32);
+
+                    // Ejecutar la consulta de inserción
+                    int filasAfectadas = await connection.ExecuteAsync(sqlInsertar, parametrosInsertar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "El estatus del proyecto se agregó exitosamente.";
+                        respuesta.Data = new { EstatusProyectoId = estatusproyecto.Id }; // Puedes devolver el ID del estatusproyecto si lo necesitas
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "Hubo un error al agregar el estatus del proyecto.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al intentar agregar el estatus del proyecto: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> EditarEstatusProyecto(EstatusProyectos estatusproyecto)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                estatusproyecto.FechaUpd = DateTime.Now;
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    string sqlValidarEstatusProyectosDescripcion = "SELECT COUNT(*) FROM EstatusProyectos WHERE EstatusProyectosDescripcion = @EstatusProyectosDescripcion";
+                    var parametrosValidar = new DynamicParameters();
+                    parametrosValidar.Add("@EstatusProyectosDescripcion", estatusproyecto.EstatusProyectosDescripcion, DbType.String);
+
+                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusProyectosDescripcion, parametrosValidar);
+
+                    if (existeDescripcion > 0)
+                    {
+                        respuesta.Mensaje = "Los proyectos ya cuentan con este estatus.";
+                        return respuesta;
+                    }
+
+                    string sqlActualizar = @"
+                    UPDATE EstatusProyectos 
+                    SET EstatusProyectosDescripcion = @EstatusProyectosDescripcion,
+                        IdUsuarioUpd = @IdUsuarioUpd,
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id;";
+
+                    var parametrosActualizar = new DynamicParameters();
+                    parametrosActualizar.Add("@Id", estatusproyecto.Id, DbType.Int32);
+                    parametrosActualizar.Add("@EstatusProyectosDescripcion", estatusproyecto.EstatusProyectosDescripcion, DbType.String);
+                    parametrosActualizar.Add("@IdUsuarioUpd", estatusproyecto.IdUsuarioUpd, DbType.Int32);
+                    parametrosActualizar.Add("@FechaUpd", estatusproyecto.FechaUpd, DbType.DateTime);
+
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Estatus de los proyectos actualizado con éxito.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No fue posible actualizar el estatus de los proyectos.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al actualizar el estatus de los proyectos: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> DesactivarEstatusProyecto(EstatusProyectos estatusproyecto)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                estatusproyecto.FechaDel = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para desactivar el estatusproyecto
+                    string sql = @"
+                    UPDATE EstatusProyectos 
+                    SET FlgActivo = 0, 
+                        IdUsuarioDel = @IdUsuarioDel, 
+                        FechaDel = @FechaDel 
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", estatusproyecto.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioDel", estatusproyecto.IdUsuarioDel, DbType.Int32);
+                    parametros.Add("@FechaDel", estatusproyecto.FechaDel, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "EstatusProyecto desactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el estatusproyecto o ya está desactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al desactivar el estatusproyecto: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> ReactivarEstatusProyecto(EstatusProyectos estatusproyecto)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                estatusproyecto.FechaUpd = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para reactivar el estatusproyecto
+                    string sql = @"
+                    UPDATE EstatusProyectos 
+                    SET FlgActivo = 1, 
+                        IdUsuarioUpd = @IdUsuarioUpd, 
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", estatusproyecto.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioUpd", estatusproyecto.IdUsuarioUpd, DbType.Int32);
+                    parametros.Add("@FechaUpd", estatusproyecto.FechaUpd, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "EstatusProyecto reactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el estatusproyecto o ya está reactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al reactivar el estatusproyecto: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        //============================================================================================================================\\
+        //=================================================   Modelo EstatusTareas   ==================================================\\
+        //==============================================================================================================================\\
+
+        public async Task<RespuestaJson> GetEstatusTareas()
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir la conexión a la base de datos
+                _dapperContext.AbrirConexion("SGP");
+
+                string sql = "SELECT Id, EstatusTareaDescripcion, FlgActivo FROM EstatusTareas";
+
+                var estatustareas = await _dapperContext.QueryAsync<EstatusTareas>(sql);
+                if (estatustareas != null)
+                {
+                    respuesta.Resultado = true;
+                    respuesta.Data = estatustareas.Select(s => new EstatusTareas
+                    {
+                        Id = s.Id,
+                        EstatusTareaDescripcion = s.EstatusTareaDescripcion,
+                        FlgActivo = s.FlgActivo
+                    }).ToList();
+                }
+                else
+                {
+                    respuesta.Mensaje = "No se encontraron estatustareas activos.";
+                    respuesta.Data = new List<EstatusTareas>(); // Inicializar Data para evitar null
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los estatustareas." + ex.Message;
+                respuesta.Data = new List<EstatusTareas>(); // Inicializar Data para evitar null
+            }
+            finally
+            {
+                // Cerrar o liberar la conexión (si es necesario)
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> AgregarEstatusTarea(EstatusTareas estatustarea)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+
+                    // Validar si ya existe un registro con el mismo IdSistema en la base de datos
+                    string sqlValidarEstatusTareasDescripcion = "SELECT COUNT(*) FROM EstatusTareas WHERE EstatusTareaDescripcion = @EstatusTareaDescripcion;";
+                    var parametrosValidarEstatusTareasDescripcion = new DynamicParameters();
+                    parametrosValidarEstatusTareasDescripcion.Add("@EstatusTareaDescripcion", estatustarea.EstatusTareaDescripcion, DbType.String);
+
+
+                    int EstatusTareasDescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusTareasDescripcion, parametrosValidarEstatusTareasDescripcion);
+
+                    if (EstatusTareasDescripcionExistente > 0)
+                    {
+                        respuesta.Mensaje = "Las tareas ya cuentan con este estatus.";
+                        return respuesta;
+                    }
+
+                    // Consulta SQL para insertar el estatustarea
+                    string sqlInsertar = @"
+                    INSERT INTO EstatusTareas 
+                    (EstatusTareaDescripcion, IdUsuarioSet) 
+                    VALUES 
+                    (@EstatusTareaDescripcion, @IdUsuarioSet);";
+
+                    var parametrosInsertar = new DynamicParameters();
+                    parametrosInsertar.Add("@EstatusTareaDescripcion", estatustarea.EstatusTareaDescripcion, DbType.String);
+                    parametrosInsertar.Add("@IdUsuarioSet", estatustarea.IdUsuarioSet, DbType.Int32);
+
+                    // Ejecutar la consulta de inserción
+                    int filasAfectadas = await connection.ExecuteAsync(sqlInsertar, parametrosInsertar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "El estatus de la tarea se agregó exitosamente.";
+                        respuesta.Data = new { EstatusTareaId = estatustarea.Id }; // Puedes devolver el ID del estatustarea si lo necesitas
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "Hubo un error al agregar el estatus de la tarea.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al intentar agregar el estatus de la tarea: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> EditarEstatusTarea(EstatusTareas estatustarea)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                estatustarea.FechaUpd = DateTime.Now;
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    string sqlValidarEstatusTareasDescripcion = "SELECT COUNT(*) FROM EstatusTareas WHERE EstatusTareaDescripcion = @EstatusTareaDescripcion";
+                    var parametrosValidar = new DynamicParameters();
+                    parametrosValidar.Add("@EstatusTareaDescripcion", estatustarea.EstatusTareaDescripcion, DbType.String);
+
+                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusTareasDescripcion, parametrosValidar);
+
+                    if (existeDescripcion > 0)
+                    {
+                        respuesta.Mensaje = "Las tareas ya cuentan con este estatus.";
+                        return respuesta;
+                    }
+
+                    string sqlActualizar = @"
+                    UPDATE EstatusTareas 
+                    SET EstatusTareaDescripcion = @EstatusTareaDescripcion,
+                        IdUsuarioUpd = @IdUsuarioUpd,
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id;";
+
+                    var parametrosActualizar = new DynamicParameters();
+                    parametrosActualizar.Add("@Id", estatustarea.Id, DbType.Int32);
+                    parametrosActualizar.Add("@EstatusTareaDescripcion", estatustarea.EstatusTareaDescripcion, DbType.String);
+                    parametrosActualizar.Add("@IdUsuarioUpd", estatustarea.IdUsuarioUpd, DbType.Int32);
+                    parametrosActualizar.Add("@FechaUpd", estatustarea.FechaUpd, DbType.DateTime);
+
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Estatus de las tareas actualizado con éxito.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No fue posible actualizar el estatus de las tareas.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al actualizar el estatus de las tareas: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> DesactivarEstatusTarea(EstatusTareas estatustarea)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                estatustarea.FechaDel = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para desactivar el estatustarea
+                    string sql = @"
+                    UPDATE EstatusTareas 
+                    SET FlgActivo = 0, 
+                        IdUsuarioDel = @IdUsuarioDel, 
+                        FechaDel = @FechaDel 
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", estatustarea.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioDel", estatustarea.IdUsuarioDel, DbType.Int32);
+                    parametros.Add("@FechaDel", estatustarea.FechaDel, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "EstatusTarea desactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el estatustarea o ya está desactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al desactivar el estatustarea: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> ReactivarEstatusTarea(EstatusTareas estatustarea)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                estatustarea.FechaUpd = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para reactivar el estatustarea
+                    string sql = @"
+                    UPDATE EstatusTareas 
+                    SET FlgActivo = 1, 
+                        IdUsuarioUpd = @IdUsuarioUpd, 
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", estatustarea.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioUpd", estatustarea.IdUsuarioUpd, DbType.Int32);
+                    parametros.Add("@FechaUpd", estatustarea.FechaUpd, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "EstatusTarea reactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el estatustarea o ya está reactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al reactivar el estatustarea: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        //============================================================================================================================\\
+        //================================================   Modelo EstatusSoportes   ================================================ \\
+        //==============================================================================================================================\\
+
+        public async Task<RespuestaJson> GetEstatusSoportes()
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir la conexión a la base de datos
+                _dapperContext.AbrirConexion("SGP");
+
+                string sql = "SELECT Id, EstatusSoporteDescripcion, FlgActivo FROM EstatusSoportes";
+
+                var estatussoportes = await _dapperContext.QueryAsync<EstatusSoportes>(sql);
+                if (estatussoportes != null)
+                {
+                    respuesta.Resultado = true;
+                    respuesta.Data = estatussoportes.Select(s => new EstatusSoportes
+                    {
+                        Id = s.Id,
+                        EstatusSoporteDescripcion = s.EstatusSoporteDescripcion,
+                        FlgActivo = s.FlgActivo
+                    }).ToList();
+                }
+                else
+                {
+                    respuesta.Mensaje = "No se encontraron estatussoportes activos.";
+                    respuesta.Data = new List<EstatusSoportes>(); // Inicializar Data para evitar null
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los estatussoportes." + ex.Message;
+                respuesta.Data = new List<EstatusSoportes>(); // Inicializar Data para evitar null
+            }
+            finally
+            {
+                // Cerrar o liberar la conexión (si es necesario)
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> AgregarEstatusSoporte(EstatusSoportes estatussoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+
+                    // Validar si ya existe un registro con el mismo IdSistema en la base de datos
+                    string sqlValidarEstatusSoportesDescripcion = "SELECT COUNT(*) FROM EstatusSoportes WHERE EstatusSoporteDescripcion = @EstatusSoporteDescripcion;";
+                    var parametrosValidarEstatusSoportesDescripcion = new DynamicParameters();
+                    parametrosValidarEstatusSoportesDescripcion.Add("@EstatusSoporteDescripcion", estatussoporte.EstatusSoporteDescripcion, DbType.String);
+
+
+                    int EstatusSoportesDescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusSoportesDescripcion, parametrosValidarEstatusSoportesDescripcion);
+
+                    if (EstatusSoportesDescripcionExistente > 0)
+                    {
+                        respuesta.Mensaje = "Los soportes ya cuentan con este estatus.";
+                        return respuesta;
+                    }
+
+                    // Consulta SQL para insertar el estatussoporte
+                    string sqlInsertar = @"
+                    INSERT INTO EstatusSoportes 
+                    (EstatusSoporteDescripcion, IdUsuarioSet) 
+                    VALUES 
+                    (@EstatusSoporteDescripcion, @IdUsuarioSet);";
+
+                    var parametrosInsertar = new DynamicParameters();
+                    parametrosInsertar.Add("@EstatusSoporteDescripcion", estatussoporte.EstatusSoporteDescripcion, DbType.String);
+                    parametrosInsertar.Add("@IdUsuarioSet", estatussoporte.IdUsuarioSet, DbType.Int32);
+
+                    // Ejecutar la consulta de inserción
+                    int filasAfectadas = await connection.ExecuteAsync(sqlInsertar, parametrosInsertar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "El estatus del soporte se agregó exitosamente.";
+                        respuesta.Data = new { EstatusSoporteId = estatussoporte.Id }; // Puedes devolver el ID del estatussoporte si lo necesitas
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "Hubo un error al agregar el estatus del soporte.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al intentar agregar el estatus del soporte: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> EditarEstatusSoporte(EstatusSoportes estatussoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                estatussoporte.FechaUpd = DateTime.Now;
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    string sqlValidarEstatusSoportesDescripcion = "SELECT COUNT(*) FROM EstatusSoportes WHERE EstatusSoporteDescripcion = @EstatusSoporteDescripcion";
+                    var parametrosValidar = new DynamicParameters();
+                    parametrosValidar.Add("@EstatusSoporteDescripcion", estatussoporte.EstatusSoporteDescripcion, DbType.String);
+
+                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusSoportesDescripcion, parametrosValidar);
+
+                    if (existeDescripcion > 0)
+                    {
+                        respuesta.Mensaje = "Los soportes ya cuentan con este estatus.";
+                        return respuesta;
+                    }
+
+                    string sqlActualizar = @"
+                    UPDATE EstatusSoportes 
+                    SET EstatusSoporteDescripcion = @EstatusSoporteDescripcion,
+                        IdUsuarioUpd = @IdUsuarioUpd,
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id;";
+
+                    var parametrosActualizar = new DynamicParameters();
+                    parametrosActualizar.Add("@Id", estatussoporte.Id, DbType.Int32);
+                    parametrosActualizar.Add("@EstatusSoporteDescripcion", estatussoporte.EstatusSoporteDescripcion, DbType.String);
+                    parametrosActualizar.Add("@IdUsuarioUpd", estatussoporte.IdUsuarioUpd, DbType.Int32);
+                    parametrosActualizar.Add("@FechaUpd", estatussoporte.FechaUpd, DbType.DateTime);
+
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Estatus de los soportes actualizado con éxito.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No fue posible actualizar el estatus de los soportes.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al actualizar el estatus de los soportes: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> DesactivarEstatusSoporte(EstatusSoportes estatussoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                estatussoporte.FechaDel = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para desactivar el estatussoporte
+                    string sql = @"
+                    UPDATE EstatusSoportes 
+                    SET FlgActivo = 0, 
+                        IdUsuarioDel = @IdUsuarioDel, 
+                        FechaDel = @FechaDel 
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", estatussoporte.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioDel", estatussoporte.IdUsuarioDel, DbType.Int32);
+                    parametros.Add("@FechaDel", estatussoporte.FechaDel, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "EstatusSoporte desactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el estatussoporte o ya está desactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al desactivar el estatussoporte: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> ReactivarEstatusSoporte(EstatusSoportes estatussoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                estatussoporte.FechaUpd = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para reactivar el estatussoporte
+                    string sql = @"
+                    UPDATE EstatusSoportes 
+                    SET FlgActivo = 1, 
+                        IdUsuarioUpd = @IdUsuarioUpd, 
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", estatussoporte.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioUpd", estatussoporte.IdUsuarioUpd, DbType.Int32);
+                    parametros.Add("@FechaUpd", estatussoporte.FechaUpd, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "EstatusSoporte reactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el estatussoporte o ya está reactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al reactivar el estatussoporte: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        //============================================================================================================================\\
+        //=============================================   Modelo NivelServicioSoportes   ==============================================\\
+        //==============================================================================================================================\\
+
+        public async Task<RespuestaJson> GetNivelServicioSoportes()
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir la conexión a la base de datos
+                _dapperContext.AbrirConexion("SGP");
+
+                string sql = "SELECT Id, NivelServicioSoporteDescripcion, FlgActivo FROM NivelServicioSoportes";
+
+                var nivelserviciosoportes = await _dapperContext.QueryAsync<NivelServicioSoportes>(sql);
+                if (nivelserviciosoportes != null)
+                {
+                    respuesta.Resultado = true;
+                    respuesta.Data = nivelserviciosoportes.Select(s => new NivelServicioSoportes
+                    {
+                        Id = s.Id,
+                        NivelServicioSoporteDescripcion = s.NivelServicioSoporteDescripcion,
+                        FlgActivo = s.FlgActivo
+                    }).ToList();
+                }
+                else
+                {
+                    respuesta.Mensaje = "No se encontraron nivelserviciosoportes activos.";
+                    respuesta.Data = new List<NivelServicioSoportes>(); // Inicializar Data para evitar null
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los nivelserviciosoportes." + ex.Message;
+                respuesta.Data = new List<NivelServicioSoportes>(); // Inicializar Data para evitar null
+            }
+            finally
+            {
+                // Cerrar o liberar la conexión (si es necesario)
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> AgregarNivelServicioSoporte(NivelServicioSoportes nivelserviciosoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+
+                    // Validar si ya existe un registro con el mismo IdSistema en la base de datos
+                    string sqlValidarNivelServicioSoportesDescripcion = "SELECT COUNT(*) FROM NivelServicioSoportes WHERE NivelServicioSoporteDescripcion = @NivelServicioSoporteDescripcion;";
+                    var parametrosValidarNivelServicioSoportesDescripcion = new DynamicParameters();
+                    parametrosValidarNivelServicioSoportesDescripcion.Add("@NivelServicioSoporteDescripcion", nivelserviciosoporte.NivelServicioSoporteDescripcion, DbType.String);
+
+
+                    int NivelServicioSoportesDescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarNivelServicioSoportesDescripcion, parametrosValidarNivelServicioSoportesDescripcion);
+
+                    if (NivelServicioSoportesDescripcionExistente > 0)
+                    {
+                        respuesta.Mensaje = "Los soportes ya cuentan con este nivel de servicio.";
+                        return respuesta;
+                    }
+
+                    // Consulta SQL para insertar el nivelserviciosoporte
+                    string sqlInsertar = @"
+                    INSERT INTO NivelServicioSoportes 
+                    (NivelServicioSoporteDescripcion, IdUsuarioSet) 
+                    VALUES 
+                    (@NivelServicioSoporteDescripcion, @IdUsuarioSet);";
+
+                    var parametrosInsertar = new DynamicParameters();
+                    parametrosInsertar.Add("@NivelServicioSoporteDescripcion", nivelserviciosoporte.NivelServicioSoporteDescripcion, DbType.String);
+                    parametrosInsertar.Add("@IdUsuarioSet", nivelserviciosoporte.IdUsuarioSet, DbType.Int32);
+
+                    // Ejecutar la consulta de inserción
+                    int filasAfectadas = await connection.ExecuteAsync(sqlInsertar, parametrosInsertar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "El nivel de servicio del soporte se agregó exitosamente.";
+                        respuesta.Data = new { NivelServicioSoporteId = nivelserviciosoporte.Id }; // Puedes devolver el ID del nivelserviciosoporte si lo necesitas
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "Hubo un error al agregar el nivel de servicio del soporte.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al intentar agregar el nivel de servicio del soporte: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> EditarNivelServicioSoporte(NivelServicioSoportes nivelserviciosoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                nivelserviciosoporte.FechaUpd = DateTime.Now;
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    string sqlValidarNivelServicioSoportesDescripcion = "SELECT COUNT(*) FROM NivelServicioSoportes WHERE NivelServicioSoporteDescripcion = @NivelServicioSoporteDescripcion";
+                    var parametrosValidar = new DynamicParameters();
+                    parametrosValidar.Add("@NivelServicioSoporteDescripcion", nivelserviciosoporte.NivelServicioSoporteDescripcion, DbType.String);
+
+                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarNivelServicioSoportesDescripcion, parametrosValidar);
+
+                    if (existeDescripcion > 0)
+                    {
+                        respuesta.Mensaje = "Los soportes ya cuentan con este nivel de servicio.";
+                        return respuesta;
+                    }
+
+                    string sqlActualizar = @"
+                    UPDATE NivelServicioSoportes 
+                    SET NivelServicioSoporteDescripcion = @NivelServicioSoporteDescripcion,
+                        IdUsuarioUpd = @IdUsuarioUpd,
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id;";
+
+                    var parametrosActualizar = new DynamicParameters();
+                    parametrosActualizar.Add("@Id", nivelserviciosoporte.Id, DbType.Int32);
+                    parametrosActualizar.Add("@NivelServicioSoporteDescripcion", nivelserviciosoporte.NivelServicioSoporteDescripcion, DbType.String);
+                    parametrosActualizar.Add("@IdUsuarioUpd", nivelserviciosoporte.IdUsuarioUpd, DbType.Int32);
+                    parametrosActualizar.Add("@FechaUpd", nivelserviciosoporte.FechaUpd, DbType.DateTime);
+
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Nivel de servicio de los soportes actualizado con éxito.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No fue posible actualizar el nivel de servicio de los soportes.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al actualizar el nivel de servicio de los soportes: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> DesactivarNivelServicioSoporte(NivelServicioSoportes nivelserviciosoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                nivelserviciosoporte.FechaDel = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para desactivar el nivelserviciosoporte
+                    string sql = @"
+                    UPDATE NivelServicioSoportes 
+                    SET FlgActivo = 0, 
+                        IdUsuarioDel = @IdUsuarioDel, 
+                        FechaDel = @FechaDel 
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", nivelserviciosoporte.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioDel", nivelserviciosoporte.IdUsuarioDel, DbType.Int32);
+                    parametros.Add("@FechaDel", nivelserviciosoporte.FechaDel, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "NivelServicioSoporte desactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el nivelserviciosoporte o ya está desactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al desactivar el nivelserviciosoporte: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> ReactivarNivelServicioSoporte(NivelServicioSoportes nivelserviciosoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                nivelserviciosoporte.FechaUpd = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para reactivar el nivelserviciosoporte
+                    string sql = @"
+                    UPDATE NivelServicioSoportes 
+                    SET FlgActivo = 1, 
+                        IdUsuarioUpd = @IdUsuarioUpd, 
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", nivelserviciosoporte.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioUpd", nivelserviciosoporte.IdUsuarioUpd, DbType.Int32);
+                    parametros.Add("@FechaUpd", nivelserviciosoporte.FechaUpd, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "NivelServicioSoporte reactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el nivelserviciosoporte o ya está reactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al reactivar el nivelserviciosoporte: " + ex.Message;
             }
             finally
             {

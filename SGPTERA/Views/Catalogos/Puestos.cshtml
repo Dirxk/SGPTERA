@@ -403,11 +403,14 @@
                 );
 
                 if (resultados.length > 0) {
-                    gridPuestos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    GridEstatusProyectos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
                     $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
                 } else {
-                    gridPuestos.itemsSource = []; // Limpia la grilla si no hay resultados.
-                    $('#mensajeNoEncontrado').text('Puesto no encontrado').show(); // Muestra un mensaje de "Puesto no encontrado".
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No se encontró ningún resultado',
+                    });
                 }
             });
 

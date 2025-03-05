@@ -34,7 +34,7 @@
                 <i class="fas fa-sync-alt"></i>
             </button>
             <!-- Botón de agregar cliente usuario -->
-            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#ClienteUsuarioModal">
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#UserModal">
                 <i class="fas fa-plus"></i>
             </button>
         </div>
@@ -54,7 +54,7 @@
 <!-- ================================================================================================= -->
 
 <div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="UserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
         <div class="modal-content">
             <form id="FormCrearUsuario">
                 <div class="modal-header">
@@ -63,49 +63,52 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <!-- Campo: Usuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <!-- Campo: Cliente Usuario -->
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" id="InpUsuario" name="InpUsuario" type="text" placeholder="Usuario" required autocomplete="off" />
-                                <label for="InpUsuario">Nombre de usuario <span class="text-danger">*</span></label>
+                                <input class="form-control" id="InpClienteUsuario" name="InpClienteUsuario" type="text" placeholder="Cliente Usuario" required autocomplete="off" />
+                                <label for="InpClienteUsuario">Cliente Usuario <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: NombreUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <!-- Campo: Nombre Cliente Usuario -->
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" id="InpNombreUsuario" name="InpNombreUsuario" type="text" placeholder="Nombre" required autocomplete="off" />
-                                <label for="InpNombreUsuario">Nombre(s) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="InpNombreClienteUsuario" name="InpNombreClienteUsuario" type="text" placeholder="Nombre Cliente Usuario" required autocomplete="off" />
+                                <label for="InpNombreClienteUsuario">Nombre(s) <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: ApellidoPaternoUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <!-- Campo: Apellido Paterno Cliente Usuario -->
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" id="InpApellidoPaternoUsuario" name="InpApellidoPaternoUsuario" type="text" placeholder="Apellido Paterno" required autocomplete="off" />
-                                <label for="InpApellidoPaternoUsuario">Apellido paterno <span class="text-danger">*</span></label>
+                                <input class="form-control" id="InpApellidoPaternoClienteUsuario" name="InpApellidoPaternoClienteUsuario" type="text" placeholder="Apellido Paterno Cliente Usuario" required autocomplete="off" />
+                                <label for="InpApellidoPaternoClienteUsuario">Apellido paterno <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: ApellidoMaternoUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <!-- Campo: Apellido Materno Cliente Usuario -->
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" id="InpApellidoMaternoUsuario" name="InpApellidoMaternoUsuario" type="text" placeholder="Apellido Materno" required autocomplete="off" />
-                                <label for="InpApellidoMaternoUsuario">Apellido materno <span class="text-danger">*</span></label>
+                                <input class="form-control" id="InpApellidoMaternoClienteUsuario" name="InpApellidoMaternoClienteUsuario" type="text" placeholder="Apellido Materno Cliente Usuario" required autocomplete="off" />
+                                <label for="InpApellidoMaternoClienteUsuario">Apellido materno <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: IdCliente -->
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" id="InpRazonSocial" name="InpRazonSocial">
+                                    <option value="">Seleccione una opción</option>
+                                    <!-- Las opciones se llenarán dinámicamente aquí -->
+                                </select>
+                                <label for="InpRazonSocial">Empresa <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <!-- Campo: IdPuesto -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <select class="form-select" id="InpPuesto" name="InpPuesto">
                                     <option value="">Seleccione una opción</option>
                                     <!-- Las opciones se llenarán dinámicamente aquí -->
                                 </select>
                                 <label for="InpPuesto">Puesto <span class="text-danger">*</span></label>
-                            </div>
-                        </div>
-                        <!-- Campo: Teléfono -->
-                        <div class="col-12 col-md-6 mb-3">
-                            <div class="form-floating">
-                                <input class="form-control" id="InpTelefono" name="InpTelefono" type="text" placeholder="Teléfono" maxlength="15" required autocomplete="off" />
-                                <label for="InpTelefono">Teléfono <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <!-- Campo: Correo -->
@@ -115,17 +118,24 @@
                                 <label for="InpCorreo">Correo <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: Contraseña -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <!-- Campo: Teléfono -->
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" id="InpContrasena" name="InpContrasena" type="password" placeholder="Contraseña" maxlength="15" required autocomplete="off" />
+                                <input class="form-control" id="InpTelefono" name="InpTelefono" type="text" placeholder="Teléfono" maxlength="15" required autocomplete="off" />
+                                <label for="InpTelefono">Teléfono <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Contraseña -->
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpContrasena" name="InpContrasena" type="password" placeholder="Contraseña" required autocomplete="off" />
                                 <label for="InpContrasena">Contraseña <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <!-- Campo: Repetir Contraseña -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" id="InpRepetirContrasena" name="InpRepetirContrasena" type="password" placeholder="Repetir Contraseña" maxlength="15" required autocomplete="off" />
+                                <input class="form-control" id="InpRepetirContrasena" name="InpRepetirContrasena" type="password" placeholder="Repetir Contraseña" required autocomplete="off" />
                                 <label for="InpRepetirContrasena">Repite la contraseña <span class="text-danger">*</span></label>
                             </div>
                         </div>
@@ -136,15 +146,15 @@
                         </div>
                         <!-- Previsualización de la imagen -->
                         <div class="col-12 mb-3">
-                            <div id="previewContainer" class="d-none border rounded p-3 d-flex align-items-center justify-content-between">
+                            <div id="previewContainer" class="d-none border rounded p-1 d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img id="previewImage" src="" alt="Previsualización" class="img-thumbnail me-3" style="max-width: 150px; max-height: 150px; object-fit: contain;">
+                                    <img id="previewImage" src="" alt="Previsualización" class="img-thumbnail me-2" style="max-width: 60px; max-height: 60px; object-fit: contain;">
                                     <div>
                                         <p id="fileName" class="mb-0 fw-bold"></p>
                                         <small id="fileSize" class="text-muted"></small>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-link text-danger p-0" id="removePreview" aria-label="Eliminar previsualización">
+                                <button type="button" class="btn btn-link text-danger p-2" id="removePreview" aria-label="Eliminar previsualización">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -173,7 +183,7 @@
 <!-- ================================================================================================= -->
 
 <div class="modal fade" id="ModalEditarClienteUsuario" tabindex="-1" aria-labelledby="ModalEditarClienteUsuarioLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
         <div class="modal-content">
             <form id="FormEditarClienteUsuario">
                 <div class="modal-header">
@@ -182,36 +192,46 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <!-- Campo: ClienteUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <!-- Campo: Cliente Usuario -->
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpClienteUsuarioEdit" name="InpClienteUsuarioEdit" type="text" placeholder="Cliente Usuario" required autocomplete="off" />
-                                <label for="InpClienteUsuarioEdit">Nombre de cliente usuario <span class="text-danger">*</span></label>
+                                <label for="InpClienteUsuarioEdit">Cliente Usuario <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: NombreClienteUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <!-- Campo: Nombre Cliente Usuario -->
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" id="InpNombreClienteUsuarioEdit" name="InpNombreClienteUsuarioEdit" type="text" placeholder="Nombre" required autocomplete="off" />
+                                <input class="form-control" id="InpNombreClienteUsuarioEdit" name="InpNombreClienteUsuarioEdit" type="text" placeholder="Nombre Cliente Usuario" required autocomplete="off" />
                                 <label for="InpNombreClienteUsuarioEdit">Nombre(s) <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: ApellidoPaternoClienteUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <!-- Campo: Apellido Paterno Cliente Usuario -->
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" id="InpApellidoPaternoClienteUsuarioEdit" name="InpApellidoPaternoClienteUsuarioEdit" type="text" placeholder="Apellido Paterno" required autocomplete="off" />
+                                <input class="form-control" id="InpApellidoPaternoClienteUsuarioEdit" name="InpApellidoPaternoClienteUsuarioEdit" type="text" placeholder="Apellido Paterno Cliente Usuario" required autocomplete="off" />
                                 <label for="InpApellidoPaternoClienteUsuarioEdit">Apellido paterno <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: ApellidoMaternoClienteUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <!-- Campo: Apellido Materno Cliente Usuario -->
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
-                                <input class="form-control" id="InpApellidoMaternoClienteUsuarioEdit" name="InpApellidoMaternoClienteUsuarioEdit" type="text" placeholder="Apellido Materno" required autocomplete="off" />
+                                <input class="form-control" id="InpApellidoMaternoClienteUsuarioEdit" name="InpApellidoMaternoClienteUsuarioEdit" type="text" placeholder="Apellido Materno Cliente Usuario" required autocomplete="off" />
                                 <label for="InpApellidoMaternoClienteUsuarioEdit">Apellido materno <span class="text-danger">*</span></label>
                             </div>
                         </div>
+                        <!-- Campo: IdCliente -->
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="form-floating">
+                                <select class="form-select" id="InpRazonSocialEdit" name="InpRazonSocialEdit">
+                                    <option value="">Seleccione una opción</option>
+                                    <!-- Las opciones se llenarán dinámicamente aquí -->
+                                </select>
+                                <label for="InpRazonSocialEdit">Empresa <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
                         <!-- Campo: IdPuesto -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <select class="form-select" id="InpPuestoEdit" name="InpPuestoEdit">
                                     <option value="">Seleccione una opción</option>
@@ -220,22 +240,22 @@
                                 <label for="InpPuestoEdit">Puesto <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: Teléfono -->
-                        <div class="col-12 col-md-6 mb-3">
-                            <div class="form-floating">
-                                <input class="form-control" id="InpTelefonoEdit" name="InpTelefonoEdit" type="text" placeholder="Teléfono" maxlength="15" required autocomplete="off" />
-                                <label for="InpTelefonoEdit">Teléfono <span class="text-danger">*</span></label>
-                            </div>
-                        </div>
                         <!-- Campo: Correo -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpCorreoEdit" name="InpCorreoEdit" type="email" placeholder="Correo" required autocomplete="off" />
                                 <label for="InpCorreoEdit">Correo <span class="text-danger">*</span></label>
                             </div>
                         </div>
+                        <!-- Campo: Teléfono -->
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpTelefonoEdit" name="InpTelefonoEdit" type="text" placeholder="Teléfono" maxlength="15" required autocomplete="off" />
+                                <label for="InpTelefonoEdit">Teléfono <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
                         <!-- Campo: Contraseña -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpContrasenaEdit" name="InpContrasenaEdit" type="password" placeholder="Contraseña" maxlength="15" required autocomplete="off" />
                                 <label for="InpContrasenaEdit">Nueva Contraseña <span class="text-danger">*</span></label>
@@ -247,9 +267,9 @@
                             <input class="form-control" id="InpClienteUsuarioImagenEdit" name="imagen" type="file" accept="image/*" />
                         </div>
                         <div class="col-12 mt-3">
-                            <div id="previewContainerEdit" class="border rounded p-3 d-flex align-items-center justify-content-between">
+                            <div id="previewContainerEdit" class="border rounded p-1 d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img id="previewImageEdit" src="" alt="Previsualización" class="img-thumbnail me-3 previewImage" style="max-width: 150px; max-height: 150px; object-fit: contain;">
+                                    <img id="previewImageEdit" src="" alt="Previsualización" class="img-thumbnail me-3 previewImage" style="max-width: 100px; max-height: 100px; object-fit: contain;">
                                     <div>
                                         <p id="fileNameEdit" class="mb-0 fw-bold"></p>
                                         <small id="fileSizeEdit" class="text-muted"></small>
@@ -380,7 +400,7 @@
             if (clienteusuario) {
                 // Guardar los valores iniciales del cliente usuario
                 valoresIniciales = {
-                    clienteusuario: clienteusuario.clienteusuario || '',
+                    clienteusuario: clienteusuario.clienteUsuario || '',
                     nombreClienteUsuario: clienteusuario.nombreClienteUsuario || '',
                     apellidoPaternoClienteUsuario: clienteusuario.apellidoPaternoClienteUsuario || '',
                     apellidoMaternoClienteUsuario: clienteusuario.apellidoMaternoClienteUsuario || '',
@@ -511,6 +531,34 @@
             });
         }
 
+        function llenarComboClientes(esEdicion = false) {
+            $.ajax({
+                type: 'POST', // Método HTTP
+                url: '@Url.Action("GetSistemasClientes", "Catalogos")', // Ruta del servidor
+                success: function (response) {
+                    console.log("Respuesta del servidor:", response); // Verifica la estructura de la respuesta
+
+                    if (response.resultado && response.data && response.data.length > 0) {
+                        // Selecciona el combo box según el parámetro esEdicion
+                        var combo = esEdicion ? $('#InpRazonSocialEdit') : $('#InpRazonSocial');
+                        combo.empty(); // Limpiar el combo box
+                        combo.append('<option value="">Seleccione una opción</option>'); // Opción por defecto
+
+                        // Llenar el combo box con las razones sociales
+                        response.data.forEach(function (cliente) {
+                            console.log("Cliente:", cliente); // Verifica cada cliente
+                            combo.append('<option value="' + cliente.id + '">' + cliente.razonSocial + '</option>');
+                        });
+                    } else {
+                        console.error("No se pudieron obtener los clientes o la respuesta está vacía.");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error al obtener los clientes:", textStatus, errorThrown);
+                }
+            });
+        }
+
         //============================================================================================================================\\
         //===============================  Inicialización del GRID Clientes Usuarios y Configuración de Eventos  ======================\\
         //==============================================================================================================================\\
@@ -527,18 +575,19 @@
                 selectionMode: wijmo.grid.SelectionMode.Row,
                 columns: [
                     { binding: '', header: '#', width: 50, align: 'center' },
-                    { binding: 'clienteUsuario', header: 'Nombre de cliente usuario', width: '*', align: 'center' },
+                    { binding: 'clienteUsuario', header: 'Cliente / Usuario', width: 180, align: 'center' },
                     {
                         binding: 'nombreCompleto',
                         header: 'Nombre Completo',
+                        minWidth: 220,
                         width: '*',
                         align: 'center',
                         isReadOnly: true
                     },
-                    { binding: 'descripcion', header: 'Puesto', width: 180, align: 'center' },
-                    { binding: 'telefono', header: 'Telefono', width: 180, align: 'center' },
-                    { binding: 'correo', header: 'Correo', width: '*', align: 'center' },
-                    { binding: 'razonSocial', header: 'Razon Social', width: '*', align: 'center' },
+                    { binding: 'razonSocial', header: 'Empresa', minWidth: 250, width: '*', align: 'center' },
+                    { binding: 'descripcion', header: 'Puesto', width: 150, align: 'center' },
+                    { binding: 'telefono', header: 'Telefono', width: 150, align: 'center' },
+                    { binding: 'correo', header: 'Correo', width: 200, align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
                 ],
                 isReadOnly: true,
@@ -580,14 +629,14 @@
                                     <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarClienteUsuario" onclick="EditarClienteUsuario(${rowData.id})">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                            <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarClienteUsuario" data-id="${rowData.id}" data-nombre="${rowData.clienteusuario}">
+                                            <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarClienteUsuario" data-id="${rowData.id}" data-nombre="${rowData.clienteUsuario}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>`;
                             } else if (flgActivo === false) {
                                 botones = `
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                            <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarClienteUsuario" data-id="${rowData.id}" data-nombre="${rowData.clienteusuario}">
+                                            <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarClienteUsuario" data-id="${rowData.id}" data-nombre="${rowData.clienteUsuario}">
                                         <i class="fas fa-check"></i>
                                     </button>
                                 </div>`;
@@ -609,7 +658,7 @@
                     const term = request.term.toLowerCase(); // Obtiene el término de búsqueda.
                     const clientesusuarios = gridClientesUsuarios.itemsSource; // Obtiene la lista de clientes usuarios.
                     const resultados = clientesusuarios.filter(clienteusuario =>
-                        clienteusuario.clienteusuario.toLowerCase().includes(term) || // Busca por nombre de cliente usuario.
+                        clienteusuario.clienteUsuario.toLowerCase().includes(term) || // Busca por nombre de cliente usuario.
                         clienteusuario.nombreClienteUsuario.toLowerCase().includes(term) || // Busca por nombre.
                         clienteusuario.apellidoPaternoClienteUsuario.toLowerCase().includes(term) || // Busca por apellido paterno.
                         clienteusuario.apellidoMaternoClienteUsuario.toLowerCase().includes(term) ||
@@ -618,8 +667,8 @@
                         clienteusuario.correo.toLowerCase().includes(term)
                     );
                     response(resultados.map(clienteusuario => ({
-                        label: `${clienteusuario.clienteusuario} (${clienteusuario.correo})`, // Muestra el nombre de cliente usuario y correo.
-                        value: clienteusuario.clienteusuario // Asigna el ID del cliente usuario como valor.
+                        label: `${clienteusuario.clienteUsuario} (${clienteusuario.correo})`, // Muestra el nombre de cliente usuario y correo.
+                        value: clienteusuario.clienteUsuario // Asigna el ID del cliente usuario como valor.
                     })));
                 },
                 select: function (event, ui) {
@@ -636,7 +685,7 @@
                 const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda.
                 const clientesusuarios = gridClientesUsuarios.itemsSource; // Obtiene la lista de clientes usuarios.
                 const resultados = clientesusuarios.filter(clienteusuario =>
-                    clienteusuario.clienteusuario.toLowerCase().includes(term) || // Busca por nombre de cliente usuario.
+                    clienteusuario.clienteUsuario.toLowerCase().includes(term) || // Busca por nombre de cliente usuario.
                     clienteusuario.nombreClienteUsuario.toLowerCase().includes(term) || // Busca por nombre.
                     clienteusuario.apellidoPaternoClienteUsuario.toLowerCase().includes(term) || // Busca por apellido paterno.
                     clienteusuario.apellidoMaternoClienteUsuario.toLowerCase().includes(term) ||
@@ -646,11 +695,14 @@
                 );
 
                 if (resultados.length > 0) {
-                    gridClientesUsuarios.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
-                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Cliente usuario no encontrado".
+                    GridEstatusProyectos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
                 } else {
-                    gridClientesUsuarios.itemsSource = []; // Limpia la grilla si no hay resultados.
-                    $('#mensajeNoEncontrado').text('Cliente usuario no encontrado').show(); // Muestra un mensaje de "Cliente usuario no encontrado".
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No se encontró ningún resultado',
+                    });
                 }
             });
 
@@ -713,9 +765,11 @@
             //========================================== Funcionalidad del boton de Agregar Cliente Usuario  ==============================\\
             //==============================================================================================================================\\
             llenarComboClientesUsuarios();
+            llenarComboClientes();
 
-            $('#ClienteUsuarioModal').on('shown.bs.modal', function () {
+            $('#UserModal').on('shown.bs.modal', function () {
                 llenarComboClientesUsuarios();
+                llenarComboClientes();
             });
 
             $("#InpTelefono").on("input", function () {
@@ -723,7 +777,7 @@
             });
 
             // Validación del formulario
-            $("#FormCrearClienteUsuario").validate({
+            $("#FormCrearUsuario").validate({
                 rules: {
                     InpClienteUsuario: { required: true, minlength: 2 },
                     InpNombreClienteUsuario: { required: true, minlength: 2 },
@@ -783,9 +837,9 @@
             });
 
             // Evento para limpiar el formulario al cerrar el modal
-            $('#ClienteUsuarioModal').on('hidden.bs.modal', function () {
-                $('#FormCrearClienteUsuario')[0].reset(); // Restablece el formulario.
-                $('#FormCrearClienteUsuario').validate().resetForm();
+            $('#UserModal').on('hidden.bs.modal', function () {
+                $('#FormCrearUsuario')[0].reset(); // Restablece el formulario.
+                $('#FormCrearUsuario').validate().resetForm();
                 $('#previewImage').attr('src', ''); // Limpia la imagen.
                 $('#fileName').text(''); // Limpia el nombre del archivo.
                 $('#fileSize').text(''); // Limpia el tamaño del archivo.
@@ -803,6 +857,7 @@
                 formData.append('Telefono', $('#InpTelefono').val());
                 formData.append('Correo', $('#InpCorreo').val());
                 formData.append('Contrasena', $('#InpContrasena').val());
+                formData.append('IdCliente', $('#InpRazonSocial').val());
                 formData.append('FotoFile', $('#InpImagenExt')[0].files[0]); // Cambiado a FotoFile para coincidir con el backend.
 
                 $.ajax({
@@ -857,6 +912,7 @@
                         } else {
                             // Desbloquear el contenido principal si hay un error en la respuesta
                             Notiflix.Block.remove('.card');
+                            document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
 
                             // Mostrar un mensaje de error con SweetAlert2
                             Swal.fire({
@@ -869,7 +925,7 @@
                     error: function (jqXHR, textStatus, errorThrown) {
                         // Desbloquear el contenido principal en caso de error en la solicitud
                         Notiflix.Block.remove('.card');
-
+                        document.getElementById('GridClientesUsuarios').style.visibility = 'visible';
                         // Mostrar un mensaje de error con SweetAlert2
                         Swal.fire({
                             icon: "error",
@@ -887,7 +943,7 @@
                     }
                 });
 
-                const ClienteUsuarioModal = bootstrap.Modal.getInstance(document.getElementById('ClienteUsuarioModal'));
+                const ClienteUsuarioModal = bootstrap.Modal.getInstance(document.getElementById('UserModal'));
                 ClienteUsuarioModal.hide();
             }
 
@@ -897,6 +953,7 @@
 
             $('#ModalEditarClienteUsuario').on('shown.bs.modal', function () {
                 llenarComboClientesUsuarios();
+                llenarComboClientes();
             });
 
             $('.cerrarModalEditarClienteUsuario').on('click', function () {
@@ -1005,6 +1062,7 @@
                 formData.append('Telefono', telefono);
                 formData.append('Correo', correo);
                 formData.append('Contrasena', $('#InpContrasenaEdit').val());
+                formData.append('IdCliente', $('#InpRazonSocialEdit').val());
 
                 // Si no se selecciona una nueva imagen, envía la imagen existente en base64.
                 if (!imagen && imagenExistente) {

@@ -132,11 +132,11 @@ namespace GestionProyectos.Models
         public bool FlgActivo { get; set; } = true;
     }
 
-    public class ModuloSistema
+    public class ModuloSistemas
     {
         [Key]
         public int Id { get; set; }
-        public required string Descripcion { get; set; }
+        public required string ModuloSistemaDescripcion { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
         public int? IdUsuarioUpd { get; set; }
@@ -150,7 +150,7 @@ namespace GestionProyectos.Models
     {
         [Key]
         public int Id { get; set; }
-        public required string Descripcion { get; set; }
+        public required string EstatusProyectosDescripcion { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
         public int? IdUsuarioUpd { get; set; }
@@ -164,7 +164,7 @@ namespace GestionProyectos.Models
     {
         [Key]
         public int Id { get; set; }
-        public required string Descripcion { get; set; }
+        public required string EstatusTareaDescripcion { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
 
@@ -174,6 +174,34 @@ namespace GestionProyectos.Models
         public DateTime? FechaDel { get; set; }
         public bool FlgActivo { get; set; } = true;
     }
-    
+
+    public class EstatusSoportes
+    {
+        [Key]
+        public int Id { get; set; }
+        public required string EstatusSoporteDescripcion { get; set; }
+        public int? IdUsuarioSet { get; set; }
+        public DateTime FechaSet { get; set; } = DateTime.UtcNow;
+        public int? IdUsuarioUpd { get; set; }
+        public DateTime? FechaUpd { get; set; }
+        public int? IdUsuarioDel { get; set; }
+        public DateTime? FechaDel { get; set; }
+        public bool FlgActivo { get; set; } = true;
+    }
+
+    public class NivelServicioSoportes
+    {
+        [Key]
+        public int Id { get; set; }
+        public required string NivelServicioSoporteDescripcion { get; set; }
+        public int? IdUsuarioSet { get; set; }
+        public DateTime FechaSet { get; set; } = DateTime.UtcNow;
+        public int? IdUsuarioUpd { get; set; }
+        public DateTime? FechaUpd { get; set; }
+        public int? IdUsuarioDel { get; set; }
+        public DateTime? FechaDel { get; set; }
+        public bool FlgActivo { get; set; } = true;
+    }
+
 }
 

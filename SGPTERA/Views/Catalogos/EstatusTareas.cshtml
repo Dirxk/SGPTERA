@@ -1,0 +1,967 @@
+﻿@{
+    ViewData["Title"] = "EstatusTareas";
+    var IdUsuario = ViewBag.IdUsuario;
+
+}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
+
+<!-- ================================================================================================= -->
+<!-- ======================================== Codigo Principal ======================================= -->
+<!-- ================================================================================================= -->
+<div class="card d-flex flex-column">
+    <div class="card-header d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between">
+        <!-- Primera columna: Título -->
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start mb-3 mb-md-0">
+            <i class="fa-solid fas fa-tasks fa-lg me-2 d-none d-md-block"></i>
+            <i class="fa-solid fas fa-tasks me-2 mb-2 d-block d-md-none"></i>
+            <h3 class="m-0 d-none d-md-block" style="font-family: 'Rubik', sans-serif; font-size: 1.25rem;">Estatus de las tareas</h3>
+            <h6 class="m-0 d-block d-md-none mb-1" style="font-family: 'Rubik', sans-serif; font-size: 1rem;">Estatus de las tareas</h6>
+        </div>
+
+        <!-- Segunda columna: Búsqueda y botones -->
+        <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end gap-2 mt-2 mt-md-0">
+            <!-- Input de búsqueda -->
+            <input id="inputBusqueda" class="form-control form-control-sm w-50" type="search" placeholder="Buscar" aria-label="Search">
+            <!-- Botón de búsqueda -->
+            <button id="btnBuscar" class="btn btn-info btn-sm" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+            <!-- Botón de recargar -->
+            <button type="button" id="btnReloadEstatusTareas" name="btnReloadEstatusTareas" class="btn btn-warning btn-sm">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <!-- Botón de agregar EstatusProyecto -->
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#UserModal">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-3 flex-grow-1">
+        <div class="table-responsive scrollbar h-100">
+            <!-- Grilla de EstatusTareas -->
+            <div id="GridEstatusTareas" style="width: 100%; height: 74vh;"></div>
+            <!-- Mensaje de "EstatusProyecto no encontrado" -->
+            <div id="mensajeNoEncontrado" class="text-danger mt-2" style="display: none;">Puesto no encontrado</div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ======================================= Modal nuevo EstatusProyecto ===================================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="UserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form id="FormCrearProyecto">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Modulo</h3>
+                    <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Campo: EstatusTareasDescripcion -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpEstatusTareasDescripcion" name="InpEstatusTareasDescripcion" required placeholder="Estatus" maxlength="20" autocomplete="off">
+                                <label for="InpEstatusTareasDescripcion">Estatus <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger cerrarModal" data-bs-dismiss="modal">
+                        <i class="fas fa-ban me-2"></i>Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success px-5" id="BtnAgregarUsuarioExt">
+                        <i class="far fa-folder me-2"></i>Agregar Modulo
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ====================================== Modal editar EstatusProyecto ===================================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" id="ModalEditarEstatusTarea" tabindex="-1" aria-labelledby="ModalEditarEstatusTareaLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <form id="FormEditarEstatusProyecto">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalEditarEstatusTareaLabel">Editar estatus de la tarea</h5>
+                    <button type="button" class="btn-close cerrarModalEditarEstatusTarea" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Campo: EstatusTareasDescripcion -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpEstatusTareasDescripcionEdit" name="InpEstatusTareasDescripcionEdit" required placeholder="Estatus" maxlength="20" autocomplete="off">
+                                <label for="InpEstatusTareasDescripcionEdit">Estatus <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger cerrarModalEditarEstatusTarea">Cancelar</button>
+                    <button type="button" class="btn btn-success EditarEstatusTarea" id="btnActualizarPuesto">Actualizar Puesto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ====================================== Modal eliminar EstatusProyecto =================================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalEliminarEstatusTarea" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="FormEliminarEstatusTarea">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar Estatus</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="fas fa-times fs--1"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-700 lh-lg mb-0">
+                        ¿Deseas eliminar el estatus de <strong class="nombreEstatusTarea"></strong>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-auto">
+                        <button class="btn btn-primary me-1 mb-1" type="button" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-danger me-1 mb-1" type="submit" id="BtnEliminarEstatusTarea">Eliminar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ====================================== Modal reactivar EstatusProyecto ================================== -->
+<!-- ================================================================================================= -->
+
+<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="ModalConfirmarEstatusTarea" tabindex="-1" aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="FormConfirmarEstatusTarea">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar Estatus</h5>
+                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="fas fa-times fs--1"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-700 lh-lg mb-0">
+                        ¿Deseas reactivar el estatus de <strong class="nombreConfirmarEstatusTarea"></strong>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-auto">
+                        <button class="btn btn-primary me-1 mb-1" type="button" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success me-1 mb-1" type="submit" id="BtnConfirmarEstatusTarea">Reactivar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        //============================================================================================================================\\
+        //====================================================  Variables Globales  ===================================================\\
+        //==============================================================================================================================\\
+        // Variable global para almacenar la instancia de la grilla de EstatusTareas.
+        var GridEstatusTareas = null;
+
+        // Función que realiza una solicitud AJAX para obtener los EstatusTareas desde el servidor.
+        function verEstatusTareas() {
+            return new Promise((resolve, reject) => {
+                const startTime = performance.now(); // Inicia el contador para medir el tiempo de respuesta.
+
+                $.ajax({
+                    type: 'POST', // Método HTTP utilizado para la solicitud.
+                    data: {}, // Datos enviados al servidor (en este caso, vacío).
+                    url: '@Url.Action("GetEstatusTareas", "Catalogos")',
+                    success: function (datos) {
+                        const endTime = performance.now(); // Finaliza el contador de tiempo.
+                        const serverResponseTime = endTime - startTime; // Calcula el tiempo de respuesta del servidor.
+                        GridEstatusTareas.itemsSource = datos.data; // Asigna los datos recibidos a la grilla de EstatusTareas.
+                        resolve(serverResponseTime); // Resuelve la promesa con el tiempo de respuesta.
+                    },
+                    error: function () {
+                        console.error("Error al obtener los EstatusTareas."); // Maneja errores en la solicitud.
+                        reject(); // Rechaza la promesa en caso de error.
+                    }
+                });
+            });
+        }
+
+        //============================================================================================================================\\
+        //================================  Función para editar un Puesto específico basado en su ID  ================================\\
+        //==============================================================================================================================\\
+
+        let valoresIniciales = {}; // Almacena los valores iniciales del Estatus del Proyecto
+
+        function EditarEstatusTarea(id) {
+            const EstatusTarea = GridEstatusTareas.itemsSource.find(c => c.id === id); // Busca el Estatus del Proyecto en la grilla.
+            if (EstatusTarea) {
+                // Guardar los valores iniciales del Estatus del Proyecto
+                valoresIniciales = {
+                    descripcion: EstatusTarea.estatusTareaDescripcion
+                };
+
+                // Asigna los valores del Estatus del Proyecto a los campos del formulario de edición.
+                $('#InpEstatusTareasDescripcionEdit').val(valoresIniciales.descripcion);
+
+                // Deshabilitar el botón de actualizar inicialmente
+                $('#btnActualizarPuesto').prop('disabled', true);
+
+                // Muestra el modal de edición de Estatus del Proyecto.
+                const ModalEditarEstatusTarea = new bootstrap.Modal($('#ModalEditarEstatusTarea')[0]);
+                ModalEditarEstatusTarea.show();
+                $('#btnActualizarPuesto').data('id', id); // Asigna el ID del Estatus del Proyecto al botón de actualizar.
+            } else {
+                console.error("Estatus del Proyecto no encontrado."); // Maneja el caso en que el Estatus del Proyecto no existe.
+            }
+        }
+
+        // Función para habilitar el botón si algún campo ha cambiado
+        function habilitarBotonActualizar() {
+            const descripcionActual = $('#InpEstatusTareasDescripcionEdit').val();
+            $('#btnActualizarPuesto').prop('disabled', descripcionActual === valoresIniciales.descripcion);
+        }
+
+        // Escucha los cambios en el campo del formulario
+        $('#InpEstatusTareasDescripcionEdit').on('input change', habilitarBotonActualizar);
+
+        // Evento para limpiar el formulario al cerrar el modal
+        $('#ModalEditarEstatusTarea').on('hidden.bs.modal', function () {
+            $('#FormEditarEstatusProyecto')[0].reset(); // Restablece el formulario.
+        });
+
+        //============================================================================================================================\\
+        //===============================  Inicialización del GRID EstatusTareas y Configuración de Eventos  ===============================\\
+        //==============================================================================================================================\\
+
+        $(document).ready(function () {
+
+            //============================================================================================================================\\
+            //==========================================               GRID Principal                ======================================\\
+            //==============================================================================================================================\\
+            // Inicializa la grilla antes de llamar a verEstatusTareas()
+            GridEstatusTareas = new wijmo.grid.FlexGrid('#GridEstatusTareas', {
+                autoGenerateColumns: false,
+                headersVisibility: 'Column',
+                itemsSource: [],
+                selectionMode: wijmo.grid.SelectionMode.Row,
+                columns: [
+                    { binding: '', header: '#', width: 50, align: 'center' },
+                    { binding: 'estatusTareaDescripcion', header: 'Estatus', width: '*', align: 'center' },
+                    { header: '', isReadOnly: true, width: 80, align: 'center' }
+                ],
+                isReadOnly: true,
+                itemFormatter: function (panel, r, c, cell) {
+                    if (panel.cellType === wijmo.grid.CellType.Cell) {
+                        const rowData = panel.rows[r].dataItem; // Obtiene los datos de la fila.
+                        const flgActivo = rowData.flgActivo; // Verificar el valor de FlgActivo.
+
+                        if (c === 0) {
+                            cell.textContent = (r + 1).toString(); // Muestra el número de fila.
+                        } else if (c === panel.columns.length - 1) {
+                            // Crear los botones según el valor de FlgActivo
+                            let botones = '';
+                            if (flgActivo === true) {
+                                botones = `
+                                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                                        <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarEstatusTarea" onclick="EditarEstatusTarea(${rowData.id})">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarEstatusTarea" data-id="${rowData.id}" data-nombre="${rowData.estatusTareaDescripcion}">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </div>`;
+                            } else if (flgActivo === false) {
+                                botones = `
+                                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                                        <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarEstatusTarea" data-id="${rowData.id}" data-nombre="${rowData.estatusTareaDescripcion}">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                    </div>`;
+                            }
+
+                            // Insertar los botones en la celda
+                            cell.innerHTML = botones;
+                        }
+                    }
+                }
+            });
+
+            // Llama a verEstatusTareas() después de inicializar la grilla
+            verEstatusTareas();
+
+            //============================================================================================================================\\
+            //==========================================  Funcionalidad de Búsqueda y Autocompletar   =====================================\\
+            //==============================================================================================================================\\
+
+            $('#inputBusqueda').autocomplete({
+                source: function (request, response) {
+                    const term = request.term.toLowerCase(); // Obtiene el término de búsqueda.
+                    const EstatusTareas = GridEstatusTareas.itemsSource; // Obtiene la lista de ModuloSistemas.
+                    const resultados = EstatusTareas.filter(estatustarea =>
+                        estatustarea.estatusTareaDescripcion.toLowerCase().includes(term)
+                    );
+                    response(resultados.map(estatustarea => ({
+                        label: `${estatustarea.estatusTareaDescripcion}`, // Muestra la descripción y tipo.
+                        value: estatustarea.estatusTareaDescripcion // Asigna el ID del puesto como valor.
+                    })));
+                },
+                select: function (event, ui) {
+                    const estatustareaId = ui.item.value; // Obtiene el ID del puesto seleccionado.
+                    const estatustarea = GridEstatusTareas.itemsSource.find(p => p.id === estatustareaId); // Busca el puesto en la grilla.
+                    if (estatustarea) {
+                        GridEstatusTareas.itemsSource = [estatustarea]; // Filtra la grilla para mostrar solo el puesto seleccionado.
+                    }
+                }
+            });
+
+            // Evento para buscar al hacer clic en el botón de búsqueda.
+            $('#btnBuscar').on('click', function () {
+                const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda.
+                const EstatusTareas = GridEstatusTareas.itemsSource; // Obtiene la lista de ModuloSistemas.
+                const resultados = EstatusTareas.filter(estatustarea =>
+                    estatustarea.estatusTareaDescripcion.toLowerCase().includes(term)
+                );
+
+                if (resultados.length > 0) {
+                    GridEstatusTareas.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No se encontró ningún resultado',
+                    });
+                }
+            });
+
+            // Evento para limpiar la búsqueda y mostrar todos los ModuloSistemas.
+            $('#inputBusqueda').on('input', function () {
+                if ($(this).val() === '') {
+                    verEstatusTareas(); // Recarga todos los ModuloSistemas.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
+                }
+            });
+
+
+            //============================================================================================================================\\
+            //==========================================      Funcionalidad del botón Recargar       ======================================\\
+            //==============================================================================================================================\\
+
+            $('#btnReloadEstatusTareas').on('click', function () {
+                // Ocultar el grid de EstatusTareas
+                document.getElementById('GridEstatusTareas').style.visibility = 'hidden';
+
+                // Bloquear el contenido principal con el estilo "arrows"
+                Notiflix.Block.arrows('.card', 'Actualizando datos...', {
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                    svgSize: '50px', // Tamaño del ícono de flechas
+                    messageFontSize: '16px', // Tamaño del mensaje
+                });
+
+                // Llamar a la función verEstatusTareas para recargar el grid
+                verEstatusTareas().then((serverResponseTime) => {
+                    // Tiempo adicional de 500 ms después de la respuesta del servidor
+                    setTimeout(() => {
+                        // Desbloquear el contenido principal
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar el grid después de que termine la animación de éxito
+                        document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                    }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                }).catch(() => {
+                    // En caso de error, desbloquear el contenido principal
+                    Notiflix.Block.remove('.card');
+
+                    // Mostrar un mensaje de error con SweetAlert2 (puedes cambiarlo por Notiflix si prefieres)
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Hubo un error al recargar los EstatusTareas.',
+                        icon: 'error',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false
+                    });
+
+                    // Mostrar el grid incluso si hay un error
+                    document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                });
+            });
+
+            //============================================================================================================================\\
+            //=========================================== Funcionalidad del boton de Agregar Modulo =======================================\\
+            //==============================================================================================================================\\
+
+            $("#FormCrearProyecto").validate({
+                rules: {
+                    InpEstatusTareasDescripcion: {
+                        required: true
+                    }
+                },
+                messages: {
+                    InpEstatusTareasDescripcion: {
+                        required: "El estatus es requerido."
+                    }
+                },
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
+                    error.insertAfter(element);
+                },
+                errorElement: 'div',
+                errorClass: 'alert-validate'
+            });
+
+            // Evento para limpiar el formulario al cerrar el modal
+            $('#UserModal').on('hidden.bs.modal', function () {
+                $('#FormCrearProyecto')[0].reset(); // Restablece el formulario.
+                $('#FormCrearProyecto').validate().resetForm();
+            });
+
+            // Función para enviar los datos del formulario mediante AJAX
+            function agregarPuesto() {
+                var formData = new FormData();
+                formData.append('EstatusTareaDescripcion', $('#InpEstatusTareasDescripcion').val());
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("AgregarEstatusTarea", "Catalogos")',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        // Ocultar el grid de EstatusTareas
+                        document.getElementById('GridEstatusTareas').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+
+                            // Llamar a la función verEstatusTareas para recargar el grid
+                            verEstatusTareas().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+                                document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los EstatusTareas.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+                            document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+                        document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                const UserModal = bootstrap.Modal.getInstance(document.getElementById('UserModal'));
+                UserModal.hide();
+            }
+
+            //============================================================================================================================\\
+            //==========================================   Funcionalidad del botón Editar EstatusProyecto    ======================================\\
+            //==============================================================================================================================\\
+
+            let valoresIniciales = {}; // Almacena los valores iniciales del Estatus del Proyecto
+
+            // Cerrar el modal
+            $('.cerrarModalEditarEstatusTarea').on('click', function () {
+                bootstrap.Modal.getInstance(document.getElementById('ModalEditarEstatusTarea')).hide();
+            });
+
+            // Validación del formulario
+            $("#FormEditarEstatusProyecto").validate({
+                rules: {
+                    InpEstatusTareasDescripcionEdit: {
+                        required: true
+                    }
+                },
+                messages: {
+                    InpEstatusTareasDescripcionEdit: {
+                        required: "El estatus es requerido."
+                    }
+                },
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
+                    error.insertAfter(element);
+                },
+                errorElement: 'div',
+                errorClass: 'alert-validate'
+            });
+
+            // Función para habilitar el botón si el campo ha cambiado y es válido
+            function habilitarBotonActualizar() {
+                const descripcionActual = $('#InpEstatusTareasDescripcionEdit').val();
+                const esValido = $("#FormEditarEstatusProyecto").valid(); // Verifica si el formulario es válido
+                $('#btnActualizarPuesto').prop('disabled', descripcionActual === valoresIniciales.descripcion || !esValido);
+            }
+
+            // Escuchar cambios en el campo del formulario
+            $('#InpEstatusTareasDescripcionEdit').on('input change', function () {
+                habilitarBotonActualizar();
+                $("#FormEditarEstatusProyecto").validate().element(this); // Valida el campo en tiempo real
+            });
+
+            // Evento para limpiar el formulario al cerrar el modal
+            $('#ModalEditarEstatusTarea').on('hidden.bs.modal', function () {
+                $('#FormEditarEstatusProyecto')[0].reset(); // Restablece el formulario.
+                $('#FormEditarEstatusProyecto').validate().resetForm(); // Limpia los mensajes de validación.
+                $('#btnActualizarPuesto').prop('disabled', true); // Deshabilita el botón de actualizar
+            });
+
+            // Función para actualizar el puesto
+            function actualizarPuesto() {
+                if (!$("#FormEditarEstatusProyecto").valid()) { // Verifica si el formulario es válido
+                    return; // Detiene la ejecución si el formulario no es válido
+                }
+
+                const id = $('#btnActualizarPuesto').data('id'); // Obtiene el ID del puesto.
+                const descripcion = $('#InpEstatusTareasDescripcionEdit').val(); // Obtiene la descripción.
+
+                const formData = new FormData();
+                formData.append('Id', id);
+                formData.append('EstatusTareaDescripcion', descripcion);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("EditarEstatusTarea", "Catalogos")', // Asegúrate de que esta ruta sea correcta.
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        // Ocultar el grid de EstatusTareas
+                        document.getElementById('GridEstatusTareas').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+
+                            // Llamar a la función verEstatusTareas para recargar el grid
+                            verEstatusTareas().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+                                document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los EstatusTareas.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+                            document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+                        document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+                const ModalEditarEstatusTarea = bootstrap.Modal.getInstance(document.getElementById('ModalEditarEstatusTarea'));
+                ModalEditarEstatusTarea.hide();
+            }
+
+            // Evento para el botón de actualizar
+            $('#btnActualizarPuesto').on('click', function () {
+                if ($("#FormEditarEstatusProyecto").valid()) { // Verifica si el formulario es válido
+                    actualizarPuesto(); // Llama a la función de actualización
+                }
+            });
+
+            // Evento para limpiar el formulario al cerrar el modal
+            $('#ModalEditarEstatusTarea').on('hidden.bs.modal', function () {
+                $('#FormEditarEstatusProyecto')[0].reset(); // Restablece el formulario.
+                $('#FormEditarEstatusProyecto').validate().resetForm();
+            });
+
+            //============================================================================================================================\\
+            //==========================================   Funcionalidad del botón Eliminar EstatusProyecto  ======================================\\
+            //==============================================================================================================================\\
+            // Función para abrir el modal de eliminación de puesto.
+            function EliminarPuesto(id, descripcion) {
+                $(".nombreEstatusTarea").text(descripcion); // Muestra la descripción del puesto en el modal.
+                $("#BtnEliminarEstatusTarea").data("id", id); // Asigna el ID al botón de eliminar.
+                const modalEliminar = new bootstrap.Modal(document.getElementById("ModalEliminarEstatusTarea"));
+                modalEliminar.show(); // Muestra el modal.
+            }
+
+            // Evento para abrir el modal de eliminación.
+            $(document).on("click", ".abrirModalEliminarEstatusTarea", function () {
+                let id = $(this).data("id"); // Extrae el ID del puesto usando un atributo data-*.
+                let descripcion = $(this).data("nombre"); // Obtiene la descripción.
+                EliminarPuesto(id, descripcion); // Llama a la función para abrir el modal.
+            });
+
+            // Evento para cerrar el modal de eliminación.
+            $(".cerrarModalEliminarEstatusTarea").on("click", function () {
+                const modalEliminar = bootstrap.Modal.getInstance(document.getElementById("ModalEliminarEstatusTarea"));
+                modalEliminar.hide(); // Cierra el modal.
+            });
+
+            // Evento para manejar la eliminación del puesto.
+            $("#FormEliminarEstatusTarea").on("submit", function (e) {
+                e.preventDefault(); // Prevenir el envío del formulario por defecto.
+
+                const id = $("#BtnEliminarEstatusTarea").data("id"); // Obtiene el ID del puesto.
+                console.log("Eliminando puesto con ID:", id); // Registra el ID en consola.
+
+                const formData = new FormData();
+                formData.append('Id', id);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DesactivarEstatusTarea", "Catalogos")', // Asegúrate de que la ruta sea correcta.
+                    data: formData,
+                    contentType: false, // Importante para FormData
+                    processData: false, // Importante para FormData
+                    beforeSend: function () {
+                        // Ocultar el grid de EstatusTareas
+                        document.getElementById('GridEstatusTareas').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verEstatusTareas para recargar el grid
+                            verEstatusTareas().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los EstatusTareas.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al desactivar el puesto."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                // Cierra el modal después de iniciar la solicitud AJAX
+                const modalEliminar = bootstrap.Modal.getInstance(document.getElementById('ModalEliminarEstatusTarea'));
+                modalEliminar.hide();
+            });
+
+            //============================================================================================================================\\
+            //==========================================  Funcionalidad del botón Reactivar EstatusProyecto  ======================================\\
+            //==============================================================================================================================\\
+            // Función para abrir el modal de confirmación de reactivación de EstatusProyecto.
+            function ConfirmarPuesto(id, descripcion) {
+                $(".nombreConfirmarEstatusTarea").text(descripcion); // Muestra la descripción del puesto en el modal.
+                $("#BtnConfirmarEstatusTarea").data("id", id); // Asigna el ID del puesto al botón de confirmación.
+                const modalConfirmar = new bootstrap.Modal(document.getElementById("ModalConfirmarEstatusTarea"));
+                modalConfirmar.show(); // Muestra el modal de confirmación.
+            }
+
+            // Evento para abrir el modal de confirmación al hacer clic en un botón específico.
+            $(document).on("click", ".abrirModalConfirmarEstatusTarea", function () {
+                let id = $(this).data("id"); // Obtiene el ID del puesto desde el atributo data-id.
+                let descripcion = $(this).data("nombre"); // Obtiene la descripción del puesto desde el atributo data-descripcion.
+                ConfirmarPuesto(id, descripcion); // Llama a la función para abrir el modal de confirmación.
+            });
+
+            // Evento para cerrar el modal de confirmación al hacer clic en un botón de cierre.
+            $(".cerrarModalConfirmarEstatusTarea").on("click", function () {
+                const modalConfirmar = bootstrap.Modal.getInstance(document.getElementById("ModalConfirmarEstatusTarea"));
+                modalConfirmar.hide(); // Cierra el modal de confirmación.
+            });
+
+            // Evento para manejar el envío del formulario de confirmación de reactivación de puesto.
+            $("#FormConfirmarEstatusTarea").on("submit", function (e) {
+                e.preventDefault(); // Evita el envío tradicional del formulario.
+
+                const id = $("#BtnConfirmarEstatusTarea").data("id"); // Obtiene el ID del puesto desde el botón de confirmación.
+                console.log("Reactivando puesto con ID:", id); // Muestra el ID del puesto en la consola para depuración.
+
+                const formData = new FormData();
+                formData.append('Id', id); // Agrega el ID del puesto al FormData.
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ReactivarEstatusTarea", "Catalogos")', // URL de la acción que reactiva al puesto.
+                    data: formData,
+                    contentType: false, // Importante para FormData.
+                    processData: false, // Importante para FormData.
+                    beforeSend: function () {
+                        // Ocultar el grid de EstatusTareas
+                        document.getElementById('GridEstatusTareas').style.visibility = 'hidden';
+
+                        // Bloquear el contenido principal con el estilo "hourglass"
+                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
+                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                            svgSize: '50px', // Tamaño del ícono de reloj de arena
+                            messageFontSize: '16px', // Tamaño del mensaje
+                        });
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            // Llamar a la función verEstatusTareas para recargar el grid
+                            verEstatusTareas().then((serverResponseTime) => {
+                                // Tiempo adicional de 500 ms después de la respuesta del servidor
+                                setTimeout(() => {
+                                    // Desbloquear el contenido principal
+                                    Notiflix.Block.remove('.card');
+
+                                    // Mostrar el grid después de que termine la animación de éxito
+                                    document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                                }, serverResponseTime + 500); // Tiempo del servidor + 500 ms
+                            }).catch(() => {
+                                // En caso de error, desbloquear el contenido principal
+                                Notiflix.Block.remove('.card');
+
+                                // Mostrar un mensaje de error con SweetAlert2
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Hubo un error al recargar los EstatusTareas.',
+                                    icon: 'error',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                });
+
+                                // Mostrar el grid incluso si hay un error
+                                document.getElementById('GridEstatusTareas').style.visibility = 'visible';
+                            });
+                        } else {
+                            // Desbloquear el contenido principal si hay un error en la respuesta
+                            Notiflix.Block.remove('.card');
+
+                            // Mostrar un mensaje de error con SweetAlert2
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        // Desbloquear el contenido principal en caso de error en la solicitud
+                        Notiflix.Block.remove('.card');
+
+                        // Mostrar un mensaje de error con SweetAlert2
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al reactivar el puesto."
+                        });
+
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                    },
+                    complete: function () {
+                        // Desbloquear el contenido principal después de 500 ms adicionales
+                        setTimeout(() => {
+                            Notiflix.Block.remove('.card');
+                        }, 500);
+                    }
+                });
+
+                // Cierra el modal de confirmación después de iniciar la solicitud AJAX.
+                const modalConfirmar = bootstrap.Modal.getInstance(document.getElementById('ModalConfirmarEstatusTarea'));
+                modalConfirmar.hide();
+            });
+        });
+
+    </script>
+}

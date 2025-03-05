@@ -645,11 +645,14 @@
                 );
 
                 if (resultados.length > 0) {
-                    gridUsuarios.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
-                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Usuario no encontrado".
+                    GridEstatusProyectos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
                 } else {
-                    gridUsuarios.itemsSource = []; // Limpia la grilla si no hay resultados.
-                    $('#mensajeNoEncontrado').text('Usuario no encontrado').show(); // Muestra un mensaje de "Usuario no encontrado".
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No se encontró ningún resultado',
+                    });
                 }
             });
 

@@ -448,11 +448,14 @@
                 );
 
                 if (resultados.length > 0) {
-                    gridSistemas.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
-                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Sistema no encontrado".
+                    GridEstatusProyectos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
                 } else {
-                    gridSistemas.itemsSource = []; // Limpia la grilla si no hay resultados.
-                    $('#mensajeNoEncontrado').text('Sistema no encontrado').show(); // Muestra un mensaje de "Sistema no encontrado".
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No se encontró ningún resultado',
+                    });
                 }
             });
 

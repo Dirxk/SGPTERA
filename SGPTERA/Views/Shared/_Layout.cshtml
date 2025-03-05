@@ -153,7 +153,47 @@
                                         <li class="nav-item">
                                             <a class="nav-link" asp-action="ClientesUsuarios" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
                                                 <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">ClientesUsuarios</span>
+                                                    <span class="nav-link-text">Usuarios de Clientes</span>
+                                                </div>
+                                            </a>
+                                            <!-- more inner pages-->
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-action="ModuloSistemas" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-text">Modulos de los Sistemas</span>
+                                                </div>
+                                            </a>
+                                            <!-- more inner pages-->
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-action="EstatusProyectos" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-text">Estatus de proyectos</span>
+                                                </div>
+                                            </a>
+                                            <!-- more inner pages-->
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-action="EstatusTareas" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-text">Estatus de Tareas</span>
+                                                </div>
+                                            </a>
+                                            <!-- more inner pages-->
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-action="EstatusSoportes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-text">Estatus de Soportes</span>
+                                                </div>
+                                            </a>
+                                            <!-- more inner pages-->
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-action="NivelServicioSoportes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-text">Niveles de atención para Soporte</span>
                                                 </div>
                                             </a>
                                             <!-- more inner pages-->
@@ -381,23 +421,23 @@
     <script>
         var mdLoader = new bootstrap.Modal(document.getElementById('mdLoader'), {});
 
-        toastr.options = {
-            closeButton: true,
-            debug: false,
-            newestOnTop: false,
-            progressBar: true,
-            positionClass: "toast-top-right",
-            preventDuplicates: false,
-            onclick: null,
-            showDuration: 300,
-            hideDuration: 1000,
-            timeOut: 3000,
-            extendedTimeOut: 1000,
-            showEasing: "swing",
-            hideEasing: "linear",
-            showMethod: "fadeIn",
-            hideMethod: "fadeOut"
-        };
+        // toastr.options = {
+        //     closeButton: true,
+        //     debug: false,
+        //     newestOnTop: false,
+        //     progressBar: true,
+        //     positionClass: "toast-top-right",
+        //     preventDuplicates: false,
+        //     onclick: null,
+        //     showDuration: 300,
+        //     hideDuration: 1000,
+        //     timeOut: 3000,
+        //     extendedTimeOut: 1000,
+        //     showEasing: "swing",
+        //     hideEasing: "linear",
+        //     showMethod: "fadeIn",
+        //     hideMethod: "fadeOut"
+        // };
 
         function loaderGrid(grid, mensaje = 'Cargando datos, por favor espere...') {
             if (document.getElementsByClassName(`wj-loader-${grid.hostElement.id}`).length == 0) {

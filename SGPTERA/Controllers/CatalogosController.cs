@@ -51,6 +51,31 @@ namespace SGPTERA.Controllers
             ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
             return View();
         }
+        public IActionResult ModuloSistemas()
+        {
+            ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
+            return View();
+        }
+        public IActionResult EstatusProyectos()
+        {
+            ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
+            return View();
+        }
+        public IActionResult EstatusTareas()
+        {
+            ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
+            return View();
+        }
+        public IActionResult EstatusSoportes()
+        {
+            ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
+            return View();
+        }
+        public IActionResult NivelServicioSoportes()
+        {
+            ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
+            return View();
+        }
 
         //============================================================================================================================\\
         //================================================   Controlador de Clientes   =============================================== \\
@@ -213,17 +238,17 @@ namespace SGPTERA.Controllers
         }
 
         [HttpPost]
-        public async Task<RespuestaJson> DesactivarUsuario(Usuarios usuario)
+        public async Task<RespuestaJson> DesactivarUsuario(Usuarios usuarios)
         {
-            usuario.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
-            return await new Catalogos(_dapperContext).DesactivarUsuario(usuario);
+            usuarios.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarUsuario(usuarios);
         }
 
         [HttpPost]
-        public async Task<RespuestaJson> ReactivarUsuario(Usuarios usuario)
+        public async Task<RespuestaJson> ReactivarUsuario(Usuarios usuarios)
         {
-            usuario.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
-            return await new Catalogos(_dapperContext).ReactivarUsuario(usuario);
+            usuarios.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarUsuario(usuarios);
         }
 
         //============================================================================================================================\\
@@ -243,6 +268,8 @@ namespace SGPTERA.Controllers
             RespuestaJson respuesta = await new Catalogos(_dapperContext).GetClientesUsuariosPuestos();
             return respuesta;
         }
+
+
 
         [HttpPost]
         public async Task<RespuestaJson> AgregarClienteUsuario(ClientesUsuarios clientesusuarios)
@@ -270,6 +297,202 @@ namespace SGPTERA.Controllers
         {
             clienteusuario.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
             return await new Catalogos(_dapperContext).ReactivarClienteUsuario(clienteusuario);
+        }
+
+        //============================================================================================================================\\
+        //=========================================   Controlador de ModuloSistemas   =================================================\\
+        //==============================================================================================================================\\
+
+        [HttpPost]
+        public async Task<RespuestaJson> GetModuloSistemas()
+        {
+            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetModuloSistemas();
+            return respuesta;
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> AgregarModuloSistema(ModuloSistemas modulosistema)
+        {
+            modulosistema.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).AgregarModuloSistema(modulosistema);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> EditarModuloSistema(ModuloSistemas modulosistema)
+        {
+            modulosistema.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).EditarModuloSistema(modulosistema);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> DesactivarModuloSistema(ModuloSistemas modulosistema)
+        {
+            modulosistema.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarModuloSistema(modulosistema);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> ReactivarModuloSistema(ModuloSistemas modulosistema)
+        {
+            modulosistema.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarModuloSistema(modulosistema);
+        }
+    
+
+        //============================================================================================================================\\
+        //============================================   Controlador de EstatusProyectos   ============================================= \\
+        //==============================================================================================================================\\
+
+        [HttpPost]
+        public async Task<RespuestaJson> GetEstatusProyectos()
+        {
+            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetEstatusProyectos();
+            return respuesta;
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> AgregarEstatusProyecto(EstatusProyectos estatusproyecto)
+        {
+            estatusproyecto.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).AgregarEstatusProyecto(estatusproyecto);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> EditarEstatusProyecto(EstatusProyectos estatusproyecto)
+        {
+            estatusproyecto.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).EditarEstatusProyecto(estatusproyecto);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> DesactivarEstatusProyecto(EstatusProyectos estatusproyecto)
+        {
+            estatusproyecto.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarEstatusProyecto(estatusproyecto);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> ReactivarEstatusProyecto(EstatusProyectos estatusproyecto)
+        {
+            estatusproyecto.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarEstatusProyecto(estatusproyecto);
+        }
+
+        //============================================================================================================================\\
+        //============================================   Controlador de EstatusTareas   ============================================= \\
+        //==============================================================================================================================\\
+
+        [HttpPost]
+        public async Task<RespuestaJson> GetEstatusTareas()
+        {
+            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetEstatusTareas();
+            return respuesta;
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson>  AgregarEstatusTarea(EstatusTareas estatustarea)
+        {
+            estatustarea.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).AgregarEstatusTarea(estatustarea);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> EditarEstatusTarea(EstatusTareas estatustarea)
+        {
+            estatustarea.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).EditarEstatusTarea(estatustarea);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> DesactivarEstatusTarea(EstatusTareas estatustarea)
+        {
+            estatustarea.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarEstatusTarea(estatustarea);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> ReactivarEstatusTarea(EstatusTareas estatustarea)
+        {
+            estatustarea.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarEstatusTarea(estatustarea);
+        }
+
+        //============================================================================================================================\\
+        //============================================   Controlador de EstatusSoportes   ============================================ \\
+        //==============================================================================================================================\\
+
+        [HttpPost]
+        public async Task<RespuestaJson> GetEstatusSoportes()
+        {
+            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetEstatusSoportes();
+            return respuesta;
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> AgregarEstatusSoporte(EstatusSoportes estatussoporte)
+        {
+            estatussoporte.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).AgregarEstatusSoporte(estatussoporte);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> EditarEstatusSoporte(EstatusSoportes estatussoporte)
+        {
+            estatussoporte.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).EditarEstatusSoporte(estatussoporte);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> DesactivarEstatusSoporte(EstatusSoportes estatussoporte)
+        {
+            estatussoporte.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarEstatusSoporte(estatussoporte);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> ReactivarEstatusSoporte(EstatusSoportes estatussoporte)
+        {
+            estatussoporte.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarEstatusSoporte(estatussoporte);
+        }
+
+        //============================================================================================================================\\
+        //=========================================   Controlador de NivelServicioSoportes   ==========================================\\
+        //==============================================================================================================================\\
+
+        [HttpPost]
+        public async Task<RespuestaJson> GetNivelServicioSoportes()
+        {
+            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetNivelServicioSoportes();
+            return respuesta;
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> AgregarNivelServicioSoporte(NivelServicioSoportes nivelserviciosoporte)
+        {
+            nivelserviciosoporte.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).AgregarNivelServicioSoporte(nivelserviciosoporte);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> EditarNivelServicioSoporte(NivelServicioSoportes nivelserviciosoporte)
+        {
+            nivelserviciosoporte.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).EditarNivelServicioSoporte(nivelserviciosoporte);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> DesactivarNivelServicioSoporte(NivelServicioSoportes nivelserviciosoporte)
+        {
+            nivelserviciosoporte.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarNivelServicioSoporte(nivelserviciosoporte);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> ReactivarNivelServicioSoporte(NivelServicioSoportes nivelserviciosoporte)
+        {
+            nivelserviciosoporte.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarNivelServicioSoporte(nivelserviciosoporte);
         }
     }
 }
