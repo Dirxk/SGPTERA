@@ -3175,5 +3175,529 @@ namespace TeracromController
             }
             return respuesta;
         }
+
+        //============================================================================================================================\\
+        //=============================================   Modelo TipoSoportes   =====================================================\\
+        //==============================================================================================================================\\
+
+        public async Task<RespuestaJson> GetTipoSoportes()
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir la conexión a la base de datos
+                _dapperContext.AbrirConexion("SGP");
+
+                string sql = "SELECT Id, TipoSoporteDescripcion, FlgActivo FROM TipoSoportes";
+
+                var tiposoportes = await _dapperContext.QueryAsync<TipoSoportes>(sql);
+                if (tiposoportes != null)
+                {
+                    respuesta.Resultado = true;
+                    respuesta.Data = tiposoportes.Select(s => new TipoSoportes
+                    {
+                        Id = s.Id,
+                        TipoSoporteDescripcion = s.TipoSoporteDescripcion,
+                        FlgActivo = s.FlgActivo
+                    }).ToList();
+                }
+                else
+                {
+                    respuesta.Mensaje = "No se encontraron tiposoportes activos.";
+                    respuesta.Data = new List<TipoSoportes>(); // Inicializar Data para evitar null
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los tiposoportes." + ex.Message;
+                respuesta.Data = new List<TipoSoportes>(); // Inicializar Data para evitar null
+            }
+            finally
+            {
+                // Cerrar o liberar la conexión (si es necesario)
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> AgregarTipoSoporte(TipoSoportes tiposoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Validar si ya existe un registro con el mismo IdSistema en la base de datos
+                    string sqlValidarTipoSoportesDescripcion = "SELECT COUNT(*) FROM TipoSoportes WHERE TipoSoporteDescripcion = @TipoSoporteDescripcion;";
+                    var parametrosValidarTipoSoportesDescripcion = new DynamicParameters();
+                    parametrosValidarTipoSoportesDescripcion.Add("@TipoSoporteDescripcion", tiposoporte.TipoSoporteDescripcion, DbType.String);
+
+                    int TipoSoportesDescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarTipoSoportesDescripcion, parametrosValidarTipoSoportesDescripcion);
+
+                    if (TipoSoportesDescripcionExistente > 0)
+                    {
+                        respuesta.Mensaje = "Los soportes ya cuentan con este tipo de soporte.";
+                        return respuesta;
+                    }
+
+                    // Consulta SQL para insertar el tiposoporte
+                    string sqlInsertar = @"
+                    INSERT INTO TipoSoportes 
+                    (TipoSoporteDescripcion, IdUsuarioSet) 
+                    VALUES 
+                    (@TipoSoporteDescripcion, @IdUsuarioSet);";
+
+                    var parametrosInsertar = new DynamicParameters();
+                    parametrosInsertar.Add("@TipoSoporteDescripcion", tiposoporte.TipoSoporteDescripcion, DbType.String);
+                    parametrosInsertar.Add("@IdUsuarioSet", tiposoporte.IdUsuarioSet, DbType.Int32);
+
+                    // Ejecutar la consulta de inserción
+                    int filasAfectadas = await connection.ExecuteAsync(sqlInsertar, parametrosInsertar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "El tipo de soporte se agregó exitosamente.";
+                        respuesta.Data = new { TipoSoporteId = tiposoporte.Id }; // Puedes devolver el ID del tiposoporte si lo necesitas
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "Hubo un error al agregar el tipo de soporte.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al intentar agregar el tipo de soporte: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> EditarTipoSoporte(TipoSoportes tiposoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                tiposoporte.FechaUpd = DateTime.Now;
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    string sqlValidarTipoSoportesDescripcion = "SELECT COUNT(*) FROM TipoSoportes WHERE TipoSoporteDescripcion = @TipoSoporteDescripcion";
+                    var parametrosValidar = new DynamicParameters();
+                    parametrosValidar.Add("@TipoSoporteDescripcion", tiposoporte.TipoSoporteDescripcion, DbType.String);
+
+                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarTipoSoportesDescripcion, parametrosValidar);
+
+                    if (existeDescripcion > 0)
+                    {
+                        respuesta.Mensaje = "Los soportes ya cuentan con este tipo de soporte.";
+                        return respuesta;
+                    }
+
+                    string sqlActualizar = @"
+                    UPDATE TipoSoportes 
+                    SET TipoSoporteDescripcion = @TipoSoporteDescripcion,
+                        IdUsuarioUpd = @IdUsuarioUpd,
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id;";
+
+                    var parametrosActualizar = new DynamicParameters();
+                    parametrosActualizar.Add("@Id", tiposoporte.Id, DbType.Int32);
+                    parametrosActualizar.Add("@TipoSoporteDescripcion", tiposoporte.TipoSoporteDescripcion, DbType.String);
+                    parametrosActualizar.Add("@IdUsuarioUpd", tiposoporte.IdUsuarioUpd, DbType.Int32);
+                    parametrosActualizar.Add("@FechaUpd", tiposoporte.FechaUpd, DbType.DateTime);
+
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Tipo de soporte actualizado con éxito.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No fue posible actualizar el tipo de soporte.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al actualizar el tipo de soporte: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> DesactivarTipoSoporte(TipoSoportes tiposoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                tiposoporte.FechaDel = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para desactivar el tiposoporte
+                    string sql = @"
+                    UPDATE TipoSoportes 
+                    SET FlgActivo = 0, 
+                        IdUsuarioDel = @IdUsuarioDel, 
+                        FechaDel = @FechaDel 
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", tiposoporte.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioDel", tiposoporte.IdUsuarioDel, DbType.Int32);
+                    parametros.Add("@FechaDel", tiposoporte.FechaDel, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "TipoSoporte desactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el tiposoporte o ya está desactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al desactivar el tiposoporte: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> ReactivarTipoSoporte(TipoSoportes tiposoporte)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                tiposoporte.FechaUpd = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para reactivar el tiposoporte
+                    string sql = @"
+                    UPDATE TipoSoportes 
+                    SET FlgActivo = 1, 
+                        IdUsuarioUpd = @IdUsuarioUpd, 
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", tiposoporte.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioUpd", tiposoporte.IdUsuarioUpd, DbType.Int32);
+                    parametros.Add("@FechaUpd", tiposoporte.FechaUpd, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "TipoSoporte reactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el tiposoporte o ya está reactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al reactivar el tiposoporte: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        //============================================================================================================================\\
+        //=============================================   Modelo NivelComplejidadTareas   =============================================\\
+        //==============================================================================================================================\\
+
+        public async Task<RespuestaJson> GetNivelComplejidadTareas()
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir la conexión a la base de datos
+                _dapperContext.AbrirConexion("SGP");
+
+                string sql = "SELECT Id, NivelComplejidadTareaDescripcion, FlgActivo FROM NivelComplejidadTareas";
+
+                var nivelcomplejidadtareas = await _dapperContext.QueryAsync<NivelComplejidadTareas>(sql);
+                if (nivelcomplejidadtareas != null)
+                {
+                    respuesta.Resultado = true;
+                    respuesta.Data = nivelcomplejidadtareas.Select(s => new NivelComplejidadTareas
+                    {
+                        Id = s.Id,
+                        NivelComplejidadTareaDescripcion = s.NivelComplejidadTareaDescripcion,
+                        FlgActivo = s.FlgActivo
+                    }).ToList();
+                }
+                else
+                {
+                    respuesta.Mensaje = "No se encontraron nivelcomplejidadtareas activos.";
+                    respuesta.Data = new List<NivelComplejidadTareas>(); // Inicializar Data para evitar null
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los nivelcomplejidadtareas." + ex.Message;
+                respuesta.Data = new List<NivelComplejidadTareas>(); // Inicializar Data para evitar null
+            }
+            finally
+            {
+                // Cerrar o liberar la conexión (si es necesario)
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> AgregarNivelComplejidadTarea(NivelComplejidadTareas nivelcomplejidadtarea)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Validar si ya existe un registro con el mismo IdSistema en la base de datos
+                    string sqlValidarNivelComplejidadTareasDescripcion = "SELECT COUNT(*) FROM NivelComplejidadTareas WHERE NivelComplejidadTareaDescripcion = @NivelComplejidadTareaDescripcion;";
+                    var parametrosValidarNivelComplejidadTareasDescripcion = new DynamicParameters();
+                    parametrosValidarNivelComplejidadTareasDescripcion.Add("@NivelComplejidadTareaDescripcion", nivelcomplejidadtarea.NivelComplejidadTareaDescripcion, DbType.String);
+
+                    int NivelComplejidadTareasDescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarNivelComplejidadTareasDescripcion, parametrosValidarNivelComplejidadTareasDescripcion);
+
+                    if (NivelComplejidadTareasDescripcionExistente > 0)
+                    {
+                        respuesta.Mensaje = "Los soportes ya cuentan con este nivel de complejidad de tarea.";
+                        return respuesta;
+                    }
+
+                    // Consulta SQL para insertar el nivelcomplejidadtarea
+                    string sqlInsertar = @"
+                    INSERT INTO NivelComplejidadTareas 
+                    (NivelComplejidadTareaDescripcion, IdUsuarioSet) 
+                    VALUES 
+                    (@NivelComplejidadTareaDescripcion, @IdUsuarioSet);";
+
+                    var parametrosInsertar = new DynamicParameters();
+                    parametrosInsertar.Add("@NivelComplejidadTareaDescripcion", nivelcomplejidadtarea.NivelComplejidadTareaDescripcion, DbType.String);
+                    parametrosInsertar.Add("@IdUsuarioSet", nivelcomplejidadtarea.IdUsuarioSet, DbType.Int32);
+
+                    // Ejecutar la consulta de inserción
+                    int filasAfectadas = await connection.ExecuteAsync(sqlInsertar, parametrosInsertar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "El nivel de complejidad de tarea se agregó exitosamente.";
+                        respuesta.Data = new { NivelComplejidadTareaId = nivelcomplejidadtarea.Id }; // Puedes devolver el ID del nivelcomplejidadtarea si lo necesitas
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "Hubo un error al agregar el nivel de complejidad de tarea.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al intentar agregar el nivel de complejidad de tarea: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> EditarNivelComplejidadTarea(NivelComplejidadTareas nivelcomplejidadtarea)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                nivelcomplejidadtarea.FechaUpd = DateTime.Now;
+
+                // Abrir conexión y validar duplicados
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    string sqlValidarNivelComplejidadTareasDescripcion = "SELECT COUNT(*) FROM NivelComplejidadTareas WHERE NivelComplejidadTareaDescripcion = @NivelComplejidadTareaDescripcion";
+                    var parametrosValidar = new DynamicParameters();
+                    parametrosValidar.Add("@NivelComplejidadTareaDescripcion", nivelcomplejidadtarea.NivelComplejidadTareaDescripcion, DbType.String);
+
+                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarNivelComplejidadTareasDescripcion, parametrosValidar);
+
+                    if (existeDescripcion > 0)
+                    {
+                        respuesta.Mensaje = "Los soportes ya cuentan con este nivel de complejidad de tarea.";
+                        return respuesta;
+                    }
+
+                    string sqlActualizar = @"
+                    UPDATE NivelComplejidadTareas 
+                    SET NivelComplejidadTareaDescripcion = @NivelComplejidadTareaDescripcion,
+                        IdUsuarioUpd = @IdUsuarioUpd,
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id;";
+
+                    var parametrosActualizar = new DynamicParameters();
+                    parametrosActualizar.Add("@Id", nivelcomplejidadtarea.Id, DbType.Int32);
+                    parametrosActualizar.Add("@NivelComplejidadTareaDescripcion", nivelcomplejidadtarea.NivelComplejidadTareaDescripcion, DbType.String);
+                    parametrosActualizar.Add("@IdUsuarioUpd", nivelcomplejidadtarea.IdUsuarioUpd, DbType.Int32);
+                    parametrosActualizar.Add("@FechaUpd", nivelcomplejidadtarea.FechaUpd, DbType.DateTime);
+
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "Nivel de complejidad de tarea actualizado con éxito.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No fue posible actualizar el nivel de complejidad de tarea.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Se produjo un error al actualizar el nivel de complejidad de tarea: " + ex.Message;
+                respuesta.Errores.Add(ex.Message);
+            }
+            finally
+            {
+                _dapperContext.Dispose(); // Liberar recursos
+            }
+
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> DesactivarNivelComplejidadTarea(NivelComplejidadTareas nivelcomplejidadtarea)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                nivelcomplejidadtarea.FechaDel = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para desactivar el nivelcomplejidadtarea
+                    string sql = @"
+                    UPDATE NivelComplejidadTareas 
+                    SET FlgActivo = 0, 
+                        IdUsuarioDel = @IdUsuarioDel, 
+                        FechaDel = @FechaDel 
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", nivelcomplejidadtarea.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioDel", nivelcomplejidadtarea.IdUsuarioDel, DbType.Int32);
+                    parametros.Add("@FechaDel", nivelcomplejidadtarea.FechaDel, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "NivelComplejidadTarea desactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el nivelcomplejidadtarea o ya está desactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al desactivar el nivelcomplejidadtarea: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
+
+        public async Task<RespuestaJson> ReactivarNivelComplejidadTarea(NivelComplejidadTareas nivelcomplejidadtarea)
+        {
+            RespuestaJson respuesta = new RespuestaJson();
+            try
+            {
+                // Obtener la fecha y hora actual
+                nivelcomplejidadtarea.FechaUpd = DateTime.Now;
+
+                using (var connection = _dapperContext.AbrirConexion("SGP"))
+                {
+                    // Consulta SQL para reactivar el nivelcomplejidadtarea
+                    string sql = @"
+                    UPDATE NivelComplejidadTareas 
+                    SET FlgActivo = 1, 
+                        IdUsuarioUpd = @IdUsuarioUpd, 
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id";
+
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@Id", nivelcomplejidadtarea.Id, DbType.Int32);
+                    parametros.Add("@IdUsuarioUpd", nivelcomplejidadtarea.IdUsuarioUpd, DbType.Int32);
+                    parametros.Add("@FechaUpd", nivelcomplejidadtarea.FechaUpd, DbType.DateTime);
+
+                    // Ejecutar la consulta
+                    int filasAfectadas = await connection.ExecuteAsync(sql, parametros);
+
+                    if (filasAfectadas > 0)
+                    {
+                        respuesta.Resultado = true;
+                        respuesta.Mensaje = "NivelComplejidadTarea reactivado correctamente.";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró el nivelcomplejidadtarea o ya está reactivado.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Mensaje = "Ocurrió un error al reactivar el nivelcomplejidadtarea: " + ex.Message;
+            }
+            finally
+            {
+                _dapperContext.Dispose();
+            }
+            return respuesta;
+        }
     }
 }

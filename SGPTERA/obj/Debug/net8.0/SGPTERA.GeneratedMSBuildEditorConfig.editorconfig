@@ -42,6 +42,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXE1vZHVsb1Npc3RlbWFzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/NivelComplejidadTareas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXE5pdmVsQ29tcGxlamlkYWRUYXJlYXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/NivelServicioSoportes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXE5pdmVsU2VydmljaW9Tb3BvcnRlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -52,6 +56,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Sistemas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXFNpc3RlbWFzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/TipoSoportes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXFRpcG9Tb3BvcnRlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Usuarios.cshtml]

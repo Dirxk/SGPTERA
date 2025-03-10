@@ -203,5 +203,33 @@ namespace GestionProyectos.Models
         public bool FlgActivo { get; set; } = true;
     }
 
+    public class TipoSoportes
+    {
+        [Key]
+        public int Id { get; set; }
+        public required string TipoSoporteDescripcion { get; set; }
+        public int? IdUsuarioSet { get; set; }
+        public DateTime FechaSet { get; set; } = DateTime.UtcNow;
+        public int? IdUsuarioUpd { get; set; }
+        public DateTime? FechaUpd { get; set; }
+        public int? IdUsuarioDel { get; set; }
+        public DateTime? FechaDel { get; set; }
+        public bool FlgActivo { get; set; } = true;
+    }
+
+    public class NivelComplejidadTareas
+    {
+        [Key]
+        public int Id { get; set; }
+        public required string NivelComplejidadTareaDescripcion { get; set; }
+        public int? IdUsuarioSet { get; set; }
+        public DateTime FechaSet { get; set; } = DateTime.UtcNow;
+        public int? IdUsuarioUpd { get; set; }
+        public DateTime? FechaUpd { get; set; }
+        public int? IdUsuarioDel { get; set; }
+        public DateTime? FechaDel { get; set; }
+        public bool FlgActivo { get; set; } = true;
+    }
+
 }
 

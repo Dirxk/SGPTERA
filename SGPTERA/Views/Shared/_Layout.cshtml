@@ -105,103 +105,163 @@
                                 </div>
                             </div>
                             <!-- parent pages-->
-                            <div class="nav-item-wrapper">
-                                <a class="nav-link dropdown-indicator label-1" href="#nv-Catalogos" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-Catalogos">
-                                    <div class="d-flex align-items-center">
-                                        <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
-                                        <span class="nav-link-icon"><span data-feather="list"></span></span>
-                                        <span class="nav-link-text">Catálogos</span>
-                                    </div>
-                                </a>
-                                <div class="parent-wrapper label-1">
-                                    <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-Catalogos">
-                                        <li class="collapsed-nav-item-title d-none">
-                                            Catálogos
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="Puestos" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Puestos</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="Clientes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Clientes</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="Sistemas" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Sistemas</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="Usuarios" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Usuarios</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="ClientesUsuarios" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Usuarios de Clientes</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="ModuloSistemas" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Modulos de los Sistemas</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="EstatusProyectos" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Estatus de proyectos</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="EstatusTareas" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Estatus de Tareas</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="EstatusSoportes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Estatus de Soportes</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" asp-action="NivelServicioSoportes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">Niveles de atención para Soporte</span>
-                                                </div>
-                                            </a>
-                                            <!-- more inner pages-->
-                                        </li>
-                                    </ul>
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-indicator label-1" href="#nv-catalogos" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-catalogos">
+                                <div class="d-flex align-items-center">
+                                    <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                                    <span class="nav-link-icon"><span data-feather="layers"></span></span>
+                                    <span class="nav-link-text">Catálogos</span>
                                 </div>
-                            </div>
+                            </a>
+                            <div class="parent-wrapper label-1">
+                                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-catalogos">
+                                    <li class="collapsed-nav-item-title d-none">Catálogos</li>
 
+                                    <!-- Puestos -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-action="Puestos" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-text">Puestos</span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <!-- Clientes -->
+                                    <li class="nav-item">
+                                        <a class="nav-link dropdown-indicator" href="#nv-clientes" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-clientes">
+                                            <div class="d-flex align-items-center">
+                                                <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                                                <span class="nav-link-text">Clientes</span>
+                                            </div>
+                                        </a>
+                                        <div class="parent-wrapper">
+                                            <ul class="nav collapse parent" data-bs-parent="#nv-catalogos" id="nv-clientes">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-action="Clientes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="nav-link-text">Clientes</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-action="ClientesUsuarios" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="nav-link-text">Usuarios de Clientes</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <!-- Usuarios -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-action="Usuarios" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-text">Usuarios</span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <!-- Sistemas -->
+                                    <li class="nav-item">
+                                        <a class="nav-link dropdown-indicator" href="#nv-sistemas" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-sistemas">
+                                            <div class="d-flex align-items-center">
+                                                <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                                                <span class="nav-link-text">Sistemas</span>
+                                            </div>
+                                        </a>
+                                        <div class="parent-wrapper">
+                                            <ul class="nav collapse parent" data-bs-parent="#nv-catalogos" id="nv-sistemas">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-action="Sistemas" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="nav-link-text">Sistemas</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-action="ModuloSistemas" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="nav-link-text">Módulos de los Sistemas</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link dropdown-indicator" href="#nv-estatus" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-estatus">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                                                            <span class="nav-link-text">Estatus</span>
+                                                        </div>
+                                                    </a>
+                                                    <div class="parent-wrapper">
+                                                        <ul class="nav collapse parent" data-bs-parent="#nv-sistemas" id="nv-estatus">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" asp-action="EstatusProyectos" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <span class="nav-link-text">Estatus de Proyectos</span>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" asp-action="EstatusTareas" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <span class="nav-link-text">Estatus de Tareas</span>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" asp-action="EstatusSoportes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                                    <div class="d-flex align-items-center">
+                                                                        <span class="nav-link-text">Estatus de Soportes</span>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <!-- Soporte -->
+                                    <li class="nav-item">
+                                        <a class="nav-link dropdown-indicator" href="#nv-soporte" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-soporte">
+                                            <div class="d-flex align-items-center">
+                                                <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                                                <span class="nav-link-text">Soporte</span>
+                                            </div>
+                                        </a>
+                                        <div class="parent-wrapper">
+                                            <ul class="nav collapse parent" data-bs-parent="#nv-catalogos" id="nv-soporte">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-action="NivelServicioSoportes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="nav-link-text">Niveles de atención para Soporte</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-action="TipoSoportes" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="nav-link-text">Tipos de Soporte</span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                    <!-- Complejidad de tareas -->
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-action="NivelComplejidadTareas" asp-controller="Catalogos" data-bs-toggle="" aria-expanded="false">
+                                            <div class="d-flex align-items-center">
+                                                <span class="nav-link-text">Complejidad de tareas</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -225,7 +285,6 @@
                         </picture>
                     </a>
                 </div>
-
                 <div class="search-box navbar-top-search-box d-none d-lg-block justify-content-between" data-list='{"valueNames":["title"]}' style="width:30rem;">
                     <form class="position-relative d-flex" data-bs-toggle="search" data-bs-display="static">
                         <input class="form-control search-input fuzzy-search rounded-pill form-control-sm" type="search" placeholder="Buscar..." aria-label="Buscar" />

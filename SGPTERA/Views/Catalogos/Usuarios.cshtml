@@ -526,17 +526,18 @@
                 selectionMode: wijmo.grid.SelectionMode.Row,
                 columns: [
                     { binding: '', header: '#', width: 50, align: 'center' },
-                    { binding: 'usuario', header: 'Nombre de usuario', width: '*', align: 'center' },
+                    { binding: 'usuario', header: 'Usuario', width: 200, align: 'center' },
                     {
                         binding: 'nombreCompleto',
                         header: 'Nombre Completo',
+                        minWidth: 220,
                         width: '*',
                         align: 'center',
                         isReadOnly: true
                     },
-                    { binding: 'descripcion', header: 'Puesto', width: 180, align: 'center' },
+                    { binding: 'descripcion', header: 'Puesto', width: 150, align: 'center' },
                     { binding: 'telefono', header: 'Telefono', width: 180, align: 'center' },
-                    { binding: 'correo', header: 'Correo', width: '*', align: 'center' },
+                    { binding: 'correo', header: 'Correo', width: 200, align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
                 ],
                 isReadOnly: true,

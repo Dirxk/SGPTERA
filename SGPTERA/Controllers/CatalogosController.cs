@@ -76,6 +76,16 @@ namespace SGPTERA.Controllers
             ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
             return View();
         }
+        public IActionResult TipoSoportes()
+        {
+            ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
+            return View();
+        }
+        public IActionResult NivelComplejidadTareas()
+        {
+            ViewBag.Usuario = GetSessionValue("IdUsuario").ToString() ?? "";
+            return View();
+        }
 
         //============================================================================================================================\\
         //================================================   Controlador de Clientes   =============================================== \\
@@ -493,6 +503,84 @@ namespace SGPTERA.Controllers
         {
             nivelserviciosoporte.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
             return await new Catalogos(_dapperContext).ReactivarNivelServicioSoporte(nivelserviciosoporte);
+        }
+
+        //============================================================================================================================\\
+        //=========================================   Controlador de TipoSoportes   ==================================================\\
+        //==============================================================================================================================\\
+
+        [HttpPost]
+        public async Task<RespuestaJson> GetTipoSoportes()
+        {
+            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetTipoSoportes();
+            return respuesta;
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> AgregarTipoSoporte(TipoSoportes tiposoporte)
+        {
+            tiposoporte.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).AgregarTipoSoporte(tiposoporte);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> EditarTipoSoporte(TipoSoportes tiposoporte)
+        {
+            tiposoporte.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).EditarTipoSoporte(tiposoporte);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> DesactivarTipoSoporte(TipoSoportes tiposoporte)
+        {
+            tiposoporte.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarTipoSoporte(tiposoporte);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> ReactivarTipoSoporte(TipoSoportes tiposoporte)
+        {
+            tiposoporte.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarTipoSoporte(tiposoporte);
+        }
+
+        //============================================================================================================================\\
+        //=========================================   Controlador de NivelComplejidadTareas   =========================================\\
+        //==============================================================================================================================\\
+
+        [HttpPost]
+        public async Task<RespuestaJson> GetNivelComplejidadTareas()
+        {
+            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetNivelComplejidadTareas();
+            return respuesta;
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> AgregarNivelComplejidadTarea(NivelComplejidadTareas nivelcomplejidadtarea)
+        {
+            nivelcomplejidadtarea.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).AgregarNivelComplejidadTarea(nivelcomplejidadtarea);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> EditarNivelComplejidadTarea(NivelComplejidadTareas nivelcomplejidadtarea)
+        {
+            nivelcomplejidadtarea.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).EditarNivelComplejidadTarea(nivelcomplejidadtarea);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> DesactivarNivelComplejidadTarea(NivelComplejidadTareas nivelcomplejidadtarea)
+        {
+            nivelcomplejidadtarea.IdUsuarioDel = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).DesactivarNivelComplejidadTarea(nivelcomplejidadtarea);
+        }
+
+        [HttpPost]
+        public async Task<RespuestaJson> ReactivarNivelComplejidadTarea(NivelComplejidadTareas nivelcomplejidadtarea)
+        {
+            nivelcomplejidadtarea.IdUsuarioUpd = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
+            return await new Catalogos(_dapperContext).ReactivarNivelComplejidadTarea(nivelcomplejidadtarea);
         }
     }
 }
