@@ -58,7 +58,7 @@
         <div class="modal-content">
             <form id="FormCrearProyecto">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo cliente</h3>
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Puesto</h3>
                     <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
@@ -373,20 +373,39 @@
             //==============================================================================================================================\\
             $('#inputBusqueda').autocomplete({
                 source: function (request, response) {
-                    const term = request.term.toLowerCase(); // Obtiene el término de búsqueda.
+                    const term = request.term.toLowerCase(); // Obtiene el término de búsqueda en minúsculas.
+
+                    // Verifica que gridPuestos.itemsSource esté definido y sea un array.
+                    if (!gridPuestos.itemsSource || !Array.isArray(gridPuestos.itemsSource)) {
+                        console.error('gridPuestos.itemsSource no está definido o no es un array');
+                        response([]); // Devuelve un array vacío si no hay datos.
+                        return;
+                    }
+
                     const puestos = gridPuestos.itemsSource; // Obtiene la lista de puestos.
+
+                    // Filtra los puestos, asegurándose de que las propiedades existan.
                     const resultados = puestos.filter(puesto =>
-                        puesto.descripcion.toLowerCase().includes(term) || // Busca por descripción.
-                        puesto.tipo.toLowerCase().includes(term) // Busca por tipo.
+                        (puesto.descripcion && puesto.descripcion.toLowerCase().includes(term)) || // Busca por descripción.
+                        (puesto.tipo && puesto.tipo.toLowerCase().includes(term)) // Busca por tipo.
                     );
+
+                    // Mapea los resultados para el autocompletado.
                     response(resultados.map(puesto => ({
-                        label: `${puesto.descripcion} (${puesto.tipo})`, // Muestra la descripción y tipo.
-                        value: puesto.id // Asigna el ID del puesto como valor.
+                        label: `${puesto.descripcion}`, // Muestra la descripción.
+                        value: puesto.descripcion // Asigna la descripción como valor.
                     })));
                 },
                 select: function (event, ui) {
-                    const puestoId = ui.item.value; // Obtiene el ID del puesto seleccionado.
-                    const puesto = gridPuestos.itemsSource.find(p => p.id === puestoId); // Busca el puesto en la grilla.
+                    // Verifica que se haya seleccionado un valor válido.
+                    if (!ui.item || !ui.item.value) {
+                        console.error('No se seleccionó un puesto válido');
+                        return;
+                    }
+
+                    const puestoId = ui.item.value; // Obtiene el valor seleccionado.
+                    const puesto = gridPuestos.itemsSource.find(p => p.descripcion === puestoId); // Busca el puesto en la grilla.
+
                     if (puesto) {
                         gridPuestos.itemsSource = [puesto]; // Filtra la grilla para mostrar solo el puesto seleccionado.
                     }
@@ -395,15 +414,24 @@
 
             // Evento para buscar al hacer clic en el botón de búsqueda.
             $('#btnBuscar').on('click', function () {
-                const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda.
+                const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda en minúsculas.
+
+                // Verifica que gridPuestos.itemsSource esté definido y sea un array.
+                if (!gridPuestos.itemsSource || !Array.isArray(gridPuestos.itemsSource)) {
+                    console.error('gridPuestos.itemsSource no está definido o no es un array');
+                    return;
+                }
+
                 const puestos = gridPuestos.itemsSource; // Obtiene la lista de puestos.
+
+                // Filtra los puestos, asegurándose de que las propiedades existan.
                 const resultados = puestos.filter(puesto =>
-                    puesto.descripcion.toLowerCase().includes(term) || // Busca por descripción.
-                    puesto.tipo.toLowerCase().includes(term) // Busca por tipo.
+                    (puesto.descripcion && puesto.descripcion.toLowerCase().includes(term)) || // Busca por descripción.
+                    (puesto.tipo && puesto.tipo.toLowerCase().includes(term)) // Busca por tipo.
                 );
 
                 if (resultados.length > 0) {
-                    GridEstatusProyectos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    gridPuestos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
                     $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
                 } else {
                     Swal.fire({
@@ -417,7 +445,12 @@
             // Evento para limpiar la búsqueda y mostrar todos los puestos.
             $('#inputBusqueda').on('input', function () {
                 if ($(this).val() === '') {
-                    verPuestos(); // Recarga todos los puestos.
+                    // Verifica que la función verPuestos esté definida.
+                    if (typeof verPuestos === 'function') {
+                        verPuestos(); // Recarga todos los puestos.
+                    } else {
+                        console.error('verPuestos no está definido');
+                    }
                     $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
                 }
             });
@@ -514,18 +547,19 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de clientes
-                        document.getElementById('GridPuestos').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando cliente...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridPuestos').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Agregando Puesto...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
 
                             // Llamar a la función verPuestos para recargar el grid
                             verPuestos().then((serverResponseTime) => {
@@ -540,15 +574,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridPuestos').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
                                     text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -558,26 +591,29 @@
                                 document.getElementById('GridPuestos').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el cliente."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -674,18 +710,20 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de puestos
-                        document.getElementById('GridPuestos').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridPuestos').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Actualizando Puesto...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
                             // Llamar a la función verPuestos para recargar el grid
                             verPuestos().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
@@ -699,15 +737,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridPuestos').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
                                     text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -717,25 +754,26 @@
                                 document.getElementById('GridPuestos').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
 
-                            // Mostrar un mensaje de error con SweetAlert2
-                            Swal.fire({ icon: "error", title: "Error", text: response.mensaje });
+                            });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
-                            title: 'Error',
-                            text: 'Hubo un error en la solicitud al servidor.',
-                            icon: 'error',
-                            timer: 2000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
                             allowOutsideClick: false,
                             allowEscapeKey: false,
                             allowEnterKey: false
@@ -802,18 +840,20 @@
                     contentType: false, // Importante para FormData
                     processData: false, // Importante para FormData
                     beforeSend: function () {
-                        // Ocultar el grid de puestos
-                        document.getElementById('GridPuestos').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridPuestos').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Eliminando Puesto...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
                             // Llamar a la función verPuestos para recargar el grid
                             verPuestos().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
@@ -827,15 +867,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridPuestos').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
                                     text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -845,26 +884,29 @@
                                 document.getElementById('GridPuestos').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al desactivar el puesto."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -923,18 +965,20 @@
                     contentType: false, // Importante para FormData.
                     processData: false, // Importante para FormData.
                     beforeSend: function () {
-                        // Ocultar el grid de puestos
-                        document.getElementById('GridPuestos').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridPuestos').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Reactivando Puesto...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
                             // Llamar a la función verPuestos para recargar el grid
                             verPuestos().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
@@ -948,15 +992,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridPuestos').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
                                     text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -966,26 +1009,29 @@
                                 document.getElementById('GridPuestos').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al reactivar el puesto."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);

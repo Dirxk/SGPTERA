@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fAUackqDkjzH66EYnkDK+O8qG6zxhYX3gNAo+d0SjXI=",
+  "Hash": "Wq7CT/B6FOfn5l+Y4FxW9v2fISNWYoa5WOjm5QdQ900=",
   "Source": "SGPTERA",
   "BasePath": "_content/SGPTERA",
   "Mode": "Default",
@@ -4862,6 +4862,25 @@
       "OriginalItemSpec": "wwwroot\\lib\\dashboard\\assets\\img\\e-commerce\\whooping_banner_shape_2.png"
     },
     {
+      "Identity": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\ERROR.svg",
+      "SourceId": "SGPTERA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\",
+      "BasePath": "_content/SGPTERA",
+      "RelativePath": "lib/dashboard/assets/img/ERROR.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\dashboard\\assets\\img\\ERROR.svg"
+    },
+    {
       "Identity": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\favicons\\android-chrome-192x192.png",
       "SourceId": "SGPTERA",
       "SourceType": "Discovered",
@@ -8964,6 +8983,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\dashboard\\assets\\img\\icons\\yellow.png"
+    },
+    {
+      "Identity": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\IMAGE.svg",
+      "SourceId": "SGPTERA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\",
+      "BasePath": "_content/SGPTERA",
+      "RelativePath": "lib/dashboard/assets/img/IMAGE.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\dashboard\\assets\\img\\IMAGE.svg"
     },
     {
       "Identity": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\kanban\\1.jpg",

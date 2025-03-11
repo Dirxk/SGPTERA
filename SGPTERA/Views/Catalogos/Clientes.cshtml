@@ -94,7 +94,7 @@
                         <!-- Campo: Imagen -->
                         <div class="col-12 mb-3">
                             <label class="fw-bold mb-2" style="font-size: 1rem;">Imagen para el usuario:</label>
-                            <input class="form-control" id="InpImagenExt" name="imagen" type="file" accept="image/*" required />
+                            <input class="form-control" id="InpImagenExt" name="imagen" type="file" accept="image/*"/>
                         </div>
                         <!-- Previsualización de la imagen -->
                         <div class="col-12 mb-3">
@@ -148,28 +148,28 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpRazonSocialEdit" name="InpRazonSocialEdit" type="text" placeholder="Razón Social" required autocomplete="off" />
-                                <label for="InpRazonSocialEdit">Razón Social <span class="text-danger">*</span></label>
+                                <label for="InpRazonSocialEdit">Razón Social</label>
                             </div>
                         </div>
                         <!-- Campo: RFC -->
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input class="form-control text-uppercase" id="InpRFCEdit" name="InpRazonSocialEdit" type="text" placeholder="RFC" maxlength="13" required autocomplete="off" />
-                                <label for="InpRFCEdit">RFC <span class="text-danger">*</span></label>
+                                <label for="InpRFCEdit">RFC</label>
                             </div>
                         </div>
                         <!-- Campo: Prefijo -->
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input class="form-control text-uppercase" id="InpPrefijoEdit" name="InpRazonSocialEdit" type="text" placeholder="Prefijo" maxlength="15" required autocomplete="off" />
-                                <label for="InpPrefijoEdit">Prefijo <span class="text-danger">*</span></label>
+                                <label for="InpPrefijoEdit">Prefijo</label>
                             </div>
                         </div>
                         <!-- Campo: Telefono -->
                         <div class="col-md-6 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpTelefonoEdit" type="text" placeholder="Telefono" maxlength="15" required autocomplete="off" />
-                                <label for="InpPrefijoEdit">Telefono <span class="text-danger">*</span></label>
+                                <label for="InpPrefijoEdit">Telefono</label>
                             </div>
                         </div>
                         <!-- Campo: Imagen -->
@@ -326,12 +326,17 @@
                 $('#InpPrefijoEdit').val(valoresIniciales.prefijo);
                 $('#InpTelefonoEdit').val(valoresIniciales.telefono);
 
-                // Muestra la imagen del cliente si está disponible.
+                // Muestra la imagen del cliente si está disponible, de lo contrario, muestra una imagen por defecto.
                 if (cliente.logotipo && typeof cliente.logotipo === 'string') {
                     $('#previewImageEdit').attr('src', `data:image/png;base64,${cliente.logotipo}`);
                     $('#previewContainerEdit').css('display', 'flex');
                 } else {
-                    $('#previewContainerEdit').hide();
+                    // Ruta de la imagen por defecto (relativa desde la raíz del sitio)
+                    const rutaImagenPorDefecto = "/lib/dashboard/assets/img/IMAGE.svg";
+
+                    // Asigna la imagen por defecto al atributo src de la imagen
+                    $('#previewImageEdit').attr('src', rutaImagenPorDefecto);
+                    $('#previewContainerEdit').css('display', 'flex');
                 }
 
                 // Deshabilitar el botón de actualizar inicialmente
@@ -480,7 +485,7 @@
                     );
                     response(resultados.map(cliente => ({
                         label: `${cliente.razonSocial} (${cliente.rfc})`, // Muestra la razón social y RFC.
-                        value: cliente.id // Asigna el ID del cliente como valor.
+                        value: cliente.razonSocial // Asigna el ID del cliente como valor.
                     })));
                 },
                 select: function (event, ui) {
@@ -505,10 +510,13 @@
 
                 if (resultados.length > 0) {
                     gridClientes.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
-                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Cliente no encontrado".
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
                 } else {
-                    gridClientes.itemsSource = []; // Limpia la grilla si no hay resultados.
-                    $('#mensajeNoEncontrado').text('Cliente no encontrado').show(); // Muestra un mensaje de "Cliente no encontrado".
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'No se encontró ningún resultado',
+                    });
                 }
             });
 
@@ -580,15 +588,13 @@
                     InpRazonSocial: { required: true, minlength: 2 },
                     InpRFC: { required: true, minlength: 12, maxlength: 13 },
                     InpPrefijo: { required: true },
-                    InpTelefono: { required: true, maxlength: 15 },
-                    InpImagenExt: { required: true, accept: "image/*" }
+                    InpTelefono: { required: true, maxlength: 15 }
                 },
                 messages: {
                     InpRazonSocial: { required: "La razón social es requerida.", minlength: "Mínimo 2 caracteres." },
                     InpRFC: { required: "El RFC es requerido.", minlength: "El RFC debe tener al menos 12 caracteres.", maxlength: "El RFC no puede tener más de 13 caracteres." },
                     InpPrefijo: { required: "El Prefijo es requerido." },
-                    InpTelefono: { required: "El Telefono es requerido.", maxlength: "El telefono no puede tener más de 15 caracteres." },
-                    InpImagenExt: { required: "El logotipo es requerido.", accept: "Solo se permiten archivos de imagen." }
+                    InpTelefono: { required: "El Telefono es requerido.", maxlength: "El telefono no puede tener más de 15 caracteres." }
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
@@ -653,20 +659,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de clientes
-                        document.getElementById('GridClientes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando cliente...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            
-                            // Llamar a la función verClientes para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridClientes').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Agregando Cliente...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verClientes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -679,15 +686,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridClientes').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los clientes.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -697,26 +703,29 @@
                                 document.getElementById('GridClientes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el cliente."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -846,19 +855,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de clientes
-                        document.getElementById('GridClientes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verClientes para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridClientes').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Actualizando Cliente...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verClientes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -871,15 +882,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridClientes').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los clientes.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -889,25 +899,26 @@
                                 document.getElementById('GridClientes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
 
-                            // Mostrar un mensaje de error con SweetAlert2
-                            Swal.fire({ icon: "error", title: "Error", text: response.mensaje });
+                            });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
-                            title: 'Error',
-                            text: 'Hubo un error en la solicitud al servidor.',
-                            icon: 'error',
-                            timer: 2000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
                             allowOutsideClick: false,
                             allowEscapeKey: false,
                             allowEnterKey: false
@@ -992,19 +1003,21 @@
                     contentType: false, // Importante para FormData
                     processData: false, // Importante para FormData
                     beforeSend: function () {
-                        // Ocultar el grid de clientes
-                        document.getElementById('GridClientes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verClientes para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridClientes').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Eliminando Cliente...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verClientes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -1017,15 +1030,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridClientes').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los clientes.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -1035,26 +1047,29 @@
                                 document.getElementById('GridClientes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al desactivar el cliente."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -1113,19 +1128,21 @@
                     contentType: false, // Importante para FormData.
                     processData: false, // Importante para FormData.
                     beforeSend: function () {
-                        // Ocultar el grid de clientes
-                        document.getElementById('GridClientes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verClientes para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridClientes').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Reactivando Cliente...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verClientes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -1138,15 +1155,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridClientes').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los clientes.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -1156,26 +1172,29 @@
                                 document.getElementById('GridClientes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al reactivar el cliente."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);

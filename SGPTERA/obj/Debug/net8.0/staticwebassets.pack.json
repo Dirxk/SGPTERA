@@ -273,6 +273,14 @@
       "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\data\\world.js"
     },
     {
+      "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\ERROR.svg",
+      "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\ERROR.svg"
+    },
+    {
+      "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\IMAGE.svg",
+      "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\IMAGE.svg"
+    },
+    {
       "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\animated-icons\\rotating-earth-dark.json",
       "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\animated-icons\\rotating-earth-dark.json"
     },

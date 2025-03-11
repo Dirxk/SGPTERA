@@ -425,17 +425,18 @@ namespace TeracromController
                 // Abrir conexión y validar duplicados
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
-
-                    // Validar si la Descripcion ya existe en la base de datos
-                    string sqlValidarDescripcion = "SELECT COUNT(*) FROM Puestos WHERE Descripcion = @Descripcion;";
+                    
+                    // Validar si la Descripción ya existe en la base de datos
+                    string sqlValidarDescripcion = "SELECT COUNT(*) FROM Puestos WHERE Descripcion = @Descripcion AND Tipo = @Tipo;";
                     var parametrosValidarDescripcion = new DynamicParameters();
                     parametrosValidarDescripcion.Add("@Descripcion", puesto.Descripcion, DbType.String);
+                    parametrosValidarDescripcion.Add("@Tipo", puesto.Tipo, DbType.String); // Corregido: puesto.Tipo en lugar de puesto.Descripcion
 
                     int DescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarDescripcion, parametrosValidarDescripcion);
 
                     if (DescripcionExistente > 0)
                     {
-                        respuesta.Mensaje = "El prefijo ya existe en la base de datos.";
+                        respuesta.Mensaje = "El puesto ya existe en la base de datos para el tipo especificado."; // Mensaje más claro
                         return respuesta;
                     }
 
@@ -491,6 +492,21 @@ namespace TeracromController
                 // Abrir conexión y validar duplicados
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
+
+                    // Validar si la Descripción ya existe en la base de datos
+                    string sqlValidarDescripcion = "SELECT COUNT(*) FROM Puestos WHERE Descripcion = @Descripcion AND Tipo = @Tipo;";
+                    var parametrosValidarDescripcion = new DynamicParameters();
+                    parametrosValidarDescripcion.Add("@Descripcion", puesto.Descripcion, DbType.String);
+                    parametrosValidarDescripcion.Add("@Tipo", puesto.Tipo, DbType.String); // Corregido: puesto.Tipo en lugar de puesto.Descripcion
+
+                    int DescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarDescripcion, parametrosValidarDescripcion);
+
+                    if (DescripcionExistente > 0)
+                    {
+                        respuesta.Mensaje = "El puesto ya existe en la base de datos para el tipo especificado."; // Mensaje más claro
+                        return respuesta;
+                    }
+
                     // Consulta SQL para actualizar el puesto
                     string sqlActualizar = @"
                     UPDATE Puestos 
