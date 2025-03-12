@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Wq7CT/B6FOfn5l+Y4FxW9v2fISNWYoa5WOjm5QdQ900=",
+  "Hash": "TyOiCkNtIoDJNAeCtqqMP4hPeaI33ySyqbweKR4E7yI=",
   "Source": "SGPTERA",
   "BasePath": "_content/SGPTERA",
   "Mode": "Default",
@@ -1402,6 +1402,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\dashboard\\assets\\img\\animated-icons\\typing2.json"
+    },
+    {
+      "Identity": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\AvatarTeracromGreen.png",
+      "SourceId": "SGPTERA",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\",
+      "BasePath": "_content/SGPTERA",
+      "RelativePath": "lib/dashboard/assets/img/AvatarTeracromGreen.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\dashboard\\assets\\img\\AvatarTeracromGreen.png"
     },
     {
       "Identity": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\bg\\10.png",

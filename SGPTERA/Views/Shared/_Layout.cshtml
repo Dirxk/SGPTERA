@@ -600,26 +600,26 @@
             resizeWidth();
         });
 
-        $(document).ready(function () {
-            setInterval(function () {
-                $.ajax({
-                    url: '@Url.Action("KeepSessionAlive", "Account")',
-                    type: 'GET',
-                    success: function (response) {
-                        if (!response.sessionActive) {
-                            Swal.fire({
-                                title: "Sesión Expirada",
-                                text: "Tu sesión ha expirado. Debes iniciar sesión nuevamente.",
-                                icon: "warning",
-                                allowOutsideClick: false
-                            }).then(() => {
-                                window.location.href = '@Url.Action("Index", "Login")';
-                            });
-                        }
-                    }
-                });
-            }, 60000); // Se verifica cada 60 segundos
-        });
+        // $(document).ready(function () {
+        //     setInterval(function () {
+        //         $.ajax({
+        //             url: '@Url.Action("KeepSessionAlive", "Account")',
+        //             type: 'GET',
+        //             success: function (response) {
+        //                 if (!response.sessionActive) {
+        //                     Swal.fire({
+        //                         title: "Sesión Expirada",
+        //                         text: "Tu sesión ha expirado. Debes iniciar sesión nuevamente.",
+        //                         icon: "warning",
+        //                         allowOutsideClick: false
+        //                     }).then(() => {
+        //                         window.location.href = '@Url.Action("Index", "Login")';
+        //                     });
+        //                 }
+        //             }
+        //         });
+        //     }, 60000); // Se verifica cada 60 segundos
+        // });
     </script>
 </body>
 </html>

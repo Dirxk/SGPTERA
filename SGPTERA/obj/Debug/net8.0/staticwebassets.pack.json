@@ -273,6 +273,10 @@
       "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\data\\world.js"
     },
     {
+      "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\AvatarTeracromGreen.png",
+      "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\AvatarTeracromGreen.png"
+    },
+    {
       "Id": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\lib\\dashboard\\assets\\img\\ERROR.svg",
       "PackagePath": "staticwebassets\\lib\\dashboard\\assets\\img\\ERROR.svg"
     },

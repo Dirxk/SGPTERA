@@ -1447,9 +1447,11 @@ namespace TeracromController
                 s.ApellidoPaternoClienteUsuario, 
                 s.ApellidoMaternoClienteUsuario, 
                 c.Descripcion, 
+                s.IdPuesto,
                 s.Telefono, 
                 s.Correo, 
                 cli.RazonSocial,
+                s.IdCliente,
                 s.FotoPerfil, 
                 s.FlgActivo
             FROM 
@@ -1470,11 +1472,13 @@ namespace TeracromController
                         ApellidoPaternoClienteUsuario = s.ApellidoPaternoClienteUsuario,
                         ApellidoMaternoClienteUsuario = s.ApellidoMaternoClienteUsuario,
                         Descripcion = s.Descripcion,
+                        IdPuesto = s.IdPuesto,
                         Telefono = s.Telefono,
                         Correo = s.Correo,
                         FotoPerfil = s.FotoPerfil,
                         FlgActivo = s.FlgActivo,
-                        RazonSocial = s.RazonSocial  // Asegúrate de que la clase ClientesUsuarios tenga esta propiedad
+                        RazonSocial = s.RazonSocial,  // Asegúrate de que la clase ClientesUsuarios tenga esta propiedad
+                        IdCliente = s.IdCliente
                     }).ToList();
                 }
                 else
@@ -1496,51 +1500,6 @@ namespace TeracromController
             return respuesta;
         }
 
-        public async Task<RespuestaJson> GetClientesUsuariosPuestos()
-        {
-            RespuestaJson respuesta = new RespuestaJson();
-            try
-            {
-                // Abrir la conexión a la base de datos
-                _dapperContext.AbrirConexion("SGP");
-
-                string sql = @"
-                SELECT 
-                    Id, 
-                    Descripcion 
-                FROM 
-                    Puestos WHERE Tipo = 2";
-
-                var puestos = await _dapperContext.QueryAsync<Puestos>(sql);
-                if (puestos != null)
-                {
-                    respuesta.Resultado = true;
-                    respuesta.Data = puestos.Select(c => new
-                    {
-                        Id = c.Id,
-                        Descripcion = c.Descripcion
-                    }).ToList();
-                }
-                else
-                {
-                    respuesta.Mensaje = "No se encontraron puestos.";
-                    respuesta.Data = new List<Puestos>(); // Inicializar Data para evitar null
-                }
-            }
-            catch (Exception ex)
-            {
-                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los puestos." + ex.Message;
-                respuesta.Data = new List<Puestos>(); // Inicializar Data para evitar null
-            }
-            finally
-            {
-                // Cerrar o liberar la conexión (si es necesario)
-                _dapperContext.Dispose();
-            }
-            return respuesta;
-        }
-
-
         public async Task<RespuestaJson> AgregarClienteUsuario(ClientesUsuarios clienteusuario)
         {
             RespuestaJson respuesta = new RespuestaJson();
@@ -1553,6 +1512,20 @@ namespace TeracromController
                     {
                         await clienteusuario.FotoFile.CopyToAsync(memoryStream);
                         clienteusuario.FotoPerfil = memoryStream.ToArray(); // Convierte la imagen a byte[]
+                    }
+                }
+                else
+                {
+                    // Cargar la imagen por defecto si no se recibe ninguna foto
+                    string rutaImagenPorDefecto = @"C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\wwwroot\lib\dashboard\assets\img\AvatarTeracromGreen.png";
+                    if (System.IO.File.Exists(rutaImagenPorDefecto))
+                    {
+                        clienteusuario.FotoPerfil = await System.IO.File.ReadAllBytesAsync(rutaImagenPorDefecto);
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró la imagen por defecto.";
+                        return respuesta;
                     }
                 }
 
