@@ -58,7 +58,7 @@
         <div class="modal-content">
             <form id="FormCrearSistema">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo sistema</h3>
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Sistema</h3>
                     <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
@@ -70,14 +70,11 @@
                                 <label for="InpDescripcion">Descripcion <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: Razon Social -->
-                        <div class="col-12 col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select class="form-select" id="InpRazonSocial" name="InpRazonSocial">
-                                    <option value="">Seleccione una opción</option>
-                                    <!-- Las opciones se llenarán dinámicamente aquí -->
-                                </select>
-                                <label for="InpRazonSocial">Razon Social<span class="text-danger">*</span></label>
+                        <!-- Campo: IdCliente -->
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbIdEmpresa" class="form-label">EMPRESA:</label>
+                                <div id="cbIdEmpresa"></div>
                             </div>
                         </div>
                         <!-- Campo: Repositorio -->
@@ -130,14 +127,11 @@
                                 <label for="InpDescripcionEdit">Descripcion <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <!-- Campo: Razon Social -->
-                        <div class="col-12 col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select class="form-select" id="InpRazonSocialEdit" name="InpRazonSocialEdit" required>
-                                    <option value="">Seleccione una opción</option>
-                                    <!-- Las opciones se llenarán dinámicamente aquí -->
-                                </select>
-                                <label for="InpRazonSocialEdit">Razon Social<span class="text-danger">*</span></label>
+                        <!-- Campo: IdCliente -->
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbIdEmpresaEdit" class="form-label">EMPRESA:</label>
+                                <div id="cbIdEmpresaEdit"></div>
                             </div>
                         </div>
                         <!-- Campo: Repositorio -->
@@ -241,6 +235,16 @@
         // Variable global para almacenar la instancia de la grilla de sistemas.
         var gridSistemas = null;
 
+        // Inicializar el AutoComplete con los datos obtenidos
+
+        var cbIdEmpresa = new wijmo.input.AutoComplete('#cbIdEmpresa', {
+            displayMemberPath: 'Empresa', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+        var cbIdEmpresaEdit = new wijmo.input.AutoComplete('#cbIdEmpresaEdit', {
+            displayMemberPath: 'Empresa', selectedValuePath: 'Id', itemsSource: []
+        });
+
         // Función que realiza una solicitud AJAX para obtener los sistemas desde el servidor.
         function verSistemas() {
             return new Promise((resolve, reject) => {
@@ -265,18 +269,75 @@
         }
 
         //============================================================================================================================\\
-        //================================  Función para editar un Puesto específico basado en su ID  ================================\\
+        //================================== funciones para obtener los datos de empresa y de puestos =================================\\
+        //==============================================================================================================================\\
+
+        function getDataEmpresa() {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetClientes", "Catalogos")',
+                    success: function (response) {
+                        if (response.resultado && response.data && response.data.length > 0) {
+                            // Filtrar solo los clientes activos y mapear al formato requerido
+                            const data = response.data
+                                .filter(cliente => cliente.flgActivo == 1)
+                                .map(cliente => ({
+                                    Id: cliente.id,
+                                    Empresa: cliente.razonSocial
+                                }));
+                            resolve(data); // Resolver la promesa con los datos
+                        } else {
+                            reject("No se pudieron obtener los clientes o la respuesta está vacía.");
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        reject("Error al obtener los clientes: " + textStatus + " - " + errorThrown);
+                    }
+                });
+            });
+        }
+
+        function getDataPuesto() {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetPuestos", "Catalogos")',
+                    success: function (response) {
+                        if (response.resultado && response.data && response.data.length > 0) {
+                            // Filtrar solo los puestos activos y del tipo 2, y mapear al formato requerido
+                            const data = response.data
+                                .filter(puesto => puesto.flgActivo == 1 && puesto.tipo == 2)
+                                .map(puesto => ({
+                                    Id: puesto.id,
+                                    Puesto: puesto.descripcion
+                                }));
+                            resolve(data); // Resolver la promesa con los datos
+                        } else {
+                            reject("No se pudieron obtener los puestos o la respuesta está vacía.");
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        reject("Error al obtener los puestos: " + textStatus + " - " + errorThrown);
+                    }
+                });
+            });
+        }
+
+        //============================================================================================================================\\
+        //================================  Función para editar un cliente usuario específico basado en su ID  =========================\\
         //==============================================================================================================================\\
 
         function EditarSistema(id) {
-            const sistema = gridSistemas.itemsSource.find(c => c.id === id); // Busca el sistema en la grilla.
-            if (sistema) {
-                // Guardar los valores iniciales del sistema
+            const sistema = gridsistema.itemsSource.find(u => u.id === id);
+            if (clienteusuario) {
+                // Guardar los valores iniciales del cliente usuario
                 valoresIniciales = {
                     descripcion: sistema.descripcion || '',
                     razonSocial: sistema.razonSocial || '',
                     repositorio: sistema.repositorio || '',
-                    prefijo: sistema.prefijo || ''
+                    prefijo: sistema.prefijo || '',
+                    idCliente: clienteusuario.idCliente || -1
                 };
 
                 // Asigna los valores del sistema a los campos del formulario de edición.
@@ -285,51 +346,36 @@
                 $('#InpRepositorioEdit').val(valoresIniciales.repositorio);
                 $('#InpPrefijoEdit').val(valoresIniciales.prefijo);
 
-                // Llenar el combo box de edición con las razones sociales
-                llenarComboClientes(true); // true indica que es para el modal de edición
-
                 // Deshabilitar el botón de actualizar inicialmente
                 $('#btnActualizarSistema').prop('disabled', true);
 
-                // Muestra el modal de edición de sistema.
+                // Muestra el modal de edición de cliente usuario.
                 const modalEditarSistema = new bootstrap.Modal($('#ModalEditarSistema')[0]);
                 modalEditarSistema.show();
-                $('#btnActualizarSistema').data('id', id); // Asigna el ID del sistema al botón de actualizar.
+                $('#btnActualizarSistema').data('id', id);
+
+                // Cargar datos de empresas
+                getDataEmpresa()
+                    .then(data => {
+                        cbIdEmpresaEdit.itemsSource = data;
+                        const idCliente = Number(valoresIniciales.idCliente);
+                        const empresaSeleccionada = data.find(empresa => empresa.Id === idCliente);
+                        if (empresaSeleccionada) {
+                            cbIdEmpresaEdit.selectedValue = idCliente;
+                        } else {
+                            const valorPorDefecto = data[0]?.Id || null;
+                            cbIdEmpresaEdit.selectedValue = valorPorDefecto;
+                            console.warn("idCliente no encontrado. Usando valor por defecto:", valorPorDefecto);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        swal.fire('Error', 'No se pudieron cargar los datos de las empresas disponibles.', 'error');
+                        cbIdEmpresaEdit.isDisabled = true;
+                    });
             } else {
-                console.error("Sistema no encontrado."); // Maneja el caso en que el sistema no existe.
+                console.error("Cliente usuario no encontrado.");
             }
-        }
-
-        //============================================================================================================================\\
-        //===============================  Inicialización del GRID Clientes y Configuración de Eventos  ===============================\\
-        //==============================================================================================================================\\
-
-        function llenarComboClientes(esEdicion = false) {
-            $.ajax({
-                type: 'POST', // Método HTTP
-                url: '@Url.Action("GetSistemasClientes", "Catalogos")', // Ruta del servidor
-                success: function (response) {
-                    console.log("Respuesta del servidor:", response); // Verifica la estructura de la respuesta
-
-                    if (response.resultado && response.data && response.data.length > 0) {
-                        // Selecciona el combo box según el parámetro esEdicion
-                        var combo = esEdicion ? $('#InpRazonSocialEdit') : $('#InpRazonSocial');
-                        combo.empty(); // Limpiar el combo box
-                        combo.append('<option value="">Seleccione una opción</option>'); // Opción por defecto
-
-                        // Llenar el combo box con las razones sociales
-                        response.data.forEach(function (cliente) {
-                            console.log("Cliente:", cliente); // Verifica cada cliente
-                            combo.append('<option value="' + cliente.id + '">' + cliente.razonSocial + '</option>');
-                        });
-                    } else {
-                        console.error("No se pudieron obtener los clientes o la respuesta está vacía.");
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("Error al obtener los clientes:", textStatus, errorThrown);
-                }
-            });
         }
 
         //============================================================================================================================\\
@@ -349,10 +395,10 @@
                 selectionMode: wijmo.grid.SelectionMode.Row,
                 columns: [
                     { binding: '', header: '#', width: 50, align: 'center' },
-                    { binding: 'descripcion', header: 'Descripcion', minWidth: 300, width: '*', align: 'center' },
-                    { binding: 'razonSocial', header: 'Razon Social', minWidth: 250, width: '*', align: 'center' },
-                    { binding: 'repositorio', header: 'Repositorio', width: 300, align: 'center' },
+                    { binding: 'descripcion', header: 'Sistema / Proyecto', minWidth: 300, width: '*', align: 'center' },
                     { binding: 'prefijo', header: 'Prefijo', width: 150, align: 'center' },
+                    { binding: 'repositorio', header: 'Repositorio', width: 300, align: 'center' },
+                    { binding: 'razonSocial', header: 'Empresa', minWidth: 250, width: '*', align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
                 ],
                 isReadOnly: true,
@@ -424,7 +470,7 @@
                     );
                     response(resultados.map(sistema => ({
                         label: `${sistema.descripcion} (${sistema.razonSocial})`, // Muestra la descripción y tipo.
-                        value: sistema.id // Asigna el ID del sistema como valor.
+                        value: sistema.descripcion // Asigna el ID del sistema como valor.
                     })));
                 },
                 select: function (event, ui) {
@@ -448,7 +494,7 @@
                 );
 
                 if (resultados.length > 0) {
-                    GridEstatusProyectos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    gridSistemas.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
                     $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
                 } else {
                     Swal.fire({
@@ -518,12 +564,6 @@
             //========================================== Funcionalidad del boton de Agregar Puesto  =======================================\\
             //==============================================================================================================================\\
            
-            llenarComboClientes();
-
-            $('#UserModal').on('shown.bs.modal', function () {
-                llenarComboClientes();
-            });
-
             // Agregar una regla personalizada para validar URLs
             $.validator.addMethod("validUrl", function (value, element) {
                 // Expresión regular para validar URLs
@@ -670,10 +710,7 @@
             //==========================================   Funcionalidad del botón Editar Cliente    ======================================\\
             //==============================================================================================================================\\
 
-            $('#ModalEditarSistema').on('shown.bs.modal', function () {
-                llenarComboClientes();
-            });
-
+            
             $('.cerrarModalEditarSistema').on('click', function () {
                 const modalEditarSistema = bootstrap.Modal.getInstance(document.getElementById('ModalEditarSistema'));
                 modalEditarSistema.hide();

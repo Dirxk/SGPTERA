@@ -54,62 +54,59 @@
 <!-- ================================================================================================= -->
 
 <div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="UserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
         <div class="modal-content">
             <form id="FormCrearUsuario">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo usuario</h3>
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Usuario</h3>
                     <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <!-- Campo: Usuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpUsuario" name="InpUsuario" type="text" placeholder="Usuario" required autocomplete="off" />
                                 <label for="InpUsuario">Nombre de usuario <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <!-- Campo: NombreUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpNombreUsuario" name="InpNombreUsuario" type="text" placeholder="Nombre" required autocomplete="off" />
                                 <label for="InpNombreUsuario">Nombre(s) <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <!-- Campo: ApellidoPaternoUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpApellidoPaternoUsuario" name="InpApellidoPaternoUsuario" type="text" placeholder="Apellido Paterno" required autocomplete="off" />
                                 <label for="InpApellidoPaternoUsuario">Apellido paterno <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <!-- Campo: ApellidoMaternoUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3 mt-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpApellidoMaternoUsuario" name="InpApellidoMaternoUsuario" type="text" placeholder="Apellido Materno" required autocomplete="off" />
                                 <label for="InpApellidoMaternoUsuario">Apellido materno <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <!-- Campo: IdPuesto -->
-                        <div class="col-12 col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select class="form-select" id="InpPuesto" name="InpPuesto">
-                                    <option value="">Seleccione una opción</option>
-                                    <!-- Las opciones se llenarán dinámicamente aquí -->
-                                </select>
-                                <label for="InpPuesto">Puesto <span class="text-danger">*</span></label>
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbIdPuesto" class="form-label">PUESTO: <span class="text-danger">*</span></label>
+                                <div id="cbIdPuesto"></div>
                             </div>
                         </div>
                         <!-- Campo: Teléfono -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3 mt-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpTelefono" name="InpTelefono" type="text" placeholder="Teléfono" maxlength="15" required autocomplete="off" />
                                 <label for="InpTelefono">Teléfono <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <!-- Campo: Correo -->
-                        <div class="col-12 mb-3">
+                        <div class="col-12 mb-3 mt-2">
                             <div class="form-floating">
                                 <input class="form-control" id="InpCorreo" name="InpCorreo" type="email" placeholder="Correo" required autocomplete="off" />
                                 <label for="InpCorreo">Correo <span class="text-danger">*</span></label>
@@ -132,7 +129,7 @@
                         <!-- Campo: Imagen -->
                         <div class="col-12 mb-3">
                             <label class="fw-bold mb-2" style="font-size: 1rem;">Imagen para el usuario:</label>
-                            <input class="form-control" id="InpImagenExt" name="InpImagenExt" type="file" accept="image/*" required />
+                            <input class="form-control" id="InpImagenExt" name="InpImagenExt" type="file" accept="image/*" />
                         </div>
                         <!-- Previsualización de la imagen -->
                         <div class="col-12 mb-3">
@@ -173,7 +170,7 @@
 <!-- ================================================================================================= -->
 
 <div class="modal fade" id="ModalEditarUsuario" tabindex="-1" aria-labelledby="ModalEditarUsuarioLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
         <div class="modal-content">
             <form id="FormEditarUsuario">
                 <div class="modal-header">
@@ -183,62 +180,59 @@
                 <div class="modal-body">
                     <div class="row">
                         <!-- Campo: Usuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpUsuarioEdit" name="InpUsuarioEdit" type="text" placeholder="Usuario" required autocomplete="off" />
-                                <label for="InpUsuarioEdit">Nombre de usuario <span class="text-danger">*</span></label>
+                                <label for="InpUsuarioEdit">Nombre de usuario</label>
                             </div>
                         </div>
                         <!-- Campo: NombreUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpNombreUsuarioEdit" name="InpNombreUsuarioEdit" type="text" placeholder="Nombre" required autocomplete="off" />
-                                <label for="InpNombreUsuarioEdit">Nombre(s) <span class="text-danger">*</span></label>
+                                <label for="InpNombreUsuarioEdit">Nombre(s)</label>
                             </div>
                         </div>
                         <!-- Campo: ApellidoPaternoUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpApellidoPaternoUsuarioEdit" name="InpApellidoPaternoUsuarioEdit" type="text" placeholder="Apellido Paterno" required autocomplete="off" />
-                                <label for="InpApellidoPaternoUsuarioEdit">Apellido paterno <span class="text-danger">*</span></label>
+                                <label for="InpApellidoPaternoUsuarioEdit">Apellido paterno</label>
                             </div>
                         </div>
                         <!-- Campo: ApellidoMaternoUsuario -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3 mt-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpApellidoMaternoUsuarioEdit" name="InpApellidoMaternoUsuarioEdit" type="text" placeholder="Apellido Materno" required autocomplete="off" />
-                                <label for="InpApellidoMaternoUsuarioEdit">Apellido materno <span class="text-danger">*</span></label>
+                                <label for="InpApellidoMaternoUsuarioEdit">Apellido materno</label>
                             </div>
                         </div>
                         <!-- Campo: IdPuesto -->
-                        <div class="col-12 col-md-6 mb-3">
-                            <div class="form-floating">
-                                <select class="form-select" id="InpPuestoEdit" name="InpPuestoEdit">
-                                    <option value="">Seleccione una opción</option>
-                                    <!-- Las opciones se llenarán dinámicamente aquí -->
-                                </select>
-                                <label for="InpPuestoEdit">Puesto <span class="text-danger">*</span></label>
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbIdPuestoEdit" class="form-label">PUESTO:</label>
+                                <div id="cbIdPuestoEdit"></div>
                             </div>
                         </div>
                         <!-- Campo: Teléfono -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-3 mt-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpTelefonoEdit" name="InpTelefonoEdit" type="text" placeholder="Teléfono" maxlength="15" required autocomplete="off" />
-                                <label for="InpTelefonoEdit">Teléfono <span class="text-danger">*</span></label>
+                                <label for="InpTelefonoEdit">Teléfono</label>
                             </div>
                         </div>
                         <!-- Campo: Correo -->
-                        <div class="col-12 col-md-6 mb-3">
+                        <div class="col-12 col-md-6 mb-3 mt-2">
                             <div class="form-floating">
                                 <input class="form-control" id="InpCorreoEdit" name="InpCorreoEdit" type="email" placeholder="Correo" required autocomplete="off" />
-                                <label for="InpCorreoEdit">Correo <span class="text-danger">*</span></label>
+                                <label for="InpCorreoEdit">Correo</label>
                             </div>
                         </div>
                         <!-- Campo: Contraseña -->
                         <div class="col-12 col-md-6 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpContrasenaEdit" name="InpContrasenaEdit" type="password" placeholder="Contraseña" maxlength="15" required autocomplete="off" />
-                                <label for="InpContrasenaEdit">Nueva Contraseña <span class="text-danger">*</span></label>
+                                <label for="InpContrasenaEdit">Nueva Contraseña</label>
                             </div>
                         </div>
                         <!-- Campo: Imagen -->
@@ -344,6 +338,14 @@
         // Variable global para almacenar la instancia de la grilla de clientes.
         var gridUsuarios = null;
 
+        // Inicializar el AutoComplete con los datos obtenidos
+        var cbIdPuesto = new wijmo.input.AutoComplete('#cbIdPuesto', {
+            displayMemberPath: 'Puesto', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+        var cbIdPuestoEdit = new wijmo.input.AutoComplete('#cbIdPuestoEdit', {
+            displayMemberPath: 'Puesto', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
 
         // Función que realiza una solicitud AJAX para obtener los usuarios desde el servidor.
         function verUsuarios() {
@@ -369,16 +371,43 @@
         }
 
         //============================================================================================================================\\
-        //================================  Función para editar un cliente específico basado en su ID  ================================\\
+        //================================== funciones para obtener los datos de empresa y de puestos =================================\\
         //==============================================================================================================================\\
 
-        let valoresIniciales = {}; // Almacena los valores iniciales del usuario
-        const camposEdicion = ['#InpUsuarioEdit', '#InpNombreUsuarioEdit', '#InpApellidoPaternoUsuarioEdit', '#InpApellidoMaternoUsuarioEdit', '#InpTelefonoEdit', '#InpCorreoEdit', '#InpUsuarioImagenEdit'];
+        function getDataPuesto() {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetPuestos", "Catalogos")',
+                    success: function (response) {
+                        if (response.resultado && response.data && response.data.length > 0) {
+                            // Filtrar solo los puestos activos y del tipo 2, y mapear al formato requerido
+                            const data = response.data
+                                .filter(puesto => puesto.flgActivo == 1 && puesto.tipo == 1)
+                                .map(puesto => ({
+                                    Id: puesto.id,
+                                    Puesto: puesto.descripcion
+                                }));
+                            resolve(data); // Resolver la promesa con los datos
+                        } else {
+                            reject("No se pudieron obtener los puestos o la respuesta está vacía.");
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        reject("Error al obtener los puestos: " + textStatus + " - " + errorThrown);
+                    }
+                });
+            });
+        }
+
+        //============================================================================================================================\\
+        //================================  Función para editar un cliente usuario específico basado en su ID  =========================\\
+        //==============================================================================================================================\\
 
         function EditarUsuario(id) {
-            const usuario = gridUsuarios.itemsSource.find(u => u.id === id); // Busca el usuario en la grilla.
+            const usuario = gridUsuarios.itemsSource.find(u => u.id === id);
             if (usuario) {
-                // Guardar los valores iniciales del usuario
+                // Guardar los valores iniciales del cliente usuario
                 valoresIniciales = {
                     usuario: usuario.usuario || '',
                     nombreUsuario: usuario.nombreUsuario || '',
@@ -386,7 +415,8 @@
                     apellidoMaternoUsuario: usuario.apellidoMaternoUsuario || '',
                     telefono: usuario.telefono || '',
                     correo: usuario.correo || '',
-                    fotoPerfil: usuario.fotoPerfil || ''
+                    fotoPerfil: usuario.fotoPerfil || '',
+                    idPuesto: usuario.idPuesto || -1 // Agrega IdPuesto aquí
                 };
 
                 // Asigna los valores del usuario a los campos del formulario de edición.
@@ -397,118 +427,48 @@
                 $('#InpTelefonoEdit').val(valoresIniciales.telefono);
                 $('#InpCorreoEdit').val(valoresIniciales.correo);
 
-                // Muestra la imagen del usuario si está disponible.
+                // Muestra la imagen del cliente usuario si está disponible.
                 if (usuario.fotoPerfil && typeof usuario.fotoPerfil === 'string') {
                     $('#previewImageEdit').attr('src', `data:image/png;base64,${usuario.fotoPerfil}`);
                     $('#previewContainerEdit').css('display', 'flex');
                 } else {
-                    $('#previewContainerEdit').hide();
+                    const rutaImagenPorDefecto = "/lib/dashboard/assets/img/IMAGE.svg";
+                    $('#previewImageEdit').attr('src', rutaImagenPorDefecto);
+                    $('#previewContainerEdit').css('display', 'flex');
                 }
-
-                llenarComboUsuarios(true);
 
                 // Deshabilitar el botón de actualizar inicialmente
                 $('#btnActualizarUsuario').prop('disabled', true);
 
-                // Muestra el modal de edición de usuario.
+                // Muestra el modal de edición de cliente usuario.
                 const modalEditarUsuario = new bootstrap.Modal($('#ModalEditarUsuario')[0]);
                 modalEditarUsuario.show();
-                $('#btnActualizarUsuario').data('id', id); // Asigna el ID del usuario al botón de actualizar.
+                $('#btnActualizarUsuario').data('id', id);
+
+                // Cargar datos de puestos
+                getDataPuesto()
+                    .then(data => {
+                        cbIdPuestoEdit.itemsSource = data;
+                        const idPuesto = Number(valoresIniciales.idPuesto);
+                        const puestoSeleccionado = data.find(puesto => puesto.Id === idPuesto);
+                        if (puestoSeleccionado) {
+                            cbIdPuestoEdit.selectedValue = idPuesto;
+                        } else {
+                            const valorPorDefecto = data[0]?.Id || null;
+                            cbIdPuestoEdit.selectedValue = valorPorDefecto;
+                            console.warn("IdPuesto no encontrado. Usando valor por defecto:", valorPorDefecto);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        swal.fire('Error', 'No se pudieron cargar los datos de los puestos disponibles.', 'error');
+                        cbIdPuestoEdit.isDisabled = true;
+                    });
             } else {
-                console.error("Usuario no encontrado."); // Maneja el caso en que el usuario no existe.
+                console.error("Cliente usuario no encontrado.");
             }
         }
 
-        // Función para habilitar el botón si algún campo ha cambiado
-        function habilitarBotonActualizar() {
-            let algunCampoCambiado = false;
-
-            // Comparar los valores actuales con los valores iniciales
-            if ($('#InpRazonSocialEdit').val() !== valoresIniciales.razonSocial ||
-                $('#InpRFCEdit').val() !== valoresIniciales.rfc ||
-                $('#InpPrefijoEdit').val() !== valoresIniciales.prefijo ||
-                $('#InpTelefonoEdit').val() !== valoresIniciales.telefono ||
-                $('#InpContrasenaEdit').val() !== valoresIniciales.telefono ||
-                $('#InpUsuarioImagenEdit')[0].files.length > 0) {
-                algunCampoCambiado = true;
-            }
-
-            // Habilita el botón si algún campo ha cambiado
-            $('#btnActualizarUsuario').prop('disabled', !algunCampoCambiado);
-        }
-
-        // Captura el evento de cambio o entrada en cualquier campo dentro de un contenedor (por ejemplo, un formulario)
-        $('#FormEditarUsuario').on('input change', function () {
-            habilitarBotonActualizar();
-        });
-
-        // También puedes capturar el clic en cualquier botón dentro del formulario
-        $('#FormEditarUsuario').on('click', 'button', function () {
-            habilitarBotonActualizar();
-        });
-        // Escucha los cambios en los campos del formulario
-        camposEdicion.forEach(function (campo) {
-            $(campo).on('input change', function () {
-                habilitarBotonActualizar();
-            });
-        });
-
-        // Escucha el evento de cambio en el input de la imagen
-        $('#InpUsuarioImagenEdit').on('change', function (event) {
-            const file = event.target.files[0]; // Obtiene el archivo seleccionado.
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#previewImageEdit').attr('src', e.target.result); // Muestra la imagen.
-                    $('#fileNameEdit').text(file.name); // Muestra el nombre del archivo.
-                    $('#fileSizeEdit').text((file.size / 1024).toFixed(2) + ' KB'); // Muestra el tamaño del archivo.
-                    $('#previewContainerEdit').removeClass('d-none'); // Muestra el contenedor de previsualización.
-                };
-                reader.readAsDataURL(file); // Lee el archivo como URL.
-            }
-            habilitarBotonActualizar();
-        });
-
-        // Evento para limpiar el formulario al cerrar el modal
-        $('#ModalEditarUsuario').on('hidden.bs.modal', function () {
-            $('#FormEditarUsuario')[0].reset(); // Restablece el formulario.
-            $('#previewImageEdit').attr('src', ''); // Limpia la imagen.
-            $('#fileNameEdit').text(''); // Limpia el nombre del archivo.
-            $('#fileSizeEdit').text(''); // Limpia el tamaño del archivo.
-            $('#btnActualizarUsuario').prop('disabled', true); // Bloquea el botón de actualizar.
-        });
-
-        //============================================================================================================================\\
-        //===============================  Inicialización del GRID Clientes y Configuración de Eventos  ===============================\\
-        //==============================================================================================================================\\
-
-        function llenarComboUsuarios(esEdicion = false) {
-            $.ajax({
-                type: 'POST', // Método HTTP
-                url: '@Url.Action("GetUsuariosPuestos", "Catalogos")', // Ruta del servidor
-                success: function (response) {
-                    console.log("Respuesta del servidor:", response); // Verifica la estructura de la respuesta
-
-                    if (response.resultado && response.data && response.data.length > 0) {
-                        // Selecciona el combo box según el parámetro esEdicion
-                        var combo = esEdicion ? $('#InpPuestoEdit') : $('#InpPuesto');
-                        combo.empty(); // Limpiar el combo box
-                        combo.append('<option value="">Seleccione una opción</option>'); // Opción por defecto
-
-                        // Llenar el combo box con las razones sociales
-                        response.data.forEach(function (puesto) {
-                            console.log("Puesto:", puesto); // Verifica cada cliente
-                            combo.append('<option value="' + puesto.id + '">' + puesto.descripcion + '</option>');
-                        });
-                    } else {
-                        console.error("No se pudieron obtener los puestos o la respuesta está vacía.");
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("Error al obtener los puestos:", textStatus, errorThrown);
-                }
-            });
-        }
 
         //============================================================================================================================\\
         //===============================  Inicialización del GRID Clientes y Configuración de Eventos  ===============================\\
@@ -535,7 +495,7 @@
                         align: 'center',
                         isReadOnly: true
                     },
-                    { binding: 'descripcion', header: 'Puesto', width: 150, align: 'center' },
+                    { binding: 'idPuesto', header: 'Puesto', width: 200, align: 'center' },
                     { binding: 'telefono', header: 'Telefono', width: 180, align: 'center' },
                     { binding: 'correo', header: 'Correo', width: 200, align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
@@ -568,6 +528,11 @@
                         //     cell.style.color = '#FFFFFF'; // Texto blanco para mejor contraste
                         // }
 
+                        // Mostrar la razón social en lugar del idPuesto
+                        if (panel.columns[c].binding === 'idPuesto') {
+                            cell.textContent = rowData.descripcion; // Muestra la razón social en lugar del idCliente.
+                        }
+
                         if (c === 0) {
                             cell.textContent = (r + 1).toString(); // Muestra el número de fila.
                         } else if (c === panel.columns.length - 1) {
@@ -575,21 +540,21 @@
                             let botones = '';
                             if (flgActivo === true) {
                                 botones = `
-                        <div class="d-flex justify-content-center align-items-center gap-2">
-                            <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarUsuario" onclick="EditarUsuario(${rowData.id})">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarUsuario" data-id="${rowData.id}" data-nombre="${rowData.usuario}">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>`;
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarUsuario" onclick="EditarUsuario(${rowData.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                            <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarUsuario" data-id="${rowData.id}" data-nombre="${rowData.usuario}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>`;
                             } else if (flgActivo === false) {
                                 botones = `
-                        <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarUsuario" data-id="${rowData.id}" data-nombre="${rowData.usuario}">
-                                <i class="fas fa-check"></i>
-                            </button>
-                        </div>`;
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                            <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarUsuario" data-id="${rowData.id}" data-nombre="${rowData.usuario}">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </div>`;
                             }
 
                             // Insertar los botones en la celda
@@ -615,7 +580,7 @@
                         usuario.apellidoMaternoUsuario.toLowerCase().includes(term) ||
                         usuario.descripcion.toLowerCase().includes(term) ||
                         usuario.telefono.toLowerCase().includes(term) ||// Busca por teléfono.
-                        usuario.correo.toLowerCase().includes(term) 
+                        usuario.correo.toLowerCase().includes(term)
                     );
                     response(resultados.map(usuario => ({
                         label: `${usuario.usuario} (${usuario.correo})`, // Muestra la razón social y RFC.
@@ -646,7 +611,7 @@
                 );
 
                 if (resultados.length > 0) {
-                    GridEstatusProyectos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
+                    gridUsuarios.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
                     $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
                 } else {
                     Swal.fire({
@@ -713,17 +678,25 @@
             });
 
             //============================================================================================================================\\
-            //========================================== Funcionalidad del boton de Agregar Cliente  ======================================\\
+            //========================================== Funcionalidad del boton de Agregar Usuario  ======================================\\
             //==============================================================================================================================\\
-            llenarComboUsuarios();
 
-            $('#UserModal').on('shown.bs.modal', function () {
-                llenarComboUsuarios();
-            });
 
             $("#InpTelefono").on("input", function () {
                 $(this).val($(this).val().replace(/[^0-9+ ]/g, ""));
             });
+
+            //Combobox Puesto
+            getDataPuesto()
+                .then(data => {
+                    cbIdPuesto.itemsSource = data;
+                    cbIdPuesto.selectedValue = -1;
+                })
+                .catch(error => {
+                    console.error(error);
+                    swal.fire('Error', 'No se pudieron cargar los datos de los puestos disponibles.', 'error');
+                    cbIdPuesto.isDisabled = true;
+                });
 
             // Validación del formulario
             $("#FormCrearUsuario").validate({
@@ -735,8 +708,7 @@
                     InpTelefono: { required: true, maxlength: 15 },
                     InpCorreo: { required: true, email: true }, // Validar que sea un correo válido
                     InpContrasena: { required: true, minlength: 8 }, // Mínimo 8 caracteres
-                    InpRepetirContrasena: { required: true, minlength: 8, equalTo: "#InpContrasena" }, // Mínimo 8 caracteres y debe ser igual a InpContrasena
-                    InpImagenExt: { required: true }
+                    InpRepetirContrasena: { required: true, minlength: 8, equalTo: "#InpContrasena" }
                 },
                 messages: {
                     InpUsuario: { required: "La usuario es requerido.", minlength: "Mínimo 2 caracteres." },
@@ -746,12 +718,18 @@
                     InpTelefono: { required: "El Teléfono es requerido.", maxlength: "El teléfono no puede tener más de 15 caracteres." },
                     InpCorreo: { required: "El correo es requerido.", email: "Por favor, introduce un correo válido." }, // Mensaje para correo inválido
                     InpContrasena: { required: "La contraseña es requerida.", minlength: "La contraseña debe tener al menos 8 caracteres." }, // Mensaje para contraseña corta
-                    InpRepetirContrasena: { required: "Por favor repite correctamente la contraseña.", minlength: "La contraseña debe tener al menos 8 caracteres.", equalTo: "Las contraseñas no coinciden." }, // Mensaje para contraseñas no coincidentes
-                    InpImagenExt: { required: "La fotografia es requerida."}
+                    InpRepetirContrasena: { required: "Por favor repite correctamente la contraseña.", minlength: "La contraseña debe tener al menos 8 caracteres.", equalTo: "Las contraseñas no coinciden." }
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
-                    agregarUsuario(); // Llamar a la función sin pasar IdUsuario
+                    // Validar que se haya seleccionado un puesto
+                    if (cbIdPuesto.selectedValue == null || cbIdPuesto.selectedValue === -1) {
+                        swal.fire('Advertencia', 'Por favor selecciona un puesto', 'warning');
+                        return; // Detiene la ejecución si no se ha seleccionado un puesto
+                    }
+
+                    // Si todo está correcto, llama a la función para agregar el usuario
+                    agregarUsuario();
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -793,26 +771,27 @@
                 $('#fileName').text(''); // Limpia el nombre del archivo.
                 $('#fileSize').text(''); // Limpia el tamaño del archivo.
                 $('#previewContainer').addClass('d-none'); // Oculta el contenedor de previsualización.
+
+                // Restablecer el selectedValue del componente Wijmo cbIdPuesto a -1
+                if (cbIdPuesto && cbIdPuesto.selectedValue !== undefined) {
+                    cbIdPuesto.selectedValue = -1;
+                }
             });
 
             // Función para enviar los datos del formulario mediante AJAX
             function agregarUsuario() {
-                
+
                 var formData = new FormData();
                 formData.append('Usuario', $('#InpUsuario').val()); // Enviar el IdCliente
                 formData.append('NombreUsuario', $('#InpNombreUsuario').val());
                 formData.append('ApellidoPaternoUsuario', $('#InpApellidoPaternoUsuario').val());
                 formData.append('ApellidoMaternoUsuario', $('#InpApellidoMaternoUsuario').val());
-                formData.append('IdPuesto', $('#InpPuesto').val()); // Enviar el IdCliente
+                formData.append('IdPuesto', cbIdPuesto.selectedValue);// Enviar el ID del puesto
                 formData.append('Telefono', $('#InpTelefono').val());
                 formData.append('Correo', $('#InpCorreo').val());
                 formData.append('Contrasena', $('#InpContrasena').val());
                 formData.append('FotoFile', $('#InpImagenExt')[0].files[0]); // Cambiado a LogotipoFile para coincidir con el backend
-                // let dataSend = {
-                //     usuario: {
-                //         Usuario
-                //     }
-                // }
+
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("AgregarUsuario", "Catalogos")',
@@ -820,19 +799,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de usuarios
-                        document.getElementById('GridUsuarios').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando usuario...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verUsuarios para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridUsuarios').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Agregando Usuario...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verUsuarios().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -845,15 +826,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridUsuarios').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los usuarios.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -863,26 +843,29 @@
                                 document.getElementById('GridUsuarios').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el usuario."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -900,12 +883,10 @@
             }
 
             //============================================================================================================================\\
-            //==========================================   Funcionalidad del botón Editar Cliente    ======================================\\
+            //==========================================   Funcionalidad del botón Editar Usuario    ======================================\\
             //==============================================================================================================================\\
 
-            $('#ModalEditarUsuario').on('shown.bs.modal', function () {
-                llenarComboUsuarios();
-            });
+
 
             $('.cerrarModalEditarUsuario').on('click', function () {
                 const modalEditarUsuario = bootstrap.Modal.getInstance(document.getElementById('ModalEditarUsuario'));
@@ -970,10 +951,13 @@
             }
 
             // Escucha los cambios en los campos del formulario
-            camposEdicion.forEach(function (campo) {
-                $(campo).on('input change', function () {
-                    habilitarBotonActualizar();
-                });
+            $('#FormEditarUsuario').on('input change', function () {
+                habilitarBotonActualizar();
+            });
+
+            // Escucha el evento de cambio en los selectores #cbIdEmpresaEdit y #cbIdPuestoEdit
+            $('#cbIdPuestoEdit').on('change', function () {
+                habilitarBotonActualizar();
             });
 
             // Escucha el evento de cambio en el input de la imagen
@@ -1009,7 +993,7 @@
                 formData.append('NombreUsuario', nombreUsuario);
                 formData.append('ApellidoPaternoUsuario', apellidoPaternoUsuario);
                 formData.append('ApellidoMaternoUsuario', apellidoMaternoUsuario);
-                formData.append('IdPuesto', $('#InpPuestoEdit').val()); // Enviar el IdCliente
+                formData.append('IdPuesto', cbIdPuestoEdit.selectedValue); // Enviar el ID del puesto.
                 formData.append('Telefono', telefono);
                 formData.append('Correo', correo);
                 formData.append('Contrasena', $('#InpContrasenaEdit').val());
@@ -1029,19 +1013,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de usuarios
-                        document.getElementById('GridUsuarios').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verUsuarios para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridUsuarios').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Actualizando Usuario...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verUsuarios().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -1054,15 +1040,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridUsuarios').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los usuarios.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -1072,25 +1057,26 @@
                                 document.getElementById('GridUsuarios').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
 
-                            // Mostrar un mensaje de error con SweetAlert2
-                            Swal.fire({ icon: "error", title: "Error", text: response.mensaje });
+                            });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
-                            title: 'Error',
-                            text: 'Hubo un error en la solicitud al servidor.',
-                            icon: 'error',
-                            timer: 2000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
                             allowOutsideClick: false,
                             allowEscapeKey: false,
                             allowEnterKey: false
@@ -1134,7 +1120,7 @@
             });
 
             //============================================================================================================================\\
-            //==========================================   Funcionalidad del botón Eliminar Cliente  ======================================\\
+            //==========================================   Funcionalidad del botón Eliminar Usuario  ======================================\\
             //==============================================================================================================================\\
             // Función para abrir el modal de eliminación de usuario.
             function EliminarUsuario(id, usuario) {
@@ -1174,19 +1160,21 @@
                     contentType: false, // Importante para FormData
                     processData: false, // Importante para FormData
                     beforeSend: function () {
-                        // Ocultar el grid de usuarios
-                        document.getElementById('GridUsuarios').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verUsuarios para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridUsuarios').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'EEliminando Usuario...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verUsuarios().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -1199,15 +1187,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridUsuarios').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los usuarios.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -1217,26 +1204,29 @@
                                 document.getElementById('GridUsuarios').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al desactivar el usuario."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -1255,7 +1245,7 @@
             });
 
             //============================================================================================================================\\
-            //==========================================  Funcionalidad del botón Reactivar Cliente  ======================================\\
+            //==========================================  Funcionalidad del botón Reactivar Usuario  ======================================\\
             //==============================================================================================================================\\
             // Función para abrir el modal de confirmación de reactivación de usuario.
             function ConfirmarUsuario(id, usuario) {
@@ -1295,19 +1285,21 @@
                     contentType: false, // Importante para FormData.
                     processData: false, // Importante para FormData.
                     beforeSend: function () {
-                        // Ocultar el grid de usuarios
-                        document.getElementById('GridUsuarios').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verUsuarios para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridUsuarios').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Eliminando Usuario...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verUsuarios().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -1320,15 +1312,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridUsuarios').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los usuarios.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -1338,26 +1329,29 @@
                                 document.getElementById('GridUsuarios').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al reactivar el usuario."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);

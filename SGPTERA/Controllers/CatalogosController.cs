@@ -227,13 +227,6 @@ namespace SGPTERA.Controllers
         }
 
         [HttpPost]
-        public async Task<RespuestaJson> GetUsuariosPuestos()
-        {
-            RespuestaJson respuesta = await new Catalogos(_dapperContext).GetUsuariosPuestos();
-            return respuesta;
-        }
-
-        [HttpPost]
         public async Task<RespuestaJson> AgregarUsuario(Usuarios usuarios)
         {
             usuarios.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");

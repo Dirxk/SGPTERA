@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TeracromDatabase")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab62b0972c875e4a732039f4af80e7a7b56afb94")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+04aea7451638c29af059a4fbfc244f9eb1e08bf8")]
 [assembly: System.Reflection.AssemblyProductAttribute("TeracromDatabase")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TeracromDatabase")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using TeracromDatabase;
 using TeracromModels;
 
+
 namespace TeracromController
 {
     public class Catalogos
@@ -18,6 +19,7 @@ namespace TeracromController
             _dapperContext = dapperContext;
         }
 
+        
         //============================================================================================================================\\
         //====================================================   Modelo Clientes   =================================================== \\
         //==============================================================================================================================\\
@@ -1023,6 +1025,7 @@ namespace TeracromController
                                 s.ApellidoPaternoUsuario, 
                                 s.ApellidoMaternoUsuario, 
                                 c.Descripcion, 
+                                s.IdPuesto, 
                                 s.Telefono, 
                                 s.Correo, 
                                 s.FotoPerfil, 
@@ -1042,6 +1045,7 @@ namespace TeracromController
                         NombreUsuario = s.NombreUsuario,
                         ApellidoPaternoUsuario = s.ApellidoPaternoUsuario,
                         ApellidoMaternoUsuario = s.ApellidoMaternoUsuario,
+                        IdPuesto = s.IdPuesto,
                         Descripcion = s.Descripcion,
                         Telefono = s.Telefono,
                         Correo = s.Correo,
@@ -1068,50 +1072,6 @@ namespace TeracromController
             return respuesta;
         }
 
-        public async Task<RespuestaJson> GetUsuariosPuestos()
-        {
-            RespuestaJson respuesta = new RespuestaJson();
-            try
-            {
-                // Abrir la conexión a la base de datos
-                _dapperContext.AbrirConexion("SGP");
-
-                string sql = @"
-                SELECT 
-                    Id, 
-                    Descripcion 
-                FROM 
-                    Puestos WHERE Tipo = 1";
-
-                var puestos = await _dapperContext.QueryAsync<Puestos>(sql);
-                if (puestos != null)
-                {
-                    respuesta.Resultado = true;
-                    respuesta.Data = puestos.Select(c => new
-                    {
-                        Id = c.Id,
-                        Descripcion = c.Descripcion
-                    }).ToList();
-                }
-                else
-                {
-                    respuesta.Mensaje = "No se encontraron clientes.";
-                    respuesta.Data = new List<Puestos>(); // Inicializar Data para evitar null
-                }
-            }
-            catch (Exception ex)
-            {
-                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los clientes." + ex.Message;
-                respuesta.Data = new List<Puestos>(); // Inicializar Data para evitar null
-            }
-            finally
-            {
-                // Cerrar o liberar la conexión (si es necesario)
-                _dapperContext.Dispose();
-            }
-            return respuesta;
-        }
-
         public async Task<RespuestaJson> AgregarUsuario(Usuarios usuario)
         {
             RespuestaJson respuesta = new RespuestaJson();
@@ -1126,7 +1086,20 @@ namespace TeracromController
                         usuario.FotoPerfil = memoryStream.ToArray(); // Convierte la imagen a byte[]
                     }
                 }
-
+                else
+                {
+                    string rutaImagenPorDefecto = @"C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\wwwroot\lib\dashboard\assets\img\AvatarTeracrom.png";
+                    if (System.IO.File.Exists(rutaImagenPorDefecto))
+                    {
+                        usuario.FotoPerfil = await System.IO.File.ReadAllBytesAsync(rutaImagenPorDefecto);
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "No se encontró la imagen por defecto.";
+                        return respuesta;
+                    }
+                }
+               
                 // Eliminar caracteres no numéricos del número de teléfono
                 if (!string.IsNullOrEmpty(usuario.Telefono))
                 {
@@ -1516,7 +1489,6 @@ namespace TeracromController
                 }
                 else
                 {
-                    // Cargar la imagen por defecto si no se recibe ninguna foto
                     string rutaImagenPorDefecto = @"C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\wwwroot\lib\dashboard\assets\img\AvatarTeracromGreen.png";
                     if (System.IO.File.Exists(rutaImagenPorDefecto))
                     {
