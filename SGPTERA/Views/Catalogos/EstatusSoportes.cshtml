@@ -58,7 +58,7 @@
         <div class="modal-content">
             <form id="FormCrearProyecto">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Estatus</h3>
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Estatus de Soportes</h3>
                     <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
@@ -66,8 +66,15 @@
                         <!-- Campo: EstatusSoportesDescripcion -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="InpEstatusSoportesDescripcion" name="InpEstatusSoportesDescripcion" required placeholder="Estatus" maxlength="20" autocomplete="off">
+                                <input type="text" class="form-control" id="InpEstatusSoportesDescripcion" name="InpEstatusSoportesDescripcion" required placeholder="Estatus" maxlength="150" autocomplete="off">
                                 <label for="InpEstatusSoportesDescripcion">Estatus <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Detalles -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpDetalles" name="InpEstatusDetalles" required placeholder="Detalles" maxlength="150" autocomplete="off">
+                                <label for="InpDetalles">Detalles <span class="text-danger">*</span></label>
                             </div>
                         </div>
                     </div>
@@ -94,7 +101,7 @@
         <div class="modal-content">
             <form id="FormEditarEstatusSoporte">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalEditarEstatusSoporteLabel">Editar estatus del soporte</h5>
+                    <h5 class="modal-title" id="ModalEditarEstatusSoporteLabel">Editar Estatus de Soportes</h5>
                     <button type="button" class="btn-close cerrarModalEditarEstatusSoporte" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -102,8 +109,15 @@
                         <!-- Campo: EstatusSoportesDescripcion -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="InpEstatusSoportesDescripcionEdit" name="InpEstatusSoportesDescripcionEdit" required placeholder="Estatus" maxlength="20" autocomplete="off">
+                                <input type="text" class="form-control" id="InpEstatusSoportesDescripcionEdit" name="InpEstatusSoportesDescripcionEdit" required placeholder="Estatus" maxlength="150" autocomplete="off">
                                 <label for="InpEstatusSoportesDescripcionEdit">Estatus <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Detalles -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpDetallesEdit" name="InpDetallesEdit" required placeholder="Detalles" maxlength="150" autocomplete="off">
+                                <label for="InpDetallesEdit">Detalles </label>
                             </div>
                         </div>
                     </div>
@@ -126,14 +140,14 @@
         <div class="modal-content">
             <form id="FormEliminarEstatusSoporte">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar Estatus</h5>
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar Estatus de Soportes</h5>
                     <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span class="fas fa-times fs--1"></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="text-700 lh-lg mb-0">
-                        ¿Deseas eliminar el estatus de <strong class="nombreEstatusSoporte"></strong>?
+                        ¿Deseas eliminar el estatus: <strong class="nombreEstatusSoporte"></strong>?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -158,14 +172,14 @@
         <div class="modal-content">
             <form id="FormConfirmarEstatusSoporte">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar Estatus</h5>
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar Estatus de Soportes</h5>
                     <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span class="fas fa-times fs--1"></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="text-700 lh-lg mb-0">
-                        ¿Deseas reactivar el estatus de <strong class="nombreConfirmarEstatusSoporte"></strong>?
+                        ¿Deseas reactivar el estatus: <strong class="nombreConfirmarEstatusSoporte"></strong>?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -220,18 +234,18 @@
         //================================  Función para editar un Puesto específico basado en su ID  ================================\\
         //==============================================================================================================================\\
 
-        let valoresIniciales = {}; // Almacena los valores iniciales del Estatus del Proyecto
-
         function EditarEstatusSoporte(id) {
-            const EstatusSoporte = GridEstatusSoportes.itemsSource.find(c => c.id === id); // Busca el Estatus del Proyecto en la grilla.
-            if (EstatusSoporte) {
+            const estatussoporte = GridEstatusSoportes.itemsSource.find(c => c.id === id); // Busca el Estatus del Proyecto en la grilla.
+            if (estatussoporte) {
                 // Guardar los valores iniciales del Estatus del Proyecto
                 valoresIniciales = {
-                    descripcion: EstatusSoporte.estatusSoporteDescripcion
+                    descripcion: estatussoporte.estatusSoporteDescripcion || '',
+                    detalles: estatussoporte.detalles || ''
                 };
 
                 // Asigna los valores del Estatus del Proyecto a los campos del formulario de edición.
                 $('#InpEstatusSoportesDescripcionEdit').val(valoresIniciales.descripcion);
+                $('#InpDetallesEdit').val(valoresIniciales.detalles);
 
                 // Deshabilitar el botón de actualizar inicialmente
                 $('#btnActualizarEstatusSoporte').prop('disabled', true);
@@ -241,23 +255,9 @@
                 ModalEditarEstatusSoporte.show();
                 $('#btnActualizarEstatusSoporte').data('id', id); // Asigna el ID del Estatus del Proyecto al botón de actualizar.
             } else {
-                console.error("Estatus del Proyecto no encontrado."); // Maneja el caso en que el Estatus del Proyecto no existe.
+                console.error("Estatus del soporte no encontrado."); // Maneja el caso en que el Estatus del Proyecto no existe.
             }
         }
-
-        // Función para habilitar el botón si algún campo ha cambiado
-        function habilitarBotonActualizar() {
-            const descripcionActual = $('#InpEstatusSoportesDescripcionEdit').val();
-            $('#btnActualizarEstatusSoporte').prop('disabled', descripcionActual === valoresIniciales.descripcion);
-        }
-
-        // Escucha los cambios en el campo del formulario
-        $('#InpEstatusSoportesDescripcionEdit').on('input change', habilitarBotonActualizar);
-
-        // Evento para limpiar el formulario al cerrar el modal
-        $('#ModalEditarEstatusSoporte').on('hidden.bs.modal', function () {
-            $('#FormEditarEstatusSoporte')[0].reset(); // Restablece el formulario.
-        });
 
         //============================================================================================================================\\
         //===============================  Inicialización del GRID EstatusSoportes y Configuración de Eventos  ===============================\\
@@ -277,6 +277,7 @@
                 columns: [
                     { binding: '', header: '#', width: 50, align: 'center' },
                     { binding: 'estatusSoporteDescripcion', header: 'Estatus', width: '*', align: 'center' },
+                    { binding: 'detalles', header: 'Detalles', width: '*', align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
                 ],
                 isReadOnly: true,
@@ -427,17 +428,31 @@
             $("#FormCrearProyecto").validate({
                 rules: {
                     InpEstatusSoportesDescripcion: {
-                        required: true
+                        required: true,
+                        minlength: 3,
+                        maxlength: 150
+                    },
+                    InpEstatusDetalles: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 150
                     }
                 },
                 messages: {
                     InpEstatusSoportesDescripcion: {
-                        required: "El estatus es requerido."
+                        required: "El estatus es requerido.",
+                        minlength: "Debe contener al menos 3 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
+                    },
+                    InpEstatusDetalles: {
+                        required: "Los detalles son requeridos.",
+                        minlength: "Debe contener al menos 5 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
                     }
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
-                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+                    agregarEstatusSoporte();
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -447,6 +462,7 @@
                 errorClass: 'alert-validate'
             });
 
+
             // Evento para limpiar el formulario al cerrar el modal
             $('#UserModal').on('hidden.bs.modal', function () {
                 $('#FormCrearProyecto')[0].reset(); // Restablece el formulario.
@@ -454,9 +470,10 @@
             });
 
             // Función para enviar los datos del formulario mediante AJAX
-            function agregarPuesto() {
+            function agregarEstatusSoporte() {
                 var formData = new FormData();
                 formData.append('EstatusSoporteDescripcion', $('#InpEstatusSoportesDescripcion').val());
+                formData.append('Detalles', $('#InpDetalles').val());
 
                 $.ajax({
                     type: "POST",
@@ -465,20 +482,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de EstatusSoportes
-                        document.getElementById('GridEstatusSoportes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridEstatusSoportes').style.visibility = 'hidden';
 
-                            // Llamar a la función verEstatusSoportes para recargar el grid
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Agregando Estatus...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verEstatusSoportes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -495,11 +513,10 @@
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los EstatusSoportes.',
+                                    text: 'Hubo un error al recargar los estatus.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -509,10 +526,7 @@
                                 document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
@@ -521,18 +535,20 @@
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                            text: "Ocurrió un error al agregar el estatus.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -564,17 +580,31 @@
             $("#FormEditarEstatusSoporte").validate({
                 rules: {
                     InpEstatusSoportesDescripcionEdit: {
-                        required: true
+                        required: true,
+                        minlength: 3,
+                        maxlength: 150
+                    },
+                    InpDetallesEdit: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 150
                     }
                 },
                 messages: {
                     InpEstatusSoportesDescripcionEdit: {
-                        required: "El estatus es requerido."
+                        required: "El estatus es requerido.",
+                        minlength: "Debe contener al menos 3 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
+                    },
+                    InpDetallesEdit: {
+                        required: "Los detalles son requeridos.",
+                        minlength: "Debe contener al menos 5 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
                     }
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
-                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+                    actualizarEstatusSoporte();
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -584,17 +614,30 @@
                 errorClass: 'alert-validate'
             });
 
-            // Función para habilitar el botón si el campo ha cambiado y es válido
+            // Selecciona todos los campos del formulario de edición
+            const camposEdicion = ['#InpEstatusSoportesDescripcionEdit', '#InpDetallesEdit'];
+
+            // Función para habilitar el botón si algún campo ha cambiado
             function habilitarBotonActualizar() {
-                const descripcionActual = $('#InpEstatusSoportesDescripcionEdit').val();
-                const esValido = $("#FormEditarEstatusSoporte").valid(); // Verifica si el formulario es válido
-                $('#btnActualizarEstatusSoporte').prop('disabled', descripcionActual === valoresIniciales.descripcion || !esValido);
+                let algunCampoCambiado = false;
+
+                camposEdicion.forEach(function (campo) {
+                    if ($(campo).val() !== '') {
+                        algunCampoCambiado = true;
+                    }
+                });
+
+                // Habilita el botón si algún campo ha cambiado
+                if (algunCampoCambiado) {
+                    $('#btnActualizarEstatusSoporte').prop('disabled', false);
+                } else {
+                    $('#btnActualizarEstatusSoporte').prop('disabled', true);
+                }
             }
 
-            // Escuchar cambios en el campo del formulario
-            $('#InpEstatusSoportesDescripcionEdit').on('input change', function () {
+            // Escucha los cambios en los campos del formulario
+            $('#FormEditarEstatusSoporte').on('input change', function () {
                 habilitarBotonActualizar();
-                $("#FormEditarEstatusSoporte").validate().element(this); // Valida el campo en tiempo real
             });
 
             // Evento para limpiar el formulario al cerrar el modal
@@ -605,17 +648,19 @@
             });
 
             // Función para actualizar el puesto
-            function actualizarPuesto() {
+            function actualizarEstatusSoporte() {
                 if (!$("#FormEditarEstatusSoporte").valid()) { // Verifica si el formulario es válido
                     return; // Detiene la ejecución si el formulario no es válido
                 }
 
                 const id = $('#btnActualizarEstatusSoporte').data('id'); // Obtiene el ID del puesto.
                 const descripcion = $('#InpEstatusSoportesDescripcionEdit').val(); // Obtiene la descripción.
+                const detalles = $('#InpDetallesEdit').val();
 
                 const formData = new FormData();
                 formData.append('Id', id);
                 formData.append('EstatusSoporteDescripcion', descripcion);
+                formData.append('Detalles', detalles);
 
                 $.ajax({
                     type: "POST",
@@ -624,20 +669,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de EstatusSoportes
-                        document.getElementById('GridEstatusSoportes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridEstatusSoportes').style.visibility = 'hidden';
 
-                            // Llamar a la función verEstatusSoportes para recargar el grid
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Actualizando Estatus...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verEstatusSoportes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -654,11 +700,10 @@
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los EstatusSoportes.',
+                                    text: 'Hubo un error al recargar los estatus.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -668,10 +713,7 @@
                                 document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
@@ -680,18 +722,20 @@
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                            text: "Ocurrió un error al agregar el estatus.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -710,7 +754,7 @@
             // Evento para el botón de actualizar
             $('#btnActualizarEstatusSoporte').on('click', function () {
                 if ($("#FormEditarEstatusSoporte").valid()) { // Verifica si el formulario es válido
-                    actualizarPuesto(); // Llama a la función de actualización
+                    actualizarEstatusSoporte(); // Llama a la función de actualización
                 }
             });
 
@@ -761,19 +805,21 @@
                     contentType: false, // Importante para FormData
                     processData: false, // Importante para FormData
                     beforeSend: function () {
-                        // Ocultar el grid de EstatusSoportes
-                        document.getElementById('GridEstatusSoportes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verEstatusSoportes para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridEstatusSoportes').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Actualizando Estatus...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verEstatusSoportes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -786,15 +832,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los EstatusSoportes.',
+                                    text: 'Hubo un error al recargar los estatus.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -804,26 +849,29 @@
                                 document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al desactivar el puesto."
+                            text: "Ocurrió un error al agregar el estatus.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -882,19 +930,21 @@
                     contentType: false, // Importante para FormData.
                     processData: false, // Importante para FormData.
                     beforeSend: function () {
-                        // Ocultar el grid de EstatusSoportes
-                        document.getElementById('GridEstatusSoportes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verEstatusSoportes para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridEstatusSoportes').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Actualizando Estatus...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verEstatusSoportes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -907,15 +957,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los EstatusSoportes.',
+                                    text: 'Hubo un error al recargar los estatus.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -925,26 +974,29 @@
                                 document.getElementById('GridEstatusSoportes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al reactivar el puesto."
+                            text: "Ocurrió un error al agregar el estatus.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);

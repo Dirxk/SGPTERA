@@ -58,7 +58,7 @@
         <div class="modal-content">
             <form id="FormCrearProyecto">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo nivel de atención</h3>
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Tipo de Soporte</h3>
                     <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
@@ -66,8 +66,15 @@
                         <!-- Campo: TipoSoportesDescripcion -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="InpTipoSoportesDescripcion" name="InpTipoSoportesDescripcion" required placeholder="Estatus" maxlength="60" autocomplete="off">
-                                <label for="InpTipoSoportesDescripcion">Tipo de soporte <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="InpTipoSoportesDescripcion" name="InpTipoSoportesDescripcion" required placeholder="Estatus" maxlength="150" autocomplete="off">
+                                <label for="InpTipoSoportesDescripcion">Tipo de Soporte <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Detalles -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpDetalles" name="InpEstatusDetalles" required placeholder="Detalles" maxlength="150" autocomplete="off">
+                                <label for="InpDetalles">Detalles <span class="text-danger">*</span></label>
                             </div>
                         </div>
                     </div>
@@ -77,7 +84,7 @@
                         <i class="fas fa-ban me-2"></i>Cancelar
                     </button>
                     <button type="submit" class="btn btn-success px-5" id="BtnAgregarTipoSoporteExt">
-                        <i class="fas fa-folder-plus me-3"></i>Agregar tipo de soporte
+                        <i class="fas fa-folder-plus me-3"></i>Agregar Tipo de Soporte
                     </button>
                 </div>
             </form>
@@ -94,7 +101,7 @@
         <div class="modal-content">
             <form id="FormEditarTipoSoporte">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalEditarTipoSoporteLabel">Editar nivel de atención</h5>
+                    <h5 class="modal-title" id="ModalEditarTipoSoporteLabel">Editar Tipo de Soporte</h5>
                     <button type="button" class="btn-close cerrarModalEditarTipoSoporte" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -102,15 +109,22 @@
                         <!-- Campo: TipoSoportesDescripcion -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="InpTipoSoportesDescripcionEdit" name="InpTipoSoportesDescripcionEdit" required placeholder="Estatus" maxlength="60" autocomplete="off">
-                                <label for="InpTipoSoportesDescripcionEdit">Estatus <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="InpTipoSoportesDescripcionEdit" name="InpTipoSoportesDescripcionEdit" required placeholder="Estatus" maxlength="150" autocomplete="off">
+                                <label for="InpTipoSoportesDescripcionEdit">Tipo de Soporte </label>
+                            </div>
+                        </div>
+                        <!-- Campo: Detalles -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpDetallesEdit" name="InpDetallesEdit" required placeholder="Detalles" maxlength="150" autocomplete="off">
+                                <label for="InpDetallesEdit">Detalles </label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger cerrarModalEditarTipoSoporte">Cancelar</button>
-                    <button type="button" class="btn btn-success EditarTipoSoporte" id="btnActualizarTipoSoporte">Actualizar tipo de soporte</button>
+                    <button type="button" class="btn btn-success EditarTipoSoporte" id="btnActualizarTipoSoporte">Actualizar Tipo de Soporte</button>
                 </div>
             </form>
         </div>
@@ -126,7 +140,7 @@
         <div class="modal-content">
             <form id="FormEliminarTipoSoporte">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar nivel de atención</h5>
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar Tipo de Soporte</h5>
                     <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span class="fas fa-times fs--1"></span>
                     </button>
@@ -158,7 +172,7 @@
         <div class="modal-content">
             <form id="FormConfirmarTipoSoporte">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar nivel de atención</h5>
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar Tipo de Soporte</h5>
                     <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span class="fas fa-times fs--1"></span>
                     </button>
@@ -220,18 +234,18 @@
         //================================  Función para editar un Puesto específico basado en su ID  ================================\\
         //==============================================================================================================================\\
 
-        let valoresIniciales = {}; // Almacena los valores iniciales del Estatus del Proyecto
-
         function EditarTipoSoporte(id) {
-            const TipoSoporte = GridTipoSoportes.itemsSource.find(c => c.id === id); // Busca el Estatus del Proyecto en la grilla.
-            if (TipoSoporte) {
+            const tiposoporte = GridTipoSoportes.itemsSource.find(c => c.id === id); // Busca el Estatus del Proyecto en la grilla.
+            if (tiposoporte) {
                 // Guardar los valores iniciales del Estatus del Proyecto
                 valoresIniciales = {
-                    descripcion: TipoSoporte.tipoSoporteDescripcion
+                    descripcion: tiposoporte.tipoSoporteDescripcion || '',
+                    detalles: tiposoporte.detalles || ''
                 };
 
                 // Asigna los valores del Estatus del Proyecto a los campos del formulario de edición.
                 $('#InpTipoSoportesDescripcionEdit').val(valoresIniciales.descripcion);
+                $('#InpDetallesEdit').val(valoresIniciales.detalles);
 
                 // Deshabilitar el botón de actualizar inicialmente
                 $('#btnActualizarTipoSoporte').prop('disabled', true);
@@ -241,23 +255,9 @@
                 ModalEditarTipoSoporte.show();
                 $('#btnActualizarTipoSoporte').data('id', id); // Asigna el ID del Estatus del Proyecto al botón de actualizar.
             } else {
-                console.error("Estatus del Proyecto no encontrado."); // Maneja el caso en que el Estatus del Proyecto no existe.
+                console.error("Tipo de Soporte no encontrado."); // Maneja el caso en que el Estatus del Proyecto no existe.
             }
         }
-
-        // Función para habilitar el botón si algún campo ha cambiado
-        function habilitarBotonActualizar() {
-            const descripcionActual = $('#InpTipoSoportesDescripcionEdit').val();
-            $('#btnActualizarTipoSoporte').prop('disabled', descripcionActual === valoresIniciales.descripcion);
-        }
-
-        // Escucha los cambios en el campo del formulario
-        $('#InpTipoSoportesDescripcionEdit').on('input change', habilitarBotonActualizar);
-
-        // Evento para limpiar el formulario al cerrar el modal
-        $('#ModalEditarTipoSoporte').on('hidden.bs.modal', function () {
-            $('#FormEditarTipoSoporte')[0].reset(); // Restablece el formulario.
-        });
 
         //============================================================================================================================\\
         //===============================  Inicialización del GRID TipoSoportes y Configuración de Eventos  ===============================\\
@@ -277,6 +277,7 @@
                 columns: [
                     { binding: '', header: '#', width: 50, align: 'center' },
                     { binding: 'tipoSoporteDescripcion', header: 'Tipo de soporte', width: '*', align: 'center' },
+                    { binding: 'detalles', header: 'Detalles', width: '*', align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
                 ],
                 isReadOnly: true,
@@ -292,21 +293,21 @@
                             let botones = '';
                             if (flgActivo === true) {
                                 botones = `
-                                                                            <div class="d-flex justify-content-center align-items-center gap-2">
-                                                                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarTipoSoporte" onclick="EditarTipoSoporte(${rowData.id})">
-                                                                                    <i class="fas fa-edit"></i>
-                                                                                </button>
-                                                                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarTipoSoporte" data-id="${rowData.id}" data-nombre="${rowData.tipoSoporteDescripcion}">
-                                                                                    <i class="fas fa-trash-alt"></i>
-                                                                                </button>
-                                                                            </div>`;
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarTipoSoporte" onclick="EditarTipoSoporte(${rowData.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarTipoSoporte" data-id="${rowData.id}" data-nombre="${rowData.tipoSoporteDescripcion}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>`;
                             } else if (flgActivo === false) {
                                 botones = `
-                                                                            <div class="d-flex justify-content-center align-items-center gap-2">
-                                                                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarTipoSoporte" data-id="${rowData.id}" data-nombre="${rowData.tipoSoporteDescripcion}">
-                                                                                    <i class="fas fa-check"></i>
-                                                                                </button>
-                                                                            </div>`;
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarTipoSoporte" data-id="${rowData.id}" data-nombre="${rowData.tipoSoporteDescripcion}">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </div>`;
                             }
 
                             // Insertar los botones en la celda
@@ -427,17 +428,31 @@
             $("#FormCrearProyecto").validate({
                 rules: {
                     InpTipoSoportesDescripcion: {
-                        required: true
+                        required: true,
+                        minlength: 3,
+                        maxlength: 150
+                    },
+                    InpEstatusDetalles: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 150
                     }
                 },
                 messages: {
                     InpTipoSoportesDescripcion: {
-                        required: "El tipo de soporte es requerido."
+                        required: "El tipo de soporte es requerido.",
+                        minlength: "Debe contener al menos 3 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
+                    },
+                    InpEstatusDetalles: {
+                        required: "Los detalles son requeridos.",
+                        minlength: "Debe contener al menos 5 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
                     }
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
-                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+                    agregarTipoSoporte();
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -454,9 +469,10 @@
             });
 
             // Función para enviar los datos del formulario mediante AJAX
-            function agregarPuesto() {
+            function agregarTipoSoporte() {
                 var formData = new FormData();
                 formData.append('TipoSoporteDescripcion', $('#InpTipoSoportesDescripcion').val());
+                formData.append('Detalles', $('#InpDetalles').val());
 
                 $.ajax({
                     type: "POST",
@@ -465,20 +481,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de TipoSoportes
-                        document.getElementById('GridTipoSoportes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridTipoSoportes').style.visibility = 'hidden';
 
-                            // Llamar a la función verTipoSoportes para recargar el grid
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Agregando Tipo de Soporte...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verTipoSoportes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -495,11 +512,10 @@
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los TipoSoportes.',
+                                    text: 'Hubo un error al recargar los tipos de soporte.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -509,10 +525,7 @@
                                 document.getElementById('GridTipoSoportes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            document.getElementById('GridTipoSoportes').style.visibility = 'visible';
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
@@ -521,18 +534,20 @@
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        document.getElementById('GridTipoSoportes').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                            text: "Ocurrió un error al agregar el tipo de soporte.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -564,17 +579,31 @@
             $("#FormEditarTipoSoporte").validate({
                 rules: {
                     InpTipoSoportesDescripcionEdit: {
-                        required: true
+                        required: true,
+                        minlength: 3,
+                        maxlength: 150
+                    },
+                    InpDetallesEdit: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 150
                     }
                 },
                 messages: {
                     InpTipoSoportesDescripcionEdit: {
-                        required: "El tipo de soporte es requerido."
+                        required: "El tipo de soporte es requerido.",
+                        minlength: "Debe contener al menos 3 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
+                    },
+                    InpDetallesEdit: {
+                        required: "Los detalles son requeridos.",
+                        minlength: "Debe contener al menos 5 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
                     }
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
-                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+                    actualizarTipoSoporte();
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -584,17 +613,30 @@
                 errorClass: 'alert-validate'
             });
 
-            // Función para habilitar el botón si el campo ha cambiado y es válido
+            // Selecciona todos los campos del formulario de edición
+            const camposEdicion = ['#InpTipoSoportesDescripcionEdit', '#InpDetallesEdit'];
+
+            // Función para habilitar el botón si algún campo ha cambiado
             function habilitarBotonActualizar() {
-                const descripcionActual = $('#InpTipoSoportesDescripcionEdit').val();
-                const esValido = $("#FormEditarTipoSoporte").valid(); // Verifica si el formulario es válido
-                $('#btnActualizarTipoSoporte').prop('disabled', descripcionActual === valoresIniciales.descripcion || !esValido);
+                let algunCampoCambiado = false;
+
+                camposEdicion.forEach(function (campo) {
+                    if ($(campo).val() !== '') {
+                        algunCampoCambiado = true;
+                    }
+                });
+
+                // Habilita el botón si algún campo ha cambiado
+                if (algunCampoCambiado) {
+                    $('#btnActualizarTipoSoporte').prop('disabled', false);
+                } else {
+                    $('#btnActualizarTipoSoporte').prop('disabled', true);
+                }
             }
 
-            // Escuchar cambios en el campo del formulario
-            $('#InpTipoSoportesDescripcionEdit').on('input change', function () {
+            // Escucha los cambios en los campos del formulario
+            $('#FormEditarTipoSoporte').on('input change', function () {
                 habilitarBotonActualizar();
-                $("#FormEditarTipoSoporte").validate().element(this); // Valida el campo en tiempo real
             });
 
             // Evento para limpiar el formulario al cerrar el modal
@@ -605,17 +647,19 @@
             });
 
             // Función para actualizar el puesto
-            function actualizarPuesto() {
+            function actualizarTipoSoporte() {
                 if (!$("#FormEditarTipoSoporte").valid()) { // Verifica si el formulario es válido
                     return; // Detiene la ejecución si el formulario no es válido
                 }
 
                 const id = $('#btnActualizarTipoSoporte').data('id'); // Obtiene el ID del puesto.
                 const descripcion = $('#InpTipoSoportesDescripcionEdit').val(); // Obtiene la descripción.
+                const detalles = $('#InpDetallesEdit').val();
 
                 const formData = new FormData();
                 formData.append('Id', id);
                 formData.append('TipoSoporteDescripcion', descripcion);
+                formData.append('Detalles', detalles);
 
                 $.ajax({
                     type: "POST",
@@ -624,20 +668,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de TipoSoportes
-                        document.getElementById('GridTipoSoportes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridTipoSoportes').style.visibility = 'hidden';
 
-                            // Llamar a la función verTipoSoportes para recargar el grid
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Actualizando Tipo de Soporte...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verTipoSoportes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -654,11 +699,10 @@
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los TipoSoportes.',
+                                    text: 'Hubo un error al recargar los tipos de soportes.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -668,10 +712,7 @@
                                 document.getElementById('GridTipoSoportes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            document.getElementById('GridTipoSoportes').style.visibility = 'visible';
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
@@ -680,18 +721,20 @@
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        document.getElementById('GridTipoSoportes').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                            text: "Ocurrió un error al agregar el tipo de soporte.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -710,7 +753,7 @@
             // Evento para el botón de actualizar
             $('#btnActualizarTipoSoporte').on('click', function () {
                 if ($("#FormEditarTipoSoporte").valid()) { // Verifica si el formulario es válido
-                    actualizarPuesto(); // Llama a la función de actualización
+                    actualizarTipoSoporte(); // Llama a la función de actualización
                 }
             });
 
@@ -761,19 +804,21 @@
                     contentType: false, // Importante para FormData
                     processData: false, // Importante para FormData
                     beforeSend: function () {
-                        // Ocultar el grid de TipoSoportes
-                        document.getElementById('GridTipoSoportes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verTipoSoportes para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridTipoSoportes').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Eliminando Tipo de Soporte...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verTipoSoportes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -786,15 +831,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridTipoSoportes').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los TipoSoportes.',
+                                    text: 'Hubo un error al recargar los tipos de soportes.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -804,26 +848,29 @@
                                 document.getElementById('GridTipoSoportes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al desactivar el puesto."
+                            text: "Ocurrió un error al agregar el tipo de soporte.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -882,19 +929,21 @@
                     contentType: false, // Importante para FormData.
                     processData: false, // Importante para FormData.
                     beforeSend: function () {
-                        // Ocultar el grid de TipoSoportes
-                        document.getElementById('GridTipoSoportes').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verTipoSoportes para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridTipoSoportes').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Reactivando Tipo de Soporte...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verTipoSoportes().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -907,15 +956,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridTipoSoportes').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los TipoSoportes.',
+                                    text: 'Hubo un error al recargar los tipos de soportes.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -925,26 +973,29 @@
                                 document.getElementById('GridTipoSoportes').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al reactivar el puesto."
+                            text: "Ocurrió un error al agregar el tipo de soporte.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);

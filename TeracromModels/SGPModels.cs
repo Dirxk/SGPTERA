@@ -137,6 +137,9 @@ namespace GestionProyectos.Models
         [Key]
         public int Id { get; set; }
         public required string ModuloSistemaDescripcion { get; set; }
+        public required string Descripcion { get; set; }
+        public required string Detalles { get; set; }
+        public int IdSistema { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
         public int? IdUsuarioUpd { get; set; }
@@ -144,6 +147,7 @@ namespace GestionProyectos.Models
         public int? IdUsuarioDel { get; set; }
         public DateTime? FechaDel { get; set; }
         public bool FlgActivo { get; set; } = true;
+
     }
 
     public class EstatusProyectos
@@ -151,6 +155,7 @@ namespace GestionProyectos.Models
         [Key]
         public int Id { get; set; }
         public required string EstatusProyectosDescripcion { get; set; }
+        public string Detalles { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
         public int? IdUsuarioUpd { get; set; }
@@ -165,9 +170,9 @@ namespace GestionProyectos.Models
         [Key]
         public int Id { get; set; }
         public required string EstatusTareaDescripcion { get; set; }
+        public string Detalles { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
-
         public int? IdUsuarioUpd { get; set; }
         public DateTime? FechaUpd { get; set; }
         public int? IdUsuarioDel { get; set; }
@@ -180,6 +185,7 @@ namespace GestionProyectos.Models
         [Key]
         public int Id { get; set; }
         public required string EstatusSoporteDescripcion { get; set; }
+        public string Detalles { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
         public int? IdUsuarioUpd { get; set; }
@@ -194,6 +200,7 @@ namespace GestionProyectos.Models
         [Key]
         public int Id { get; set; }
         public required string NivelServicioSoporteDescripcion { get; set; }
+        public string Detalles { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
         public int? IdUsuarioUpd { get; set; }
@@ -208,6 +215,7 @@ namespace GestionProyectos.Models
         [Key]
         public int Id { get; set; }
         public required string TipoSoporteDescripcion { get; set; }
+        public string Detalles { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
         public int? IdUsuarioUpd { get; set; }
@@ -222,6 +230,7 @@ namespace GestionProyectos.Models
         [Key]
         public int Id { get; set; }
         public required string NivelComplejidadTareaDescripcion { get; set; }
+        public string Detalles { get; set; }
         public int? IdUsuarioSet { get; set; }
         public DateTime FechaSet { get; set; } = DateTime.UtcNow;
         public int? IdUsuarioUpd { get; set; }

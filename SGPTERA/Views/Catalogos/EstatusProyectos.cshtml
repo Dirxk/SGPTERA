@@ -58,7 +58,7 @@
         <div class="modal-content">
             <form id="FormCrearProyecto">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Modulo</h3>
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Estatus de Proyectos</h3>
                     <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
@@ -66,8 +66,15 @@
                         <!-- Campo: EstatusProyectosDescripcion -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="InpEstatusProyectosDescripcion" name="InpEstatusProyectosDescripcion" required placeholder="Estatus" maxlength="20" autocomplete="off">
+                                <input type="text" class="form-control" id="InpEstatusProyectosDescripcion" name="InpEstatusProyectosDescripcion" required placeholder="Estatus" maxlength="150" autocomplete="off">
                                 <label for="InpEstatusProyectosDescripcion">Estatus <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Detalles -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpDetalles" name="InpEstatusDetalles" required placeholder="Detalles" maxlength="150" autocomplete="off">
+                                <label for="InpDetalles">Detalles <span class="text-danger">*</span></label>
                             </div>
                         </div>
                     </div>
@@ -77,7 +84,7 @@
                         <i class="fas fa-ban me-2"></i>Cancelar
                     </button>
                     <button type="submit" class="btn btn-success px-5" id="BtnAgregarUsuarioExt">
-                        <i class="far fa-folder me-2"></i>Agregar Modulo
+                        <i class="far fa-folder me-2"></i>Agregar Estatus
                     </button>
                 </div>
             </form>
@@ -94,7 +101,7 @@
         <div class="modal-content">
             <form id="FormEditarEstatusProyecto">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalEditarEstatusProyectoLabel">Editar Puesto</h5>
+                    <h5 class="modal-title" id="ModalEditarEstatusProyectoLabel">Editar Estatus de Proyectos</h5>
                     <button type="button" class="btn-close cerrarModalEditarEstatusProyecto" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -102,15 +109,22 @@
                         <!-- Campo: EstatusProyectosDescripcion -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="InpEstatusProyectosDescripcionEdit" name="InpEstatusProyectosDescripcionEdit" required placeholder="Estatus" maxlength="20" autocomplete="off">
-                                <label for="InpEstatusProyectosDescripcionEdit">Estatus <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="InpEstatusProyectosDescripcionEdit" name="InpEstatusProyectosDescripcionEdit" required placeholder="Estatus" maxlength="150" autocomplete="off">
+                                <label for="InpEstatusProyectosDescripcionEdit">Estatus </label>
+                            </div>
+                        </div>
+                        <!-- Campo: Detalles -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpDetallesEdit" name="InpDetallesEdit" required placeholder="Detalles" maxlength="150" autocomplete="off">
+                                <label for="InpDetallesEdit">Detalles </label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger cerrarModalEditarEstatusProyecto">Cancelar</button>
-                    <button type="button" class="btn btn-success EditarPuesto" id="btnActualizarPuesto">Actualizar Puesto</button>
+                    <button type="button" class="btn btn-success EditarPuesto" id="btnActualizarEstatusProyecto">Actualizar Estatus</button>
                 </div>
             </form>
         </div>
@@ -126,14 +140,14 @@
         <div class="modal-content">
             <form id="FormEliminarEstatusProyecto">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar Modulo</h5>
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar Estatus de Proyectos</h5>
                     <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span class="fas fa-times fs--1"></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="text-700 lh-lg mb-0">
-                        ¿Deseas eliminar el estatus de <strong class="nombreEstatusProyecto"></strong>?
+                        ¿Deseas eliminar el estatus: <strong class="nombreEstatusProyecto"></strong>?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -158,14 +172,14 @@
         <div class="modal-content">
             <form id="FormConfirmarEstatusProyecto">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar Modulo</h5>
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar Estatus de Proyectos</h5>
                     <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span class="fas fa-times fs--1"></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="text-700 lh-lg mb-0">
-                        ¿Deseas reactivar el estatus de <strong class="nombreConfirmarEstatusProyecto"></strong>?
+                        ¿Deseas reactivar el estatus: <strong class="nombreConfirmarEstatusProyecto"></strong>?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -220,44 +234,30 @@
         //================================  Función para editar un Puesto específico basado en su ID  ================================\\
         //==============================================================================================================================\\
 
-        let valoresIniciales = {}; // Almacena los valores iniciales del Estatus del Proyecto
-
         function EditarPuesto(id) {
-            const EstatusProyecto = GridEstatusProyectos.itemsSource.find(c => c.id === id); // Busca el Estatus del Proyecto en la grilla.
-            if (EstatusProyecto) {
+            const estatusproyecto = GridEstatusProyectos.itemsSource.find(c => c.id === id); // Busca el Estatus del Proyecto en la grilla.
+            if (estatusproyecto) {
                 // Guardar los valores iniciales del Estatus del Proyecto
                 valoresIniciales = {
-                    descripcion: EstatusProyecto.estatusProyectosDescripcion
+                    descripcion: estatusproyecto.estatusProyectosDescripcion || '',
+                    detalles: estatusproyecto.detalles || ''
                 };
 
                 // Asigna los valores del Estatus del Proyecto a los campos del formulario de edición.
                 $('#InpEstatusProyectosDescripcionEdit').val(valoresIniciales.descripcion);
+                $('#InpDetallesEdit').val(valoresIniciales.detalles);
 
                 // Deshabilitar el botón de actualizar inicialmente
-                $('#btnActualizarPuesto').prop('disabled', true);
+                $('#btnActualizarEstatusProyecto').prop('disabled', true);
 
                 // Muestra el modal de edición de Estatus del Proyecto.
                 const ModalEditarEstatusProyecto = new bootstrap.Modal($('#ModalEditarEstatusProyecto')[0]);
                 ModalEditarEstatusProyecto.show();
-                $('#btnActualizarPuesto').data('id', id); // Asigna el ID del Estatus del Proyecto al botón de actualizar.
+                $('#btnActualizarEstatusProyecto').data('id', id); // Asigna el ID del Estatus del Proyecto al botón de actualizar.
             } else {
                 console.error("Estatus del Proyecto no encontrado."); // Maneja el caso en que el Estatus del Proyecto no existe.
             }
         }
-
-        // Función para habilitar el botón si algún campo ha cambiado
-        function habilitarBotonActualizar() {
-            const descripcionActual = $('#InpEstatusProyectosDescripcionEdit').val();
-            $('#btnActualizarPuesto').prop('disabled', descripcionActual === valoresIniciales.descripcion);
-        }
-
-        // Escucha los cambios en el campo del formulario
-        $('#InpEstatusProyectosDescripcionEdit').on('input change', habilitarBotonActualizar);
-
-        // Evento para limpiar el formulario al cerrar el modal
-        $('#ModalEditarEstatusProyecto').on('hidden.bs.modal', function () {
-            $('#FormEditarEstatusProyecto')[0].reset(); // Restablece el formulario.
-        });
 
         //============================================================================================================================\\
         //===============================  Inicialización del GRID EstatusProyectos y Configuración de Eventos  ===============================\\
@@ -277,6 +277,7 @@
                 columns: [
                     { binding: '', header: '#', width: 50, align: 'center' },
                     { binding: 'estatusProyectosDescripcion', header: 'Estatus', width: '*', align: 'center' },
+                    { binding: 'detalles', header: 'Detalles', width: '*', align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
                 ],
                 isReadOnly: true,
@@ -427,17 +428,31 @@
             $("#FormCrearProyecto").validate({
                 rules: {
                     InpEstatusProyectosDescripcion: {
-                        required: true
+                        required: true,
+                        minlength: 3,
+                        maxlength: 150
+                    },
+                    InpEstatusDetalles: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 150
                     }
                 },
                 messages: {
                     InpEstatusProyectosDescripcion: {
-                        required: "El estatus es requerido."
+                        required: "El estatus es requerido.",
+                        minlength: "Debe contener al menos 3 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
+                    },
+                    InpEstatusDetalles: {
+                        required: "Los detalles son requeridos.",
+                        minlength: "Debe contener al menos 5 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
                     }
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
-                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+                    agregarEstatusProyectos();
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -447,6 +462,7 @@
                 errorClass: 'alert-validate'
             });
 
+
             // Evento para limpiar el formulario al cerrar el modal
             $('#UserModal').on('hidden.bs.modal', function () {
                 $('#FormCrearProyecto')[0].reset(); // Restablece el formulario.
@@ -454,9 +470,10 @@
             });
 
             // Función para enviar los datos del formulario mediante AJAX
-            function agregarPuesto() {
+            function agregarEstatusProyectos() {
                 var formData = new FormData();
                 formData.append('EstatusProyectosDescripcion', $('#InpEstatusProyectosDescripcion').val());
+                formData.append('Detalles', $('#InpDetalles').val());
 
                 $.ajax({
                     type: "POST",
@@ -465,20 +482,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de EstatusProyectos
-                        document.getElementById('GridEstatusProyectos').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridEstatusProyectos').style.visibility = 'hidden';
 
-                            // Llamar a la función verEstatusProyectos para recargar el grid
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Agregando Estatus...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verEstatusProyectos().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -495,11 +513,10 @@
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los EstatusProyectos.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -509,10 +526,7 @@
                                 document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
@@ -521,18 +535,20 @@
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                            text: "Ocurrió un error al agregar el estatus.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -550,7 +566,7 @@
             }
 
             //============================================================================================================================\\
-            //==========================================   Funcionalidad del botón Editar EstatusProyecto    ======================================\\
+            //======================================= Funcionalidad del botón Editar EstatusProyecto ======================================\\
             //==============================================================================================================================\\
 
             let valoresIniciales = {}; // Almacena los valores iniciales del Estatus del Proyecto
@@ -560,21 +576,34 @@
                 bootstrap.Modal.getInstance(document.getElementById('ModalEditarEstatusProyecto')).hide();
             });
 
-            // Validación del formulario
             $("#FormEditarEstatusProyecto").validate({
                 rules: {
                     InpEstatusProyectosDescripcionEdit: {
-                        required: true
+                        required: true,
+                        minlength: 3,
+                        maxlength: 150
+                    },
+                    InpDetallesEdit: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 150
                     }
                 },
                 messages: {
                     InpEstatusProyectosDescripcionEdit: {
-                        required: "El estatus es requerido."
+                        required: "El estatus es requerido.",
+                        minlength: "Debe contener al menos 3 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
+                    },
+                    InpDetallesEdit: {
+                        required: "Los detalles son requeridos.",
+                        minlength: "Debe contener al menos 5 caracteres.",
+                        maxlength: "No puede exceder los 150 caracteres."
                     }
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
-                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+                    actualizarEstatusProyectos();
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -584,38 +613,53 @@
                 errorClass: 'alert-validate'
             });
 
-            // Función para habilitar el botón si el campo ha cambiado y es válido
+            // Selecciona todos los campos del formulario de edición
+            const camposEdicion = ['#InpEstatusProyectosDescripcionEdit', '#InpDetallesEdit'];
+
+            // Función para habilitar el botón si algún campo ha cambiado
             function habilitarBotonActualizar() {
-                const descripcionActual = $('#InpEstatusProyectosDescripcionEdit').val();
-                const esValido = $("#FormEditarEstatusProyecto").valid(); // Verifica si el formulario es válido
-                $('#btnActualizarPuesto').prop('disabled', descripcionActual === valoresIniciales.descripcion || !esValido);
+                let algunCampoCambiado = false;
+
+                camposEdicion.forEach(function (campo) {
+                    if ($(campo).val() !== '') {
+                        algunCampoCambiado = true;
+                    }
+                });
+
+                // Habilita el botón si algún campo ha cambiado
+                if (algunCampoCambiado) {
+                    $('#btnActualizarEstatusProyecto').prop('disabled', false);
+                } else {
+                    $('#btnActualizarEstatusProyecto').prop('disabled', true);
+                }
             }
 
-            // Escuchar cambios en el campo del formulario
-            $('#InpEstatusProyectosDescripcionEdit').on('input change', function () {
+            // Escucha los cambios en los campos del formulario
+            $('#FormEditarEstatusProyecto').on('input change', function () {
                 habilitarBotonActualizar();
-                $("#FormEditarEstatusProyecto").validate().element(this); // Valida el campo en tiempo real
             });
 
             // Evento para limpiar el formulario al cerrar el modal
             $('#ModalEditarEstatusProyecto').on('hidden.bs.modal', function () {
                 $('#FormEditarEstatusProyecto')[0].reset(); // Restablece el formulario.
                 $('#FormEditarEstatusProyecto').validate().resetForm(); // Limpia los mensajes de validación.
-                $('#btnActualizarPuesto').prop('disabled', true); // Deshabilita el botón de actualizar
+                $('#btnActualizarEstatusProyecto').prop('disabled', true); // Deshabilita el botón de actualizar
             });
 
             // Función para actualizar el puesto
-            function actualizarPuesto() {
+            function actualizarEstatusProyectos() {
                 if (!$("#FormEditarEstatusProyecto").valid()) { // Verifica si el formulario es válido
                     return; // Detiene la ejecución si el formulario no es válido
                 }
 
-                const id = $('#btnActualizarPuesto').data('id'); // Obtiene el ID del puesto.
+                const id = $('#btnActualizarEstatusProyecto').data('id'); // Obtiene el ID del puesto.
                 const descripcion = $('#InpEstatusProyectosDescripcionEdit').val(); // Obtiene la descripción.
+                const detalles = $('#InpDetallesEdit').val();
 
                 const formData = new FormData();
                 formData.append('Id', id);
                 formData.append('EstatusProyectosDescripcion', descripcion);
+                formData.append('Detalles', detalles);
 
                 $.ajax({
                     type: "POST",
@@ -624,20 +668,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de EstatusProyectos
-                        document.getElementById('GridEstatusProyectos').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridEstatusProyectos').style.visibility = 'hidden';
 
-                            // Llamar a la función verEstatusProyectos para recargar el grid
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Actualizando Estatus...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verEstatusProyectos().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -654,11 +699,10 @@
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los EstatusProyectos.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -668,10 +712,7 @@
                                 document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
@@ -680,18 +721,20 @@
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                            text: "Ocurrió un error al agregar el estatus.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -708,9 +751,9 @@
             }
 
             // Evento para el botón de actualizar
-            $('#btnActualizarPuesto').on('click', function () {
+            $('#btnActualizarEstatusProyecto').on('click', function () {
                 if ($("#FormEditarEstatusProyecto").valid()) { // Verifica si el formulario es válido
-                    actualizarPuesto(); // Llama a la función de actualización
+                    actualizarEstatusProyectos(); // Llama a la función de actualización
                 }
             });
 
@@ -761,19 +804,21 @@
                     contentType: false, // Importante para FormData
                     processData: false, // Importante para FormData
                     beforeSend: function () {
-                        // Ocultar el grid de EstatusProyectos
-                        document.getElementById('GridEstatusProyectos').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verEstatusProyectos para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridEstatusProyectos').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Eliminando Estatus...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verEstatusProyectos().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -786,15 +831,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los EstatusProyectos.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -804,26 +848,29 @@
                                 document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al desactivar el puesto."
+                            text: "Ocurrió un error al agregar el estatus.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -882,19 +929,21 @@
                     contentType: false, // Importante para FormData.
                     processData: false, // Importante para FormData.
                     beforeSend: function () {
-                        // Ocultar el grid de EstatusProyectos
-                        document.getElementById('GridEstatusProyectos').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verEstatusProyectos para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridEstatusProyectos').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Reactivando Estatus...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verEstatusProyectos().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -907,15 +956,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los EstatusProyectos.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -925,26 +973,29 @@
                                 document.getElementById('GridEstatusProyectos').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al reactivar el puesto."
+                            text: "Ocurrió un error al agregar el estatus.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);

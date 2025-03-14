@@ -3,6 +3,7 @@ using GestionProyectos.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
+using System.Text;
 using System.Text.RegularExpressions;
 using TeracromDatabase;
 using TeracromModels;
@@ -664,7 +665,8 @@ namespace TeracromController
                 SELECT 
                     s.Id, 
                     s.Descripcion, 
-                    c.RazonSocial,  -- Obtener la RazonSocial del cliente
+                    c.RazonSocial, 
+                    s.IdCliente,
                     s.Repositorio, 
                     s.Prefijo, 
                     s.FlgActivo 
@@ -681,6 +683,7 @@ namespace TeracromController
                         Id = s.Id,
                         Descripcion = s.Descripcion,
                         RazonSocial = s.RazonSocial, 
+                        IdCliente = s.IdCliente,
                         Repositorio = s.Repositorio,
                         Prefijo = s.Prefijo,
                         FlgActivo = s.FlgActivo
@@ -1776,11 +1779,11 @@ namespace TeracromController
                 {
                     // Consulta SQL para reactivar el cliente usuario
                     string sql = @"
-            UPDATE ClientesUsuarios 
-            SET FlgActivo = 1, 
-                IdUsuarioUpd = @IdUsuarioUpd, 
-                FechaUpd = @FechaUpd
-            WHERE Id = @Id";
+                    UPDATE ClientesUsuarios 
+                    SET FlgActivo = 1, 
+                        IdUsuarioUpd = @IdUsuarioUpd, 
+                        FechaUpd = @FechaUpd
+                    WHERE Id = @Id";
 
                     var parametros = new DynamicParameters();
                     parametros.Add("@Id", clienteusuario.Id, DbType.Int32);
@@ -1815,7 +1818,6 @@ namespace TeracromController
         //============================================================================================================================\\
         //=================================================   Modelo ModuloSistemas   =================================================\\
         //==============================================================================================================================\\
-
         public async Task<RespuestaJson> GetModuloSistemas()
         {
             RespuestaJson respuesta = new RespuestaJson();
@@ -1824,16 +1826,30 @@ namespace TeracromController
                 // Abrir la conexión a la base de datos
                 _dapperContext.AbrirConexion("SGP");
 
-                string sql = "SELECT Id, ModuloSistemaDescripcion, FlgActivo FROM ModuloSistemas";
+                string sql = @"
+                SELECT 
+                    s.Id, 
+                    s.ModuloSistemaDescripcion, 
+                    c.Descripcion, 
+                    s.Detalles,
+                    s.IdSistema,
+                    s.FlgActivo 
+                FROM 
+                    ModuloSistemas s
+                INNER JOIN 
+                    Sistemas c ON s.IdSistema = c.Id";
 
                 var modulosistemas = await _dapperContext.QueryAsync<ModuloSistemas>(sql);
-                if (modulosistemas != null)
+                if (modulosistemas != null && modulosistemas.Any())
                 {
                     respuesta.Resultado = true;
                     respuesta.Data = modulosistemas.Select(s => new ModuloSistemas
                     {
                         Id = s.Id,
                         ModuloSistemaDescripcion = s.ModuloSistemaDescripcion,
+                        Descripcion = s.Descripcion,
+                        Detalles = s.Detalles,
+                        IdSistema = s.IdSistema,
                         FlgActivo = s.FlgActivo
                     }).ToList();
                 }
@@ -1845,7 +1861,7 @@ namespace TeracromController
             }
             catch (Exception ex)
             {
-                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los modulosistemas." + ex.Message;
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los modulosistemas: " + ex.Message;
                 respuesta.Data = new List<ModuloSistemas>(); // Inicializar Data para evitar null
             }
             finally
@@ -1866,31 +1882,34 @@ namespace TeracromController
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
 
-                    // Validar si ya existe un registro con el mismo IdSistema en la base de datos
-                    string sqlValidarModuloSistemasDescripcion = "SELECT COUNT(*) FROM ModuloSistemas WHERE ModuloSistemaDescripcion = @ModuloSistemaDescripcion;";
-                    var parametrosValidarModuloSistemasDescripcion = new DynamicParameters();
-                    parametrosValidarModuloSistemasDescripcion.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
+                    // Validar si ya existe un registro con la misma combinación de ModuloSistemaDescripcion e IdSistema
+                    string sqlValidarModuloSistemas = "SELECT COUNT(*) FROM ModuloSistemas WHERE ModuloSistemaDescripcion = @ModuloSistemaDescripcion AND IdSistema = @IdSistema;";
+                    var parametrosValidarModuloSistemas = new DynamicParameters();
+                    parametrosValidarModuloSistemas.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
+                    parametrosValidarModuloSistemas.Add("@IdSistema", modulosistema.IdSistema, DbType.Int32);
 
+                    int registrosExistentes = await connection.ExecuteScalarAsync<int>(sqlValidarModuloSistemas, parametrosValidarModuloSistemas);
 
-                    int ModuloSistemasDescripcionExistente = await connection.ExecuteScalarAsync<int>(sqlValidarModuloSistemasDescripcion, parametrosValidarModuloSistemasDescripcion);
-
-                    if (ModuloSistemasDescripcionExistente > 0)
+                    if (registrosExistentes > 0)
                     {
-                        respuesta.Mensaje = "Los sistemas ya cuentan con este módulo.";
+                        respuesta.Mensaje = "Ya existe este módulo para ese sistema.";
                         return respuesta;
                     }
 
                     // Consulta SQL para insertar el modulosistema
                     string sqlInsertar = @"
                     INSERT INTO ModuloSistemas 
-                    (ModuloSistemaDescripcion, IdUsuarioSet) 
+                    (ModuloSistemaDescripcion, Detalles, IdSistema, IdUsuarioSet) 
                     VALUES 
-                    (@ModuloSistemaDescripcion, @IdUsuarioSet);";
+                    (@ModuloSistemaDescripcion, @Detalles, @IdSistema, @IdUsuarioSet);";
 
                     var parametrosInsertar = new DynamicParameters();
                     parametrosInsertar.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
+                    parametrosInsertar.Add("@Detalles", modulosistema.Detalles, DbType.String);
+                    parametrosInsertar.Add("@IdSistema", modulosistema.IdSistema, DbType.Int32);
                     parametrosInsertar.Add("@IdUsuarioSet", modulosistema.IdUsuarioSet, DbType.Int32);
 
+                    
                     // Ejecutar la consulta de inserción
                     int filasAfectadas = await connection.ExecuteAsync(sqlInsertar, parametrosInsertar);
 
@@ -1930,32 +1949,71 @@ namespace TeracromController
                 // Abrir conexión y validar duplicados
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
-                    string sqlValidarModuloSistemasDescripcion = "SELECT COUNT(*) FROM ModuloSistemas WHERE ModuloSistemaDescripcion = @ModuloSistemaDescripcion";
-                    var parametrosValidar = new DynamicParameters();
-                    parametrosValidar.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
-
-                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarModuloSistemasDescripcion, parametrosValidar);
-
-                    if (existeDescripcion > 0)
-                    {
-                        respuesta.Mensaje = "Los sistemas ya cuentan con este módulo.";
-                        return respuesta;
-                    }
-
-                    string sqlActualizar = @"
-                    UPDATE ModuloSistemas 
-                    SET ModuloSistemaDescripcion = @ModuloSistemaDescripcion,
-                        IdUsuarioUpd = @IdUsuarioUpd,
-                        FechaUpd = @FechaUpd
+                    // Obtener el valor actual de ModuloSistemaDescripcion e IdSistema desde la base de datos
+                    string sqlObtenerDatosActuales = @"
+                    SELECT ModuloSistemaDescripcion, IdSistema 
+                    FROM ModuloSistemas 
                     WHERE Id = @Id;";
 
+                    var parametrosObtenerDatos = new DynamicParameters();
+                    parametrosObtenerDatos.Add("@Id", modulosistema.Id, DbType.Int32);
+
+                    var datosActuales = await connection.QueryFirstOrDefaultAsync<(string ModuloSistemaDescripcion, int IdSistema)>(sqlObtenerDatosActuales, parametrosObtenerDatos);
+
+                    // Validar duplicados solo si ModuloSistemaDescripcion o IdSistema están siendo modificados
+                    if (datosActuales.ModuloSistemaDescripcion != modulosistema.ModuloSistemaDescripcion || datosActuales.IdSistema != modulosistema.IdSistema)
+                    {
+                        string sqlValidarModuloSistemas = @"
+                        SELECT COUNT(*) 
+                        FROM ModuloSistemas 
+                        WHERE ModuloSistemaDescripcion = @ModuloSistemaDescripcion 
+                          AND IdSistema = @IdSistema 
+                          AND Id != @Id;"; // Excluir el registro actual de la validación
+
+                        var parametrosValidarModuloSistemas = new DynamicParameters();
+                        parametrosValidarModuloSistemas.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
+                        parametrosValidarModuloSistemas.Add("@IdSistema", modulosistema.IdSistema, DbType.Int32);
+                        parametrosValidarModuloSistemas.Add("@Id", modulosistema.Id, DbType.Int32);
+
+                        int registrosExistentes = await connection.ExecuteScalarAsync<int>(sqlValidarModuloSistemas, parametrosValidarModuloSistemas);
+
+                        if (registrosExistentes > 0)
+                        {
+                            respuesta.Mensaje = "Ya existe un módulo con la misma descripción para este sistema.";
+                            return respuesta;
+                        }
+                    }
+
+                    // Construir la consulta SQL dinámicamente
+                    var sqlActualizar = new StringBuilder("UPDATE ModuloSistemas SET ");
                     var parametrosActualizar = new DynamicParameters();
+
+                    if (datosActuales.ModuloSistemaDescripcion != modulosistema.ModuloSistemaDescripcion)
+                    {
+                        sqlActualizar.Append("ModuloSistemaDescripcion = @ModuloSistemaDescripcion, ");
+                        parametrosActualizar.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
+                    }
+
+                    if (!string.IsNullOrEmpty(modulosistema.Detalles))
+                    {
+                        sqlActualizar.Append("Detalles = @Detalles, ");
+                        parametrosActualizar.Add("@Detalles", modulosistema.Detalles, DbType.String);
+                    }
+
+                    if (datosActuales.IdSistema != modulosistema.IdSistema)
+                    {
+                        sqlActualizar.Append("IdSistema = @IdSistema, ");
+                        parametrosActualizar.Add("@IdSistema", modulosistema.IdSistema, DbType.Int32);
+                    }
+
+                    sqlActualizar.Append("IdUsuarioUpd = @IdUsuarioUpd, FechaUpd = @FechaUpd ");
+                    sqlActualizar.Append("WHERE Id = @Id;");
+
                     parametrosActualizar.Add("@Id", modulosistema.Id, DbType.Int32);
-                    parametrosActualizar.Add("@ModuloSistemaDescripcion", modulosistema.ModuloSistemaDescripcion, DbType.String);
                     parametrosActualizar.Add("@IdUsuarioUpd", modulosistema.IdUsuarioUpd, DbType.Int32);
                     parametrosActualizar.Add("@FechaUpd", modulosistema.FechaUpd, DbType.DateTime);
 
-                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar.ToString(), parametrosActualizar);
 
                     if (filasAfectadas > 0)
                     {
@@ -2089,7 +2147,7 @@ namespace TeracromController
                 // Abrir la conexión a la base de datos
                 _dapperContext.AbrirConexion("SGP");
 
-                string sql = "SELECT Id, EstatusProyectosDescripcion, FlgActivo FROM EstatusProyectos";
+                string sql = "SELECT Id, EstatusProyectosDescripcion, Detalles, FlgActivo FROM EstatusProyectos";
 
                 var estatusproyectos = await _dapperContext.QueryAsync<EstatusProyectos>(sql);
                 if (estatusproyectos != null)
@@ -2099,6 +2157,7 @@ namespace TeracromController
                     {
                         Id = s.Id,
                         EstatusProyectosDescripcion = s.EstatusProyectosDescripcion,
+                        Detalles = s.Detalles,
                         FlgActivo = s.FlgActivo
                     }).ToList();
                 }
@@ -2148,12 +2207,13 @@ namespace TeracromController
                     // Consulta SQL para insertar el estatusproyecto
                     string sqlInsertar = @"
                     INSERT INTO EstatusProyectos 
-                    (EstatusProyectosDescripcion, IdUsuarioSet) 
+                    (EstatusProyectosDescripcion, Detalles, IdUsuarioSet) 
                     VALUES 
-                    (@EstatusProyectosDescripcion, @IdUsuarioSet);";
+                    (@EstatusProyectosDescripcion, @Detalles, @IdUsuarioSet);";
 
                     var parametrosInsertar = new DynamicParameters();
                     parametrosInsertar.Add("@EstatusProyectosDescripcion", estatusproyecto.EstatusProyectosDescripcion, DbType.String);
+                    parametrosInsertar.Add("@Detalles", estatusproyecto.Detalles, DbType.String);
                     parametrosInsertar.Add("@IdUsuarioSet", estatusproyecto.IdUsuarioSet, DbType.Int32);
 
                     // Ejecutar la consulta de inserción
@@ -2195,32 +2255,60 @@ namespace TeracromController
                 // Abrir conexión y validar duplicados
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
-                    string sqlValidarEstatusProyectosDescripcion = "SELECT COUNT(*) FROM EstatusProyectos WHERE EstatusProyectosDescripcion = @EstatusProyectosDescripcion";
-                    var parametrosValidar = new DynamicParameters();
-                    parametrosValidar.Add("@EstatusProyectosDescripcion", estatusproyecto.EstatusProyectosDescripcion, DbType.String);
-
-                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusProyectosDescripcion, parametrosValidar);
-
-                    if (existeDescripcion > 0)
-                    {
-                        respuesta.Mensaje = "Los proyectos ya cuentan con este estatus.";
-                        return respuesta;
-                    }
-
-                    string sqlActualizar = @"
-                    UPDATE EstatusProyectos 
-                    SET EstatusProyectosDescripcion = @EstatusProyectosDescripcion,
-                        IdUsuarioUpd = @IdUsuarioUpd,
-                        FechaUpd = @FechaUpd
+                    // Obtener el valor actual de EstatusProyectosDescripcion desde la base de datos
+                    string sqlObtenerDescripcionActual = @"
+                    SELECT EstatusProyectosDescripcion 
+                    FROM EstatusProyectos 
                     WHERE Id = @Id;";
 
+                    var parametrosObtenerDescripcion = new DynamicParameters();
+                    parametrosObtenerDescripcion.Add("@Id", estatusproyecto.Id, DbType.Int32);
+
+                    string descripcionActual = await connection.QueryFirstOrDefaultAsync<string>(sqlObtenerDescripcionActual, parametrosObtenerDescripcion);
+
+                    // Validar duplicados solo si la descripción está siendo modificada
+                    if (descripcionActual != estatusproyecto.EstatusProyectosDescripcion)
+                    {
+                        string sqlValidarEstatusProyectosDescripcion = @"
+                        SELECT COUNT(*) 
+                        FROM EstatusProyectos 
+                        WHERE EstatusProyectosDescripcion = @EstatusProyectosDescripcion 
+                        AND Id != @Id;"; // Excluir el registro actual de la validación
+
+                        var parametrosValidar = new DynamicParameters();
+                        parametrosValidar.Add("@EstatusProyectosDescripcion", estatusproyecto.EstatusProyectosDescripcion, DbType.String);
+                        parametrosValidar.Add("@Id", estatusproyecto.Id, DbType.Int32);
+
+                        int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusProyectosDescripcion, parametrosValidar);
+
+                        if (existeDescripcion > 0)
+                        {
+                            respuesta.Mensaje = "Ya existe un estatus con la misma descripción.";
+                            return respuesta;
+                        }
+                    }
+
+                    // Construir la consulta SQL dinámicamente
+                    var sqlActualizar = new StringBuilder("UPDATE EstatusProyectos SET ");
                     var parametrosActualizar = new DynamicParameters();
-                    parametrosActualizar.Add("@Id", estatusproyecto.Id, DbType.Int32);
+
+                    sqlActualizar.Append("EstatusProyectosDescripcion = @EstatusProyectosDescripcion, ");
                     parametrosActualizar.Add("@EstatusProyectosDescripcion", estatusproyecto.EstatusProyectosDescripcion, DbType.String);
+
+                    if (!string.IsNullOrEmpty(estatusproyecto.Detalles))
+                    {
+                        sqlActualizar.Append("Detalles = @Detalles, ");
+                        parametrosActualizar.Add("@Detalles", estatusproyecto.Detalles, DbType.String);
+                    }
+
+                    sqlActualizar.Append("IdUsuarioUpd = @IdUsuarioUpd, FechaUpd = @FechaUpd ");
+                    sqlActualizar.Append("WHERE Id = @Id;");
+
+                    parametrosActualizar.Add("@Id", estatusproyecto.Id, DbType.Int32);
                     parametrosActualizar.Add("@IdUsuarioUpd", estatusproyecto.IdUsuarioUpd, DbType.Int32);
                     parametrosActualizar.Add("@FechaUpd", estatusproyecto.FechaUpd, DbType.DateTime);
 
-                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar.ToString(), parametrosActualizar);
 
                     if (filasAfectadas > 0)
                     {
@@ -2354,7 +2442,7 @@ namespace TeracromController
                 // Abrir la conexión a la base de datos
                 _dapperContext.AbrirConexion("SGP");
 
-                string sql = "SELECT Id, EstatusTareaDescripcion, FlgActivo FROM EstatusTareas";
+                string sql = "SELECT Id, EstatusTareaDescripcion, Detalles, FlgActivo FROM EstatusTareas";
 
                 var estatustareas = await _dapperContext.QueryAsync<EstatusTareas>(sql);
                 if (estatustareas != null)
@@ -2364,6 +2452,7 @@ namespace TeracromController
                     {
                         Id = s.Id,
                         EstatusTareaDescripcion = s.EstatusTareaDescripcion,
+                        Detalles = s.Detalles,
                         FlgActivo = s.FlgActivo
                     }).ToList();
                 }
@@ -2413,12 +2502,13 @@ namespace TeracromController
                     // Consulta SQL para insertar el estatustarea
                     string sqlInsertar = @"
                     INSERT INTO EstatusTareas 
-                    (EstatusTareaDescripcion, IdUsuarioSet) 
+                    (EstatusTareaDescripcion, Detalles, IdUsuarioSet) 
                     VALUES 
-                    (@EstatusTareaDescripcion, @IdUsuarioSet);";
+                    (@EstatusTareaDescripcion, @Detalles, @IdUsuarioSet);";
 
                     var parametrosInsertar = new DynamicParameters();
                     parametrosInsertar.Add("@EstatusTareaDescripcion", estatustarea.EstatusTareaDescripcion, DbType.String);
+                    parametrosInsertar.Add("@Detalles", estatustarea.Detalles, DbType.String);
                     parametrosInsertar.Add("@IdUsuarioSet", estatustarea.IdUsuarioSet, DbType.Int32);
 
                     // Ejecutar la consulta de inserción
@@ -2460,47 +2550,75 @@ namespace TeracromController
                 // Abrir conexión y validar duplicados
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
-                    string sqlValidarEstatusTareasDescripcion = "SELECT COUNT(*) FROM EstatusTareas WHERE EstatusTareaDescripcion = @EstatusTareaDescripcion";
-                    var parametrosValidar = new DynamicParameters();
-                    parametrosValidar.Add("@EstatusTareaDescripcion", estatustarea.EstatusTareaDescripcion, DbType.String);
-
-                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusTareasDescripcion, parametrosValidar);
-
-                    if (existeDescripcion > 0)
-                    {
-                        respuesta.Mensaje = "Las tareas ya cuentan con este estatus.";
-                        return respuesta;
-                    }
-
-                    string sqlActualizar = @"
-                    UPDATE EstatusTareas 
-                    SET EstatusTareaDescripcion = @EstatusTareaDescripcion,
-                        IdUsuarioUpd = @IdUsuarioUpd,
-                        FechaUpd = @FechaUpd
+                    // Obtener el valor actual de EstatusTareas desde la base de datos
+                    string sqlObtenerDescripcionActual = @"
+                    SELECT EstatusTareaDescripcion 
+                    FROM EstatusTareas 
                     WHERE Id = @Id;";
 
+                    var parametrosObtenerDescripcion = new DynamicParameters();
+                    parametrosObtenerDescripcion.Add("@Id", estatustarea.Id, DbType.Int32);
+
+                    string descripcionActual = await connection.QueryFirstOrDefaultAsync<string>(sqlObtenerDescripcionActual, parametrosObtenerDescripcion);
+
+                    // Validar duplicados solo si la descripción está siendo modificada
+                    if (descripcionActual != estatustarea.EstatusTareaDescripcion)
+                    {
+                        string sqlValidarEstatusEstatusTareaDescripcion = @"
+                        SELECT COUNT(*) 
+                        FROM EstatusTareas  
+                        WHERE EstatusTareaDescripcion = @EstatusTareaDescripcion 
+                        AND Id != @Id;"; // Excluir el registro actual de la validación
+
+                        var parametrosValidar = new DynamicParameters();
+                        parametrosValidar.Add("@EstatusTareaDescripcion", estatustarea.EstatusTareaDescripcion, DbType.String);
+                        parametrosValidar.Add("@Id", estatustarea.Id, DbType.Int32);
+
+                        int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusEstatusTareaDescripcion, parametrosValidar);
+
+                        if (existeDescripcion > 0)
+                        {
+                            respuesta.Mensaje = "Ya existe un estatus con la misma descripción.";
+                            return respuesta;
+                        }
+                    }
+
+                    // Construir la consulta SQL dinámicamente
+                    var sqlActualizar = new StringBuilder("UPDATE EstatusTareas SET ");
                     var parametrosActualizar = new DynamicParameters();
-                    parametrosActualizar.Add("@Id", estatustarea.Id, DbType.Int32);
+
+                    sqlActualizar.Append("EstatusTareaDescripcion = @EstatusTareaDescripcion, ");
                     parametrosActualizar.Add("@EstatusTareaDescripcion", estatustarea.EstatusTareaDescripcion, DbType.String);
+
+                    if (!string.IsNullOrEmpty(estatustarea.Detalles))
+                    {
+                        sqlActualizar.Append("Detalles = @Detalles, ");
+                        parametrosActualizar.Add("@Detalles", estatustarea.Detalles, DbType.String);
+                    }
+
+                    sqlActualizar.Append("IdUsuarioUpd = @IdUsuarioUpd, FechaUpd = @FechaUpd ");
+                    sqlActualizar.Append("WHERE Id = @Id;");
+
+                    parametrosActualizar.Add("@Id", estatustarea.Id, DbType.Int32);
                     parametrosActualizar.Add("@IdUsuarioUpd", estatustarea.IdUsuarioUpd, DbType.Int32);
                     parametrosActualizar.Add("@FechaUpd", estatustarea.FechaUpd, DbType.DateTime);
 
-                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar.ToString(), parametrosActualizar);
 
                     if (filasAfectadas > 0)
                     {
                         respuesta.Resultado = true;
-                        respuesta.Mensaje = "Estatus de las tareas actualizado con éxito.";
+                        respuesta.Mensaje = "Estatus de los proyectos actualizado con éxito.";
                     }
                     else
                     {
-                        respuesta.Mensaje = "No fue posible actualizar el estatus de las tareas.";
+                        respuesta.Mensaje = "No fue posible actualizar el estatus de los proyectos.";
                     }
                 }
             }
             catch (Exception ex)
             {
-                respuesta.Mensaje = "Se produjo un error al actualizar el estatus de las tareas: " + ex.Message;
+                respuesta.Mensaje = "Se produjo un error al actualizar el estatus de los proyectos: " + ex.Message;
                 respuesta.Errores.Add(ex.Message);
             }
             finally
@@ -2619,7 +2737,7 @@ namespace TeracromController
                 // Abrir la conexión a la base de datos
                 _dapperContext.AbrirConexion("SGP");
 
-                string sql = "SELECT Id, EstatusSoporteDescripcion, FlgActivo FROM EstatusSoportes";
+                string sql = "SELECT Id, EstatusSoporteDescripcion, Detalles, FlgActivo FROM EstatusSoportes";
 
                 var estatussoportes = await _dapperContext.QueryAsync<EstatusSoportes>(sql);
                 if (estatussoportes != null)
@@ -2629,6 +2747,7 @@ namespace TeracromController
                     {
                         Id = s.Id,
                         EstatusSoporteDescripcion = s.EstatusSoporteDescripcion,
+                        Detalles = s.Detalles,
                         FlgActivo = s.FlgActivo
                     }).ToList();
                 }
@@ -2678,12 +2797,13 @@ namespace TeracromController
                     // Consulta SQL para insertar el estatussoporte
                     string sqlInsertar = @"
                     INSERT INTO EstatusSoportes 
-                    (EstatusSoporteDescripcion, IdUsuarioSet) 
+                    (EstatusSoporteDescripcion, Detalles, IdUsuarioSet) 
                     VALUES 
-                    (@EstatusSoporteDescripcion, @IdUsuarioSet);";
+                    (@EstatusSoporteDescripcion, @Detalles, @IdUsuarioSet);";
 
                     var parametrosInsertar = new DynamicParameters();
                     parametrosInsertar.Add("@EstatusSoporteDescripcion", estatussoporte.EstatusSoporteDescripcion, DbType.String);
+                    parametrosInsertar.Add("@Detalles", estatussoporte.Detalles, DbType.String);
                     parametrosInsertar.Add("@IdUsuarioSet", estatussoporte.IdUsuarioSet, DbType.Int32);
 
                     // Ejecutar la consulta de inserción
@@ -2725,47 +2845,75 @@ namespace TeracromController
                 // Abrir conexión y validar duplicados
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
-                    string sqlValidarEstatusSoportesDescripcion = "SELECT COUNT(*) FROM EstatusSoportes WHERE EstatusSoporteDescripcion = @EstatusSoporteDescripcion";
-                    var parametrosValidar = new DynamicParameters();
-                    parametrosValidar.Add("@EstatusSoporteDescripcion", estatussoporte.EstatusSoporteDescripcion, DbType.String);
+                    // Obtener el valor actual de EstatusTareas desde la base de datos
+                    string sqlObtenerDescripcionActual = @"
+                     SELECT EstatusSoporteDescripcion 
+                     FROM EstatusSoportes 
+                     WHERE Id = @Id;";
 
-                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusSoportesDescripcion, parametrosValidar);
+                    var parametrosObtenerDescripcion = new DynamicParameters();
+                    parametrosObtenerDescripcion.Add("@Id", estatussoporte.Id, DbType.Int32);
 
-                    if (existeDescripcion > 0)
+                    string descripcionActual = await connection.QueryFirstOrDefaultAsync<string>(sqlObtenerDescripcionActual, parametrosObtenerDescripcion);
+
+                    // Validar duplicados solo si la descripción está siendo modificada
+                    if (descripcionActual != estatussoporte.EstatusSoporteDescripcion)
                     {
-                        respuesta.Mensaje = "Los soportes ya cuentan con este estatus.";
-                        return respuesta;
+                        string sqlValidarEstatusEstatusTareaDescripcion = @"
+                         SELECT COUNT(*) 
+                         FROM EstatusSoportes  
+                         WHERE EstatusSoporteDescripcion = @EstatusSoporteDescripcion 
+                         AND Id != @Id;"; // Excluir el registro actual de la validación
+
+                        var parametrosValidar = new DynamicParameters();
+                        parametrosValidar.Add("@EstatusSoporteDescripcion", estatussoporte.EstatusSoporteDescripcion, DbType.String);
+                        parametrosValidar.Add("@Id", estatussoporte.Id, DbType.Int32);
+
+                        int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarEstatusEstatusTareaDescripcion, parametrosValidar);
+
+                        if (existeDescripcion > 0)
+                        {
+                            respuesta.Mensaje = "Ya existe un estatus con la misma descripción.";
+                            return respuesta;
+                        }
                     }
 
-                    string sqlActualizar = @"
-                    UPDATE EstatusSoportes 
-                    SET EstatusSoporteDescripcion = @EstatusSoporteDescripcion,
-                        IdUsuarioUpd = @IdUsuarioUpd,
-                        FechaUpd = @FechaUpd
-                    WHERE Id = @Id;";
-
+                    // Construir la consulta SQL dinámicamente
+                    var sqlActualizar = new StringBuilder("UPDATE EstatusSoportes SET ");
                     var parametrosActualizar = new DynamicParameters();
-                    parametrosActualizar.Add("@Id", estatussoporte.Id, DbType.Int32);
+
+                    sqlActualizar.Append("EstatusSoporteDescripcion = @EstatusSoporteDescripcion, ");
                     parametrosActualizar.Add("@EstatusSoporteDescripcion", estatussoporte.EstatusSoporteDescripcion, DbType.String);
+
+                    if (!string.IsNullOrEmpty(estatussoporte.Detalles))
+                    {
+                        sqlActualizar.Append("Detalles = @Detalles, ");
+                        parametrosActualizar.Add("@Detalles", estatussoporte.Detalles, DbType.String);
+                    }
+
+                    sqlActualizar.Append("IdUsuarioUpd = @IdUsuarioUpd, FechaUpd = @FechaUpd ");
+                    sqlActualizar.Append("WHERE Id = @Id;");
+
+                    parametrosActualizar.Add("@Id", estatussoporte.Id, DbType.Int32);
                     parametrosActualizar.Add("@IdUsuarioUpd", estatussoporte.IdUsuarioUpd, DbType.Int32);
                     parametrosActualizar.Add("@FechaUpd", estatussoporte.FechaUpd, DbType.DateTime);
 
-                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar.ToString(), parametrosActualizar);
 
                     if (filasAfectadas > 0)
                     {
                         respuesta.Resultado = true;
-                        respuesta.Mensaje = "Estatus de los soportes actualizado con éxito.";
+                        respuesta.Mensaje = "Estatus de los proyectos actualizado con éxito.";
                     }
                     else
                     {
-                        respuesta.Mensaje = "No fue posible actualizar el estatus de los soportes.";
+                        respuesta.Mensaje = "No fue posible actualizar el estatus de los proyectos.";
                     }
                 }
             }
             catch (Exception ex)
             {
-                respuesta.Mensaje = "Se produjo un error al actualizar el estatus de los soportes: " + ex.Message;
+                respuesta.Mensaje = "Se produjo un error al actualizar el estatus de los proyectos: " + ex.Message;
                 respuesta.Errores.Add(ex.Message);
             }
             finally
@@ -2884,7 +3032,7 @@ namespace TeracromController
                 // Abrir la conexión a la base de datos
                 _dapperContext.AbrirConexion("SGP");
 
-                string sql = "SELECT Id, NivelServicioSoporteDescripcion, FlgActivo FROM NivelServicioSoportes";
+                string sql = "SELECT Id, NivelServicioSoporteDescripcion, Detalles, FlgActivo FROM NivelServicioSoportes";
 
                 var nivelserviciosoportes = await _dapperContext.QueryAsync<NivelServicioSoportes>(sql);
                 if (nivelserviciosoportes != null)
@@ -2894,6 +3042,7 @@ namespace TeracromController
                     {
                         Id = s.Id,
                         NivelServicioSoporteDescripcion = s.NivelServicioSoporteDescripcion,
+                        Detalles = s.Detalles,
                         FlgActivo = s.FlgActivo
                     }).ToList();
                 }
@@ -2943,12 +3092,13 @@ namespace TeracromController
                     // Consulta SQL para insertar el nivelserviciosoporte
                     string sqlInsertar = @"
                     INSERT INTO NivelServicioSoportes 
-                    (NivelServicioSoporteDescripcion, IdUsuarioSet) 
+                    (NivelServicioSoporteDescripcion, Detalles, IdUsuarioSet) 
                     VALUES 
-                    (@NivelServicioSoporteDescripcion, @IdUsuarioSet);";
+                    (@NivelServicioSoporteDescripcion, @Detalles, @IdUsuarioSet);";
 
                     var parametrosInsertar = new DynamicParameters();
                     parametrosInsertar.Add("@NivelServicioSoporteDescripcion", nivelserviciosoporte.NivelServicioSoporteDescripcion, DbType.String);
+                    parametrosInsertar.Add("@Detalles", nivelserviciosoporte.Detalles, DbType.String);
                     parametrosInsertar.Add("@IdUsuarioSet", nivelserviciosoporte.IdUsuarioSet, DbType.Int32);
 
                     // Ejecutar la consulta de inserción
@@ -2990,37 +3140,65 @@ namespace TeracromController
                 // Abrir conexión y validar duplicados
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
-                    string sqlValidarNivelServicioSoportesDescripcion = "SELECT COUNT(*) FROM NivelServicioSoportes WHERE NivelServicioSoporteDescripcion = @NivelServicioSoporteDescripcion";
-                    var parametrosValidar = new DynamicParameters();
-                    parametrosValidar.Add("@NivelServicioSoporteDescripcion", nivelserviciosoporte.NivelServicioSoporteDescripcion, DbType.String);
-
-                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarNivelServicioSoportesDescripcion, parametrosValidar);
-
-                    if (existeDescripcion > 0)
-                    {
-                        respuesta.Mensaje = "Los soportes ya cuentan con este nivel de servicio.";
-                        return respuesta;
-                    }
-
-                    string sqlActualizar = @"
-                    UPDATE NivelServicioSoportes 
-                    SET NivelServicioSoporteDescripcion = @NivelServicioSoporteDescripcion,
-                        IdUsuarioUpd = @IdUsuarioUpd,
-                        FechaUpd = @FechaUpd
+                    // Obtener el valor actual de EstatusTareas desde la base de datos
+                    string sqlObtenerDescripcionActual = @"
+                    SELECT NivelServicioSoporteDescripcion 
+                    FROM NivelServicioSoportes 
                     WHERE Id = @Id;";
 
+                    var parametrosObtenerDescripcion = new DynamicParameters();
+                    parametrosObtenerDescripcion.Add("@Id", nivelserviciosoporte.Id, DbType.Int32);
+
+                    string descripcionActual = await connection.QueryFirstOrDefaultAsync<string>(sqlObtenerDescripcionActual, parametrosObtenerDescripcion);
+
+                    // Validar duplicados solo si la descripción está siendo modificada
+                    if (descripcionActual != nivelserviciosoporte.NivelServicioSoporteDescripcion)
+                    {
+                        string sqlValidarNivelServicioSoporteDescripcion = @"
+                        SELECT COUNT(*) 
+                        FROM NivelServicioSoportes  
+                        WHERE NivelServicioSoporteDescripcion = @NivelServicioSoporteDescripcion 
+                        AND Id != @Id;"; // Excluir el registro actual de la validación
+
+                        var parametrosValidar = new DynamicParameters();
+                        parametrosValidar.Add("@NivelServicioSoporteDescripcion", nivelserviciosoporte.NivelServicioSoporteDescripcion, DbType.String);
+                        parametrosValidar.Add("@Id", nivelserviciosoporte.Id, DbType.Int32);
+
+                        int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarNivelServicioSoporteDescripcion, parametrosValidar);
+
+                        if (existeDescripcion > 0)
+                        {
+                            respuesta.Mensaje = "Ya existe un estatus con la misma descripción.";
+                            return respuesta;
+                        }
+                    }
+
+                    // Construir la consulta SQL dinámicamente
+                    var sqlActualizar = new StringBuilder("UPDATE NivelServicioSoportes SET ");
                     var parametrosActualizar = new DynamicParameters();
-                    parametrosActualizar.Add("@Id", nivelserviciosoporte.Id, DbType.Int32);
+
+                    sqlActualizar.Append("NivelServicioSoporteDescripcion = @NivelServicioSoporteDescripcion, ");
                     parametrosActualizar.Add("@NivelServicioSoporteDescripcion", nivelserviciosoporte.NivelServicioSoporteDescripcion, DbType.String);
+
+                    if (!string.IsNullOrEmpty(nivelserviciosoporte.Detalles))
+                    {
+                        sqlActualizar.Append("Detalles = @Detalles, ");
+                        parametrosActualizar.Add("@Detalles", nivelserviciosoporte.Detalles, DbType.String);
+                    }
+
+                    sqlActualizar.Append("IdUsuarioUpd = @IdUsuarioUpd, FechaUpd = @FechaUpd ");
+                    sqlActualizar.Append("WHERE Id = @Id;");
+
+                    parametrosActualizar.Add("@Id", nivelserviciosoporte.Id, DbType.Int32);
                     parametrosActualizar.Add("@IdUsuarioUpd", nivelserviciosoporte.IdUsuarioUpd, DbType.Int32);
                     parametrosActualizar.Add("@FechaUpd", nivelserviciosoporte.FechaUpd, DbType.DateTime);
 
-                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar.ToString(), parametrosActualizar);
 
                     if (filasAfectadas > 0)
                     {
                         respuesta.Resultado = true;
-                        respuesta.Mensaje = "Nivel de servicio de los soportes actualizado con éxito.";
+                        respuesta.Mensaje = "El nivel de servicio de los soportes ha sido actualizado con éxito.";
                     }
                     else
                     {
@@ -3149,7 +3327,7 @@ namespace TeracromController
                 // Abrir la conexión a la base de datos
                 _dapperContext.AbrirConexion("SGP");
 
-                string sql = "SELECT Id, TipoSoporteDescripcion, FlgActivo FROM TipoSoportes";
+                string sql = "SELECT Id, TipoSoporteDescripcion, Detalles, FlgActivo FROM TipoSoportes";
 
                 var tiposoportes = await _dapperContext.QueryAsync<TipoSoportes>(sql);
                 if (tiposoportes != null)
@@ -3159,6 +3337,7 @@ namespace TeracromController
                     {
                         Id = s.Id,
                         TipoSoporteDescripcion = s.TipoSoporteDescripcion,
+                        Detalles = s.Detalles,
                         FlgActivo = s.FlgActivo
                     }).ToList();
                 }
@@ -3205,12 +3384,13 @@ namespace TeracromController
                     // Consulta SQL para insertar el tiposoporte
                     string sqlInsertar = @"
                     INSERT INTO TipoSoportes 
-                    (TipoSoporteDescripcion, IdUsuarioSet) 
+                    (TipoSoporteDescripcion, Detalles, IdUsuarioSet) 
                     VALUES 
-                    (@TipoSoporteDescripcion, @IdUsuarioSet);";
+                    (@TipoSoporteDescripcion, @Detalles, @IdUsuarioSet);";
 
                     var parametrosInsertar = new DynamicParameters();
                     parametrosInsertar.Add("@TipoSoporteDescripcion", tiposoporte.TipoSoporteDescripcion, DbType.String);
+                    parametrosInsertar.Add("@Detalles", tiposoporte.Detalles, DbType.String);
                     parametrosInsertar.Add("@IdUsuarioSet", tiposoporte.IdUsuarioSet, DbType.Int32);
 
                     // Ejecutar la consulta de inserción
@@ -3252,47 +3432,75 @@ namespace TeracromController
                 // Abrir conexión y validar duplicados
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
-                    string sqlValidarTipoSoportesDescripcion = "SELECT COUNT(*) FROM TipoSoportes WHERE TipoSoporteDescripcion = @TipoSoporteDescripcion";
-                    var parametrosValidar = new DynamicParameters();
-                    parametrosValidar.Add("@TipoSoporteDescripcion", tiposoporte.TipoSoporteDescripcion, DbType.String);
-
-                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarTipoSoportesDescripcion, parametrosValidar);
-
-                    if (existeDescripcion > 0)
-                    {
-                        respuesta.Mensaje = "Los soportes ya cuentan con este tipo de soporte.";
-                        return respuesta;
-                    }
-
-                    string sqlActualizar = @"
-                    UPDATE TipoSoportes 
-                    SET TipoSoporteDescripcion = @TipoSoporteDescripcion,
-                        IdUsuarioUpd = @IdUsuarioUpd,
-                        FechaUpd = @FechaUpd
+                    // Obtener el valor actual de TipoSoporteDescripcion desde la base de datos
+                    string sqlObtenerDescripcionActual = @"
+                    SELECT TipoSoporteDescripcion 
+                    FROM TipoSoportes 
                     WHERE Id = @Id;";
 
+                    var parametrosObtenerDescripcion = new DynamicParameters();
+                    parametrosObtenerDescripcion.Add("@Id", tiposoporte.Id, DbType.Int32);
+
+                    string descripcionActual = await connection.QueryFirstOrDefaultAsync<string>(sqlObtenerDescripcionActual, parametrosObtenerDescripcion);
+
+                    // Validar duplicados solo si la descripción está siendo modificada
+                    if (descripcionActual != tiposoporte.TipoSoporteDescripcion)
+                    {
+                        string sqlValidarTipoSoporteDescripcion = @"
+                        SELECT COUNT(*) 
+                        FROM TipoSoportes 
+                        WHERE TipoSoporteDescripcion = @TipoSoporteDescripcion 
+                        AND Id != @Id;"; // Excluir el registro actual de la validación
+
+                        var parametrosValidar = new DynamicParameters();
+                        parametrosValidar.Add("@TipoSoporteDescripcion", tiposoporte.TipoSoporteDescripcion, DbType.String);
+                        parametrosValidar.Add("@Id", tiposoporte.Id, DbType.Int32);
+
+                        int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarTipoSoporteDescripcion, parametrosValidar);
+
+                        if (existeDescripcion > 0)
+                        {
+                            respuesta.Mensaje = "Ya existe un tipo de soporte con la misma descripción.";
+                            return respuesta;
+                        }
+                    }
+
+                    // Construir la consulta SQL dinámicamente
+                    var sqlActualizar = new StringBuilder("UPDATE TipoSoportes SET ");
                     var parametrosActualizar = new DynamicParameters();
-                    parametrosActualizar.Add("@Id", tiposoporte.Id, DbType.Int32);
+
+                    sqlActualizar.Append("TipoSoporteDescripcion = @TipoSoporteDescripcion, ");
                     parametrosActualizar.Add("@TipoSoporteDescripcion", tiposoporte.TipoSoporteDescripcion, DbType.String);
+
+                    if (!string.IsNullOrEmpty(tiposoporte.Detalles))
+                    {
+                        sqlActualizar.Append("Detalles = @Detalles, ");
+                        parametrosActualizar.Add("@Detalles", tiposoporte.Detalles, DbType.String);
+                    }
+
+                    sqlActualizar.Append("IdUsuarioUpd = @IdUsuarioUpd, FechaUpd = @FechaUpd ");
+                    sqlActualizar.Append("WHERE Id = @Id;");
+
+                    parametrosActualizar.Add("@Id", tiposoporte.Id, DbType.Int32);
                     parametrosActualizar.Add("@IdUsuarioUpd", tiposoporte.IdUsuarioUpd, DbType.Int32);
                     parametrosActualizar.Add("@FechaUpd", tiposoporte.FechaUpd, DbType.DateTime);
 
-                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar.ToString(), parametrosActualizar);
 
                     if (filasAfectadas > 0)
                     {
                         respuesta.Resultado = true;
-                        respuesta.Mensaje = "Tipo de soporte actualizado con éxito.";
+                        respuesta.Mensaje = "Estatus de los proyectos actualizado con éxito.";
                     }
                     else
                     {
-                        respuesta.Mensaje = "No fue posible actualizar el tipo de soporte.";
+                        respuesta.Mensaje = "No fue posible actualizar el estatus de los proyectos.";
                     }
                 }
             }
             catch (Exception ex)
             {
-                respuesta.Mensaje = "Se produjo un error al actualizar el tipo de soporte: " + ex.Message;
+                respuesta.Mensaje = "Se produjo un error al actualizar el estatus de los proyectos: " + ex.Message;
                 respuesta.Errores.Add(ex.Message);
             }
             finally
@@ -3411,7 +3619,7 @@ namespace TeracromController
                 // Abrir la conexión a la base de datos
                 _dapperContext.AbrirConexion("SGP");
 
-                string sql = "SELECT Id, NivelComplejidadTareaDescripcion, FlgActivo FROM NivelComplejidadTareas";
+                string sql = "SELECT Id, NivelComplejidadTareaDescripcion, Detalles, FlgActivo FROM NivelComplejidadTareas";
 
                 var nivelcomplejidadtareas = await _dapperContext.QueryAsync<NivelComplejidadTareas>(sql);
                 if (nivelcomplejidadtareas != null)
@@ -3421,18 +3629,19 @@ namespace TeracromController
                     {
                         Id = s.Id,
                         NivelComplejidadTareaDescripcion = s.NivelComplejidadTareaDescripcion,
+                        Detalles = s.Detalles,
                         FlgActivo = s.FlgActivo
                     }).ToList();
                 }
                 else
                 {
-                    respuesta.Mensaje = "No se encontraron nivelcomplejidadtareas activos.";
+                    respuesta.Mensaje = "No se encontraron niveles de complejidad de las tareas activos.";
                     respuesta.Data = new List<NivelComplejidadTareas>(); // Inicializar Data para evitar null
                 }
             }
             catch (Exception ex)
             {
-                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los nivelcomplejidadtareas." + ex.Message;
+                respuesta.Mensaje = "Ocurrió un error al obtener los datos de los niveles de complejidad de las tareas." + ex.Message;
                 respuesta.Data = new List<NivelComplejidadTareas>(); // Inicializar Data para evitar null
             }
             finally
@@ -3467,12 +3676,13 @@ namespace TeracromController
                     // Consulta SQL para insertar el nivelcomplejidadtarea
                     string sqlInsertar = @"
                     INSERT INTO NivelComplejidadTareas 
-                    (NivelComplejidadTareaDescripcion, IdUsuarioSet) 
+                    (NivelComplejidadTareaDescripcion, Detalles, IdUsuarioSet) 
                     VALUES 
-                    (@NivelComplejidadTareaDescripcion, @IdUsuarioSet);";
+                    (@NivelComplejidadTareaDescripcion, @Detalles, @IdUsuarioSet);";
 
                     var parametrosInsertar = new DynamicParameters();
                     parametrosInsertar.Add("@NivelComplejidadTareaDescripcion", nivelcomplejidadtarea.NivelComplejidadTareaDescripcion, DbType.String);
+                    parametrosInsertar.Add("@Detalles", nivelcomplejidadtarea.Detalles, DbType.String);
                     parametrosInsertar.Add("@IdUsuarioSet", nivelcomplejidadtarea.IdUsuarioSet, DbType.Int32);
 
                     // Ejecutar la consulta de inserción
@@ -3503,6 +3713,7 @@ namespace TeracromController
             return respuesta;
         }
 
+
         public async Task<RespuestaJson> EditarNivelComplejidadTarea(NivelComplejidadTareas nivelcomplejidadtarea)
         {
             RespuestaJson respuesta = new RespuestaJson();
@@ -3514,47 +3725,75 @@ namespace TeracromController
                 // Abrir conexión y validar duplicados
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
-                    string sqlValidarNivelComplejidadTareasDescripcion = "SELECT COUNT(*) FROM NivelComplejidadTareas WHERE NivelComplejidadTareaDescripcion = @NivelComplejidadTareaDescripcion";
-                    var parametrosValidar = new DynamicParameters();
-                    parametrosValidar.Add("@NivelComplejidadTareaDescripcion", nivelcomplejidadtarea.NivelComplejidadTareaDescripcion, DbType.String);
-
-                    int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarNivelComplejidadTareasDescripcion, parametrosValidar);
-
-                    if (existeDescripcion > 0)
-                    {
-                        respuesta.Mensaje = "Los soportes ya cuentan con este nivel de complejidad de tarea.";
-                        return respuesta;
-                    }
-
-                    string sqlActualizar = @"
-                    UPDATE NivelComplejidadTareas 
-                    SET NivelComplejidadTareaDescripcion = @NivelComplejidadTareaDescripcion,
-                        IdUsuarioUpd = @IdUsuarioUpd,
-                        FechaUpd = @FechaUpd
+                    // Obtener el valor actual de TipoSoporteDescripcion desde la base de datos
+                    string sqlObtenerDescripcionActual = @"
+                    SELECT NivelComplejidadTareaDescripcion 
+                    FROM NivelComplejidadTareas 
                     WHERE Id = @Id;";
 
+                    var parametrosObtenerDescripcion = new DynamicParameters();
+                    parametrosObtenerDescripcion.Add("@Id", nivelcomplejidadtarea.Id, DbType.Int32);
+
+                    string descripcionActual = await connection.QueryFirstOrDefaultAsync<string>(sqlObtenerDescripcionActual, parametrosObtenerDescripcion);
+
+                    // Validar duplicados solo si la descripción está siendo modificada
+                    if (descripcionActual != nivelcomplejidadtarea.NivelComplejidadTareaDescripcion)
+                    {
+                        string sqlValidarNivelComplejidadTareaDescripcion = @"
+                        SELECT COUNT(*) 
+                        FROM NivelComplejidadTareas 
+                        WHERE NivelComplejidadTareaDescripcion = @NivelComplejidadTareaDescripcion 
+                        AND Id != @Id;"; // Excluir el registro actual de la validación
+
+                        var parametrosValidar = new DynamicParameters();
+                        parametrosValidar.Add("@NivelComplejidadTareaDescripcion", nivelcomplejidadtarea.NivelComplejidadTareaDescripcion, DbType.String);
+                        parametrosValidar.Add("@Id", nivelcomplejidadtarea.Id, DbType.Int32);
+
+                        int existeDescripcion = await connection.ExecuteScalarAsync<int>(sqlValidarNivelComplejidadTareaDescripcion, parametrosValidar);
+
+                        if (existeDescripcion > 0)
+                        {
+                            respuesta.Mensaje = "Ya existe un nivel de complejidad con la misma descripción.";
+                            return respuesta;
+                        }
+                    }
+
+                    // Construir la consulta SQL dinámicamente
+                    var sqlActualizar = new StringBuilder("UPDATE NivelComplejidadTareas SET ");
                     var parametrosActualizar = new DynamicParameters();
-                    parametrosActualizar.Add("@Id", nivelcomplejidadtarea.Id, DbType.Int32);
+
+                    sqlActualizar.Append("NivelComplejidadTareaDescripcion = @NivelComplejidadTareaDescripcion, ");
                     parametrosActualizar.Add("@NivelComplejidadTareaDescripcion", nivelcomplejidadtarea.NivelComplejidadTareaDescripcion, DbType.String);
+
+                    if (!string.IsNullOrEmpty(nivelcomplejidadtarea.Detalles))
+                    {
+                        sqlActualizar.Append("Detalles = @Detalles, ");
+                        parametrosActualizar.Add("@Detalles", nivelcomplejidadtarea.Detalles, DbType.String);
+                    }
+
+                    sqlActualizar.Append("IdUsuarioUpd = @IdUsuarioUpd, FechaUpd = @FechaUpd ");
+                    sqlActualizar.Append("WHERE Id = @Id;");
+
+                    parametrosActualizar.Add("@Id", nivelcomplejidadtarea.Id, DbType.Int32);
                     parametrosActualizar.Add("@IdUsuarioUpd", nivelcomplejidadtarea.IdUsuarioUpd, DbType.Int32);
                     parametrosActualizar.Add("@FechaUpd", nivelcomplejidadtarea.FechaUpd, DbType.DateTime);
 
-                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar, parametrosActualizar);
+                    int filasAfectadas = await connection.ExecuteAsync(sqlActualizar.ToString(), parametrosActualizar);
 
                     if (filasAfectadas > 0)
                     {
                         respuesta.Resultado = true;
-                        respuesta.Mensaje = "Nivel de complejidad de tarea actualizado con éxito.";
+                        respuesta.Mensaje = "Nivel de complejidad de la tarea actualizada con éxito.";
                     }
                     else
                     {
-                        respuesta.Mensaje = "No fue posible actualizar el nivel de complejidad de tarea.";
+                        respuesta.Mensaje = "No fue posible actualizar el nivel de complejidad de la tarea.";
                     }
                 }
             }
             catch (Exception ex)
             {
-                respuesta.Mensaje = "Se produjo un error al actualizar el nivel de complejidad de tarea: " + ex.Message;
+                respuesta.Mensaje = "Se produjo un error al actualizar el nivel de complejidad de la tarea: " + ex.Message;
                 respuesta.Errores.Add(ex.Message);
             }
             finally

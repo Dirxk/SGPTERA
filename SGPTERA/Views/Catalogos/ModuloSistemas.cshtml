@@ -58,7 +58,7 @@
         <div class="modal-content">
             <form id="FormCrearProyecto">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo módulo</h3>
+                    <h3 class="modal-title" id="UserModalLabel">Agregar nuevo Módulo</h3>
                     <button type="button" class="btn-close cerrarModal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
@@ -66,8 +66,22 @@
                         <!-- Campo: ModuloSistemasDescripcion -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="InpModuloSistemasDescripcion" name="InpModuloSistemasDescripcion" required placeholder="Estatus" maxlength="20" autocomplete="off">
+                                <input type="text" class="form-control" id="InpModuloSistemasDescripcion" name="InpModuloSistemasDescripcion" required placeholder="Modulo" maxlength="150" autocomplete="off">
                                 <label for="InpModuloSistemasDescripcion">Ingresa el nuevo módulo <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Detalles -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpDetalles" name="InpDetalles" required placeholder="Detalles" maxlength="150" autocomplete="off">
+                                <label for="InpDetalles">Ingresa los detalles del módulo <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: IdSistema -->
+                        <div class="col-12 mb-3">
+                            <div class="form-group">
+                                <label for="cbIdSistema" class="form-label">SISTEMA: <span class="text-danger">*</span></label>
+                                <div class="w-100" id="cbIdSistema"></div>
                             </div>
                         </div>
                     </div>
@@ -94,7 +108,7 @@
         <div class="modal-content">
             <form id="FormEditarModuloSistema">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalEditarModuloSistemaLabel">Editar nivel de atención</h5>
+                    <h5 class="modal-title" id="ModalEditarModuloSistemaLabel">Editar Módulo</h5>
                     <button type="button" class="btn-close cerrarModalEditarModuloSistema" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -102,15 +116,29 @@
                         <!-- Campo: ModuloSistemasDescripcion -->
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="InpModuloSistemasDescripcionEdit" name="InpModuloSistemasDescripcionEdit" required placeholder="Estatus" maxlength="20" autocomplete="off">
-                                <label for="InpModuloSistemasDescripcionEdit">Estatus <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="InpModuloSistemasDescripcionEdit" name="InpModuloSistemasDescripcionEdit" required placeholder="Estatus" maxlength="150" autocomplete="off">
+                                <label for="InpModuloSistemasDescripcionEdit">Estatus </label>
+                            </div>
+                        </div>
+                        <!-- Campo: Detalles -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpDetallesEdit" name="InpDetallesEdit" required placeholder="Detalles" maxlength="150" autocomplete="off">
+                                <label for="InpDetallesEdit">Ingresa los detalles del módulo </label>
+                            </div>
+                        </div>
+                        <!-- Campo: IdSistema -->
+                        <div class="col-12 mb-3">
+                            <div class="form-group">
+                                <label for="cbIdSistemaEdit" class="form-label">SISTEMA: </label>
+                                <div class="w-100" id="cbIdSistemaEdit"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger cerrarModalEditarModuloSistema">Cancelar</button>
-                    <button type="button" class="btn btn-success EditarModuloSistema" id="btnActualizarModuloSistema">Actualizar nivel de atención</button>
+                    <button type="button" class="btn btn-success EditarModuloSistema" id="btnActualizarModuloSistema">Actualizar módulo</button>
                 </div>
             </form>
         </div>
@@ -126,14 +154,14 @@
         <div class="modal-content">
             <form id="FormEliminarModuloSistema">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar nivel de atención</h5>
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Eliminar Módulo</h5>
                     <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span class="fas fa-times fs--1"></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="text-700 lh-lg mb-0">
-                        ¿Deseas eliminar el nivel de atención: <strong class="nombreModuloSistema"></strong>?
+                        ¿Deseas eliminar el módulo: <strong class="nombreModuloSistema"></strong>?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -158,14 +186,14 @@
         <div class="modal-content">
             <form id="FormConfirmarModuloSistema">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar nivel de atención</h5>
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Reactivar Módulo</h5>
                     <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
                         <span class="fas fa-times fs--1"></span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <p class="text-700 lh-lg mb-0">
-                        ¿Deseas reactivar el estatus de <strong class="nombreConfirmarModuloSistema"></strong>?
+                        ¿Deseas reactivar el módulo: <strong class="nombreConfirmarModuloSistema"></strong>?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -193,6 +221,16 @@
         // Variable global para almacenar la instancia de la grilla de ModuloSistemas.
         var GridModuloSistemas = null;
 
+
+        // Inicializar el AutoComplete con los datos obtenidos
+        var cbIdSistema = new wijmo.input.AutoComplete('#cbIdSistema', {
+            displayMemberPath: 'Sistema', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+        var cbIdSistemaEdit = new wijmo.input.AutoComplete('#cbIdSistemaEdit', {
+            displayMemberPath: 'Sistema', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
         // Función que realiza una solicitud AJAX para obtener los ModuloSistemas desde el servidor.
         function verModuloSistemas() {
             return new Promise((resolve, reject) => {
@@ -217,47 +255,84 @@
         }
 
         //============================================================================================================================\\
-        //================================  Función para editar un Puesto específico basado en su ID  ================================\\
+        //================================== funciones para obtener los datos de empresa y de puestos =================================\\
         //==============================================================================================================================\\
 
-        let valoresIniciales = {}; // Almacena los valores iniciales del Estatus del Proyecto
+        function getDataSistema() {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetSistemas", "Catalogos")',
+                    success: function (response) {
+                        if (response.resultado && response.data && response.data.length > 0) {
+                            // Filtrar solo los sistema activos y mapear al formato requerido
+                            const data = response.data
+                                .filter(sistema => sistema.flgActivo == 1)
+                                .map(sistema => ({
+                                    Id: sistema.id,
+                                    Sistema: sistema.descripcion
+                                }));
+                            resolve(data); // Resolver la promesa con los datos
+                        } else {
+                            reject("No se pudieron obtener los sistema o la respuesta está vacía.");
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        reject("Error al obtener los sistema: " + textStatus + " - " + errorThrown);
+                    }
+                });
+            });
+        }
+
+        //============================================================================================================================\\
+        //================================  Función para editar un cliente usuario específico basado en su ID  =========================\\
+        //==============================================================================================================================\\
 
         function EditarModuloSistema(id) {
-            const ModuloSistema = GridModuloSistemas.itemsSource.find(c => c.id === id); // Busca el Estatus del Proyecto en la grilla.
-            if (ModuloSistema) {
-                // Guardar los valores iniciales del Estatus del Proyecto
+            const modulosistema = GridModuloSistemas.itemsSource.find(u => u.id === id);
+            if (modulosistema) {
+                // Guardar los valores iniciales del cliente usuario
                 valoresIniciales = {
-                    descripcion: ModuloSistema.moduloSistemaDescripcion
+                    moduloSistemaDescripcion: modulosistema.moduloSistemaDescripcion || '',
+                    detalles: modulosistema.detalles || '',
+                    idSistema: modulosistema.idSistema || -1,
                 };
 
-                // Asigna los valores del Estatus del Proyecto a los campos del formulario de edición.
-                $('#InpModuloSistemasDescripcionEdit').val(valoresIniciales.descripcion);
-
+                // Asigna los valores del cliente usuario a los campos del formulario de edición.
+                $('#InpModuloSistemasDescripcionEdit').val(valoresIniciales.moduloSistemaDescripcion);
+                $('#InpDetallesEdit').val(valoresIniciales.detalles);
+               
                 // Deshabilitar el botón de actualizar inicialmente
                 $('#btnActualizarModuloSistema').prop('disabled', true);
 
-                // Muestra el modal de edición de Estatus del Proyecto.
-                const ModalEditarModuloSistema = new bootstrap.Modal($('#ModalEditarModuloSistema')[0]);
-                ModalEditarModuloSistema.show();
-                $('#btnActualizarModuloSistema').data('id', id); // Asigna el ID del Estatus del Proyecto al botón de actualizar.
+                // Muestra el modal de edición de cliente usuario.
+                const modalEditarModuloSistema = new bootstrap.Modal($('#ModalEditarModuloSistema')[0]);
+                modalEditarModuloSistema.show();
+                $('#btnActualizarModuloSistema').data('id', id);
+
+                // Cargar datos de sistemas
+                getDataSistema()
+                    .then(data => {
+                        cbIdSistemaEdit.itemsSource = data;
+                        const idSistema = Number(valoresIniciales.idSistema);
+                        const sistemaSeleccionado = data.find(sistema => sistema.Id === idSistema);
+                        if (sistemaSeleccionado) {
+                            cbIdSistemaEdit.selectedValue = idSistema;
+                        } else {
+                            const valorPorDefecto = data[0]?.Id || null;
+                            cbIdSistemaEdit.selectedValue = valorPorDefecto;
+                            console.warn("idSistema no encontrado. Usando valor por defecto:", valorPorDefecto);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        swal.fire('Error', 'No se pudieron cargar los datos de los sistemas disponibles.', 'error');
+                        cbIdSistemaEdit.isDisabled = true;
+                    });
             } else {
-                console.error("Estatus del Proyecto no encontrado."); // Maneja el caso en que el Estatus del Proyecto no existe.
+                console.error("Cliente usuario no encontrado.");
             }
         }
-
-        // Función para habilitar el botón si algún campo ha cambiado
-        function habilitarBotonActualizar() {
-            const descripcionActual = $('#InpModuloSistemasDescripcionEdit').val();
-            $('#btnActualizarModuloSistema').prop('disabled', descripcionActual === valoresIniciales.descripcion);
-        }
-
-        // Escucha los cambios en el campo del formulario
-        $('#InpModuloSistemasDescripcionEdit').on('input change', habilitarBotonActualizar);
-
-        // Evento para limpiar el formulario al cerrar el modal
-        $('#ModalEditarModuloSistema').on('hidden.bs.modal', function () {
-            $('#FormEditarModuloSistema')[0].reset(); // Restablece el formulario.
-        });
 
         //============================================================================================================================\\
         //===============================  Inicialización del GRID ModuloSistemas y Configuración de Eventos  ===============================\\
@@ -277,6 +352,8 @@
                 columns: [
                     { binding: '', header: '#', width: 50, align: 'center' },
                     { binding: 'moduloSistemaDescripcion', header: 'Módulos', width: '*', align: 'center' },
+                    { binding: 'idSistema', header: 'Sistema', width: '*', align: 'center' },
+                    { binding: 'detalles', header: 'Detalles', width: '*', align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
                 ],
                 isReadOnly: true,
@@ -284,7 +361,10 @@
                     if (panel.cellType === wijmo.grid.CellType.Cell) {
                         const rowData = panel.rows[r].dataItem; // Obtiene los datos de la fila.
                         const flgActivo = rowData.flgActivo; // Verificar el valor de FlgActivo.
-
+                        // Mostrar la razón social en lugar del idCliente
+                        if (panel.columns[c].binding === 'idSistema') {
+                            cell.textContent = rowData.descripcion; // Muestra la razón social en lugar del idCliente.
+                        }
                         if (c === 0) {
                             cell.textContent = (r + 1).toString(); // Muestra el número de fila.
                         } else if (c === panel.columns.length - 1) {
@@ -292,21 +372,21 @@
                             let botones = '';
                             if (flgActivo === true) {
                                 botones = `
-                                                                            <div class="d-flex justify-content-center align-items-center gap-2">
-                                                                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarModuloSistema" onclick="EditarModuloSistema(${rowData.id})">
-                                                                                    <i class="fas fa-edit"></i>
-                                                                                </button>
-                                                                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarModuloSistema" data-id="${rowData.id}" data-nombre="${rowData.moduloSistemaDescripcion}">
-                                                                                    <i class="fas fa-trash-alt"></i>
-                                                                                </button>
-                                                                            </div>`;
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-900 abrirModalEditarModuloSistema" onclick="EditarModuloSistema(${rowData.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-danger abrirModalEliminarModuloSistema" data-id="${rowData.id}" data-nombre="${rowData.moduloSistemaDescripcion}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>`;
                             } else if (flgActivo === false) {
                                 botones = `
-                                                                            <div class="d-flex justify-content-center align-items-center gap-2">
-                                                                                <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarModuloSistema" data-id="${rowData.id}" data-nombre="${rowData.moduloSistemaDescripcion}">
-                                                                                    <i class="fas fa-check"></i>
-                                                                                </button>
-                                                                            </div>`;
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <button style="height: 25px; width: 25px;" class="btn btn-phoenix-secondary btn-icon fs--2 text-success abrirModalConfirmarModuloSistema" data-id="${rowData.id}" data-nombre="${rowData.moduloSistemaDescripcion}">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </div>`;
                             }
 
                             // Insertar los botones en la celda
@@ -422,23 +502,42 @@
             });
 
             //============================================================================================================================\\
-            //================================= Funcionalidad del boton de Agregar ModuloSistemas ==================================\\
+            //===================================== Funcionalidad del boton de Agregar ModuloSistemas =====================================\\
             //==============================================================================================================================\\
 
+            //Combobox Empresa
+            getDataSistema()
+                .then(data => {
+                    cbIdSistema.itemsSource = data;
+                    cbIdSistema.selectedValue = -1;
+                })
+                .catch(error => {
+                    console.error(error);
+                    swal.fire('Error', 'No se pudieron cargar los datos de los sistemas disponibles.', 'error');
+                    cbIdSistema.isDisabled = true;
+                });
+
+            // Resto del código de validación del formulario
             $("#FormCrearProyecto").validate({
                 rules: {
-                    InpModuloSistemasDescripcion: {
-                        required: true
-                    }
+                    InpModuloSistemasDescripcion: { required: true, minlength: 2 },
+                    InpDetalles: { required: true, minlength: 2 },
                 },
                 messages: {
-                    InpModuloSistemasDescripcion: {
-                        required: "El estatus es requerido."
-                    }
+                    InpModuloSistemasDescripcion: { required: "El módulo es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpDetalles: { required: "La descripción del módulo es requerida.", minlength: "Mínimo 2 caracteres." },
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
-                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+
+                    // Validar que se haya seleccionado una empresa
+                    if (cbIdSistema.selectedValue == null || cbIdSistema.selectedValue === -1) {
+                        swal.fire('Advertencia', 'Por favor selecciona para que sistema es este módulo', 'warning');
+                        return; // Detiene la ejecución si no se ha seleccionado una empresa
+                    }
+
+                    // Si todo está correcto, llama a la función para agregar el cliente
+                    agregarModuloSistema();
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -452,12 +551,19 @@
             $('#UserModal').on('hidden.bs.modal', function () {
                 $('#FormCrearProyecto')[0].reset(); // Restablece el formulario.
                 $('#FormCrearProyecto').validate().resetForm();
+
+                // Restablecer el selectedValue del componente Wijmo cbIdSistema a -1
+                if (cbIdSistema && cbIdSistema.selectedValue !== undefined) {
+                    cbIdSistema.selectedValue = -1;
+                }
             });
 
             // Función para enviar los datos del formulario mediante AJAX
-            function agregarPuesto() {
+            function agregarModuloSistema() {
                 var formData = new FormData();
                 formData.append('ModuloSistemaDescripcion', $('#InpModuloSistemasDescripcion').val());
+                formData.append('Detalles', $('#InpDetalles').val());
+                formData.append('IdSistema', cbIdSistema.selectedValue);
 
                 $.ajax({
                     type: "POST",
@@ -466,20 +572,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de ModuloSistemas
-                        document.getElementById('GridModuloSistemas').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridModuloSistemas').style.visibility = 'hidden';
 
-                            // Llamar a la función verModuloSistemas para recargar el grid
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Agregando módulo del sistema...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verModuloSistemas().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -496,11 +603,10 @@
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los ModuloSistemas.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -510,10 +616,7 @@
                                 document.getElementById('GridModuloSistemas').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            document.getElementById('GridModuloSistemas').style.visibility = 'visible';
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
@@ -522,18 +625,20 @@
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        document.getElementById('GridModuloSistemas').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                            text: "Ocurrió un error al agregar el módulo.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -561,21 +666,26 @@
                 bootstrap.Modal.getInstance(document.getElementById('ModalEditarModuloSistema')).hide();
             });
 
-            // Validación del formulario
+            // Resto del código de validación del formulario
             $("#FormEditarModuloSistema").validate({
                 rules: {
-                    InpModuloSistemasDescripcionEdit: {
-                        required: true
-                    }
+                    InpModuloSistemasDescripcionEdit: { required: true, minlength: 2 },
+                    InpDetallesEdit: { required: true, minlength: 2 },
                 },
                 messages: {
-                    InpModuloSistemasDescripcionEdit: {
-                        required: "El estatus es requerido."
-                    }
+                    InpModuloSistemasDescripcionEdit: { required: "El módulo es requerido.", minlength: "Mínimo 2 caracteres." },
+                    InpDetallesEdit: { required: "La descripción del módulo es requerida.", minlength: "Mínimo 2 caracteres." },
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
-                    agregarPuesto(); // Llamar a la función sin pasar IdUsuario
+
+                    // Validar que se haya seleccionado una empresa
+                    if (cbIdSistemaEdit.selectedValue == null || cbIdSistemaEdit.selectedValue === -1) {
+                        swal.fire('Advertencia', 'Por favor selecciona para que sistema es este módulo', 'warning');
+                        return; // Detiene la ejecución si no se ha seleccionado una empresa
+                    }
+                    // Si todo está correcto, llama a la función para agregar el cliente
+                    actualizarModuloSistema();
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -585,38 +695,53 @@
                 errorClass: 'alert-validate'
             });
 
-            // Función para habilitar el botón si el campo ha cambiado y es válido
+            // Selecciona todos los campos del formulario de edición
+            const camposEdicion = ['#InpModuloSistemasDescripcionEdit', '#InpDetallesEdit', '#cbIdSistemaEdit',];
+
+            // Función para habilitar el botón si algún campo ha cambiado
             function habilitarBotonActualizar() {
-                const descripcionActual = $('#InpModuloSistemasDescripcionEdit').val();
-                const esValido = $("#FormEditarModuloSistema").valid(); // Verifica si el formulario es válido
-                $('#btnActualizarModuloSistema').prop('disabled', descripcionActual === valoresIniciales.descripcion || !esValido);
+                let algunCampoCambiado = false;
+
+                camposEdicion.forEach(function (campo) {
+                    if ($(campo).val() !== '') {
+                        algunCampoCambiado = true;
+                    }
+                });
+
+                // Habilita el botón si algún campo ha cambiado
+                if (algunCampoCambiado) {
+                    $('#btnActualizarModuloSistema').prop('disabled', false);
+                } else {
+                    $('#btnActualizarModuloSistema').prop('disabled', true);
+                }
             }
 
-            // Escuchar cambios en el campo del formulario
-            $('#InpModuloSistemasDescripcionEdit').on('input change', function () {
+            // Escucha los cambios en los campos del formulario
+            $('#FormEditarModuloSistema').on('input change', function () {
                 habilitarBotonActualizar();
-                $("#FormEditarModuloSistema").validate().element(this); // Valida el campo en tiempo real
             });
 
-            // Evento para limpiar el formulario al cerrar el modal
-            $('#ModalEditarModuloSistema').on('hidden.bs.modal', function () {
-                $('#FormEditarModuloSistema')[0].reset(); // Restablece el formulario.
-                $('#FormEditarModuloSistema').validate().resetForm(); // Limpia los mensajes de validación.
-                $('#btnActualizarModuloSistema').prop('disabled', true); // Deshabilita el botón de actualizar
+            // Escucha el evento de cambio en los selectores #cbIdEmpresaEdit y #cbIdPuestoEdit
+            $('#cbIdSistemaEdit').on('change', function () {
+                habilitarBotonActualizar();
             });
+
 
             // Función para actualizar el puesto
-            function actualizarPuesto() {
+            function actualizarModuloSistema() {
                 if (!$("#FormEditarModuloSistema").valid()) { // Verifica si el formulario es válido
                     return; // Detiene la ejecución si el formulario no es válido
                 }
 
                 const id = $('#btnActualizarModuloSistema').data('id'); // Obtiene el ID del puesto.
                 const descripcion = $('#InpModuloSistemasDescripcionEdit').val(); // Obtiene la descripción.
+                const detalles = $('#InpDetallesEdit').val();
 
                 const formData = new FormData();
                 formData.append('Id', id);
                 formData.append('ModuloSistemaDescripcion', descripcion);
+                formData.append('Detalles', detalles);
+                formData.append('IdSistema', cbIdSistemaEdit.selectedValue);
 
                 $.ajax({
                     type: "POST",
@@ -625,20 +750,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de ModuloSistemas
-                        document.getElementById('GridModuloSistemas').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando EstatusProyecto...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridModuloSistemas').style.visibility = 'hidden';
 
-                            // Llamar a la función verModuloSistemas para recargar el grid
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Actualizando módulo del sistema...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verModuloSistemas().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -655,11 +781,10 @@
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los ModuloSistemas.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -669,10 +794,7 @@
                                 document.getElementById('GridModuloSistemas').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            document.getElementById('GridModuloSistemas').style.visibility = 'visible';
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
@@ -681,18 +803,20 @@
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        document.getElementById('GridModuloSistemas').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el EstatusProyecto."
+                            text: "Ocurrió un error al agregar el módulo.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -711,7 +835,7 @@
             // Evento para el botón de actualizar
             $('#btnActualizarModuloSistema').on('click', function () {
                 if ($("#FormEditarModuloSistema").valid()) { // Verifica si el formulario es válido
-                    actualizarPuesto(); // Llama a la función de actualización
+                    actualizarModuloSistema(); // Llama a la función de actualización
                 }
             });
 
@@ -719,6 +843,12 @@
             $('#ModalEditarModuloSistema').on('hidden.bs.modal', function () {
                 $('#FormEditarModuloSistema')[0].reset(); // Restablece el formulario.
                 $('#FormEditarModuloSistema').validate().resetForm();
+               
+                // Restablecer el selectedValue del componente Wijmo cbIdEmpresa a -1
+                if (cbIdSistemaEdit && cbIdSistemaEdit.selectedValue !== undefined) {
+                    cbIdSistemaEdit.selectedValue = -1;
+                }
+
             });
 
             //============================================================================================================================\\
@@ -762,19 +892,21 @@
                     contentType: false, // Importante para FormData
                     processData: false, // Importante para FormData
                     beforeSend: function () {
-                        // Ocultar el grid de ModuloSistemas
-                        document.getElementById('GridModuloSistemas').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verModuloSistemas para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridModuloSistemas').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Eliminando módulo del sistema...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verModuloSistemas().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -787,15 +919,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridModuloSistemas').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los ModuloSistemas.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -805,26 +936,29 @@
                                 document.getElementById('GridModuloSistemas').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al desactivar el puesto."
+                            text: "Ocurrió un error al agregar el módulo.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -883,19 +1017,21 @@
                     contentType: false, // Importante para FormData.
                     processData: false, // Importante para FormData.
                     beforeSend: function () {
-                        // Ocultar el grid de ModuloSistemas
-                        document.getElementById('GridModuloSistemas').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verModuloSistemas para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridModuloSistemas').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Reactivando módulo del sistema...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verModuloSistemas().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -908,15 +1044,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridModuloSistemas').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los ModuloSistemas.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -926,26 +1061,29 @@
                                 document.getElementById('GridModuloSistemas').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al reactivar el puesto."
+                            text: "Ocurrió un error al agregar el módulo.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);

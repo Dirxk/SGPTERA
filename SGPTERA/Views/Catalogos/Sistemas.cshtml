@@ -67,28 +67,28 @@
                         <div class="col-12 col-md-6 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpDescripcion" name="InpDescripcion" type="text" placeholder="Descripcion" maxlength="50" required autocomplete="off" />
-                                <label for="InpDescripcion">Descripcion <span class="text-danger">*</span></label>
-                            </div>
-                        </div>
-                        <!-- Campo: IdCliente -->
-                        <div class="col-12 col-md-4 mb-3">
-                            <div class="form-group">
-                                <label for="cbIdEmpresa" class="form-label">EMPRESA:</label>
-                                <div id="cbIdEmpresa"></div>
-                            </div>
-                        </div>
-                        <!-- Campo: Repositorio -->
-                        <div class="col-12 col-md-6 mb-3">
-                            <div class="form-floating">
-                                <input class="form-control" id="InpRepositorio" name="InpRepositorio" type="text" placeholder="Repositorio" required autocomplete="off" />
-                                <label for="InpRepositorio">Repositorio <span class="text-danger">*</span></label>
+                                <label for="InpDescripcion">Sistema o proyecto  <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <!-- Campo: Prefijo -->
                         <div class="col-12 col-md-6 mb-3">
                             <div class="form-floating">
                                 <input class="form-control text-uppercase" id="InpPrefijo" name="InpPrefijo" type="text" placeholder="Prefijo" required autocomplete="off" />
-                                <label for="InpPrefijo">Prefijo <span class="text-danger">*</span></label>
+                                <label for="InpPrefijo">Prefijo  <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: Repositorio -->
+                        <div class="col-12 col-md-6 mb-3 mt-2">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpRepositorio" name="InpRepositorio" type="text" placeholder="Repositorio" required autocomplete="off" />
+                                <label for="InpRepositorio">Repositorio  <span class="text-danger">*</span></label>
+                            </div>
+                        </div>
+                        <!-- Campo: IdCliente -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="cbIdEmpresa" class="form-label">EMPRESA: <span class="text-danger">*</span></label>
+                                <div id="cbIdEmpresa"></div>
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
 </div>
 
 <!-- ================================================================================================= -->
-<!-- ====================================== Modal editar cliente ===================================== -->
+<!-- ====================================== Modal editar Sistema ===================================== -->
 <!-- ================================================================================================= -->
 
 <div class="modal fade" id="ModalEditarSistema" tabindex="-1" aria-labelledby="ModalEditarSistemaLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -124,28 +124,28 @@
                         <div class="col-12 col-md-6 mb-3">
                             <div class="form-floating">
                                 <input class="form-control" id="InpDescripcionEdit" name="InpDescripcionEdit" type="text" placeholder="Descripcion" maxlength="50" required autocomplete="off" />
-                                <label for="InpDescripcionEdit">Descripcion <span class="text-danger">*</span></label>
-                            </div>
-                        </div>
-                        <!-- Campo: IdCliente -->
-                        <div class="col-12 col-md-4 mb-3">
-                            <div class="form-group">
-                                <label for="cbIdEmpresaEdit" class="form-label">EMPRESA:</label>
-                                <div id="cbIdEmpresaEdit"></div>
-                            </div>
-                        </div>
-                        <!-- Campo: Repositorio -->
-                        <div class="col-12 col-md-6 mb-3">
-                            <div class="form-floating">
-                                <input class="form-control" id="InpRepositorioEdit" name="InpRepositorioEdit" type="text" placeholder="Repositorio" required autocomplete="off" />
-                                <label for="InpRepositorioEdit">Repositorio <span class="text-danger">*</span></label>
+                                <label for="InpDescripcionEdit">Sistema o Proyecto </label>
                             </div>
                         </div>
                         <!-- Campo: Prefijo -->
                         <div class="col-12 col-md-6 mb-3">
                             <div class="form-floating">
                                 <input class="form-control text-uppercase" id="InpPrefijoEdit" name="InpPrefijoEdit" type="text" placeholder="Prefijo" required autocomplete="off" />
-                                <label for="InpPrefijoEdit">Prefijo <span class="text-danger">*</span></label>
+                                <label for="InpPrefijoEdit">Prefijo </label>
+                            </div>
+                        </div>
+                        <!-- Campo: Repositorio -->
+                        <div class="col-12 col-md-6 mb-3 mt-2">
+                            <div class="form-floating">
+                                <input class="form-control" id="InpRepositorioEdit" name="InpRepositorioEdit" type="text" placeholder="Repositorio" required autocomplete="off" />
+                                <label for="InpRepositorioEdit">Repositorio </label>
+                            </div>
+                        </div>
+                        <!-- Campo: IdCliente -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="cbIdEmpresaEdit" class="form-label">EMPRESA:</label>
+                                <div id="cbIdEmpresaEdit"></div>
                             </div>
                         </div>
                     </div>
@@ -269,7 +269,7 @@
         }
 
         //============================================================================================================================\\
-        //================================== funciones para obtener los datos de empresa y de puestos =================================\\
+        //======================================== funciones para obtener los datos de empresa ========================================\\
         //==============================================================================================================================\\
 
         function getDataEmpresa() {
@@ -298,46 +298,21 @@
             });
         }
 
-        function getDataPuesto() {
-            return new Promise((resolve, reject) => {
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("GetPuestos", "Catalogos")',
-                    success: function (response) {
-                        if (response.resultado && response.data && response.data.length > 0) {
-                            // Filtrar solo los puestos activos y del tipo 2, y mapear al formato requerido
-                            const data = response.data
-                                .filter(puesto => puesto.flgActivo == 1 && puesto.tipo == 2)
-                                .map(puesto => ({
-                                    Id: puesto.id,
-                                    Puesto: puesto.descripcion
-                                }));
-                            resolve(data); // Resolver la promesa con los datos
-                        } else {
-                            reject("No se pudieron obtener los puestos o la respuesta está vacía.");
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        reject("Error al obtener los puestos: " + textStatus + " - " + errorThrown);
-                    }
-                });
-            });
-        }
-
+        
         //============================================================================================================================\\
         //================================  Función para editar un cliente usuario específico basado en su ID  =========================\\
         //==============================================================================================================================\\
 
         function EditarSistema(id) {
-            const sistema = gridsistema.itemsSource.find(u => u.id === id);
-            if (clienteusuario) {
+            const sistema = gridSistemas.itemsSource.find(u => u.id === id);
+            if (sistema) {
                 // Guardar los valores iniciales del cliente usuario
                 valoresIniciales = {
                     descripcion: sistema.descripcion || '',
                     razonSocial: sistema.razonSocial || '',
                     repositorio: sistema.repositorio || '',
                     prefijo: sistema.prefijo || '',
-                    idCliente: clienteusuario.idCliente || -1
+                    idCliente: sistema.idCliente || -1
                 };
 
                 // Asigna los valores del sistema a los campos del formulario de edición.
@@ -398,7 +373,7 @@
                     { binding: 'descripcion', header: 'Sistema / Proyecto', minWidth: 300, width: '*', align: 'center' },
                     { binding: 'prefijo', header: 'Prefijo', width: 150, align: 'center' },
                     { binding: 'repositorio', header: 'Repositorio', width: 300, align: 'center' },
-                    { binding: 'razonSocial', header: 'Empresa', minWidth: 250, width: '*', align: 'center' },
+                    { binding: 'idCliente', header: 'Empresa', minWidth: 250, width: '*', align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
                 ],
                 isReadOnly: true,
@@ -407,6 +382,10 @@
                         const rowData = panel.rows[r].dataItem; // Obtiene los datos de la fila.
                         const flgActivo = rowData.flgActivo; // Verificar el valor de FlgActivo.
 
+                        // Mostrar la razón social en lugar del idCliente
+                        if (panel.columns[c].binding === 'idCliente') {
+                            cell.textContent = rowData.razonSocial; // Muestra la razón social en lugar del idCliente.
+                        }
                         if (c === 0) {
                             cell.textContent = (r + 1).toString(); // Muestra el número de fila.
                         } else if (c === 3) { // Columna de Repositorio (índice 3)
@@ -561,9 +540,21 @@
             });
 
             //============================================================================================================================\\
-            //========================================== Funcionalidad del boton de Agregar Puesto  =======================================\\
+            //======================================== Funcionalidad del boton de Agregar Sistema  ========================================\\
             //==============================================================================================================================\\
-           
+
+            //Combobox Empresa
+            getDataEmpresa()
+                .then(data => {
+                    cbIdEmpresa.itemsSource = data;
+                    cbIdEmpresa.selectedValue = -1;
+                })
+                .catch(error => {
+                    console.error(error);
+                    swal.fire('Error', 'No se pudieron cargar los datos de las empresas disponibles.', 'error');
+                    cbIdEmpresa.isDisabled = true;
+                });
+
             // Agregar una regla personalizada para validar URLs
             $.validator.addMethod("validUrl", function (value, element) {
                 // Expresión regular para validar URLs
@@ -593,6 +584,12 @@
                 },
                 submitHandler: function (form, event) {
                     event.preventDefault();
+
+                    // Validar que se haya seleccionado una empresa
+                    if (cbIdEmpresa.selectedValue == null || cbIdEmpresa.selectedValue === -1) {
+                        swal.fire('Advertencia', 'Por favor selecciona una empresa', 'warning');
+                        return; // Detiene la ejecución si no se ha seleccionado una empresa
+                    }
                     agregarSistema(); // Llamar a la función sin pasar IdUsuario
                 },
                 errorPlacement: function (error, element) {
@@ -607,13 +604,18 @@
             $('#UserModal').on('hidden.bs.modal', function () {
                 $('#FormCrearSistema')[0].reset(); // Restablece el formulario.
                 $('#FormCrearSistema').validate().resetForm();
+
+                // Restablecer el selectedValue del componente Wijmo cbIdEmpresa a -1
+                if (cbIdEmpresa && cbIdEmpresa.selectedValue !== undefined) {
+                    cbIdEmpresa.selectedValue = -1;
+                }
             });
 
             // Función para enviar los datos del formulario mediante AJAX
             function agregarSistema() {
                 var formData = new FormData();
                 formData.append('Descripcion', $('#InpDescripcion').val());
-                formData.append('IdCliente', $('#InpRazonSocial').val()); // Enviar el IdCliente
+                formData.append('IdCliente', cbIdEmpresa.selectedValue);// Enviar el IdCliente
                 formData.append('Repositorio', $('#InpRepositorio').val());
                 formData.append('Prefijo', $('#InpPrefijo').val());
 
@@ -624,19 +626,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de sistemas
-                        document.getElementById('GridSistemas').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.circle('.card', 'Agregando sistema...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verSistemas para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridSistemas').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.circle('.card', 'Agregando Sistema...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verSistemas().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -649,15 +653,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridSistemas').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los sistemas.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -667,29 +670,29 @@
                                 document.getElementById('GridSistemas').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            // Mostrar el grid después de que termine la animación de éxito
-                            document.getElementById('GridSistemas').style.visibility = 'visible';
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        // Mostrar el grid después de que termine la animación de éxito
-                        document.getElementById('GridSistemas').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al agregar el sistema."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -775,10 +778,13 @@
             }
 
             // Escucha los cambios en los campos del formulario
-            camposEdicion.forEach(function (campo) {
-                $(campo).on('input change', function () {
-                    habilitarBotonActualizar();
-                });
+            $('#FormEditarSistema').on('input change', function () {
+                habilitarBotonActualizar();
+            });
+
+            // Escucha el evento de cambio en los selectores #cbIdEmpresaEdit y #cbIdPuestoEdit
+            $('#cbIdEmpresaEdit').on('change', function () {
+                habilitarBotonActualizar();
             });
 
             $('#btnActualizarSistema').on('click', function () {
@@ -790,7 +796,7 @@
                 const formData = new FormData();
                 formData.append('Id', id);
                 formData.append('Descripcion', descripcion);
-                formData.append('IdCliente', $('#InpRazonSocialEdit').val()); // Enviar el IdCliente
+                formData.append('IdCliente', cbIdEmpresaEdit.selectedValue);// Enviar el IdCliente
                 formData.append('Repositorio', repositorio);
                 formData.append('Prefijo', prefijo);
 
@@ -801,19 +807,21 @@
                     processData: false,
                     contentType: false,
                     beforeSend: function () {
-                        // Ocultar el grid de sistemas
-                        document.getElementById('GridSistemas').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verSistemas para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridSistemas').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Editando Sistema...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verSistemas().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -826,15 +834,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridSistemas').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los sistemas.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -844,28 +851,26 @@
                                 document.getElementById('GridSistemas').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
 
-                            // Mostrar un mensaje de error con SweetAlert2
-                            Swal.fire({ icon: "error", title: "Error", text: response.mensaje });
+                            });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-
-                        // Mostrar el grid después de que termine la animación de éxito
-                        document.getElementById('GridSistemas').style.visibility = 'visible';
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
-                            title: 'Error',
-                            text: 'Hubo un error en la solicitud al servidor.',
-                            icon: 'error',
-                            timer: 2000,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
+                            icon: "error",
+                            title: "Error",
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
                             allowOutsideClick: false,
                             allowEscapeKey: false,
                             allowEnterKey: false
@@ -932,19 +937,21 @@
                     contentType: false, // Importante para FormData
                     processData: false, // Importante para FormData
                     beforeSend: function () {
-                        // Ocultar el grid de sistemas
-                        document.getElementById('GridSistemas').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verSistemas para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridSistemas').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Eliminando Sistema...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verSistemas().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -957,15 +964,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridSistemas').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los sistemas.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -975,31 +981,29 @@
                                 document.getElementById('GridSistemas').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-
-                            // Mostrar el grid después de que termine la animación de éxito
-                            document.getElementById('GridSistemas').style.visibility = 'visible';
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        // Mostrar el grid después de que termine la animación de éxito
-                        document.getElementById('GridSistemas').style.visibility = 'visible';
-
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al desactivar el sistema."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
@@ -1058,19 +1062,21 @@
                     contentType: false, // Importante para FormData.
                     processData: false, // Importante para FormData.
                     beforeSend: function () {
-                        // Ocultar el grid de sistemas
-                        document.getElementById('GridSistemas').style.visibility = 'hidden';
-
-                        // Bloquear el contenido principal con el estilo "hourglass"
-                        Notiflix.Block.hourglass('.card', 'Actualizando datos...', {
-                            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
-                            svgSize: '50px', // Tamaño del ícono de reloj de arena
-                            messageFontSize: '16px', // Tamaño del mensaje
-                        });
+                        // Aquí no se oculta el grid ni se muestra el bloqueo
                     },
                     success: function (response) {
                         if (response.resultado) {
-                            // Llamar a la función verSistemas para recargar el grid
+                            // Ocultar el grid de puestos
+                            document.getElementById('GridSistemas').style.visibility = 'hidden';
+
+                            // Bloquear el contenido principal con el estilo "hourglass"
+                            Notiflix.Block.hourglass('.card', 'Reactivando Sistema...', {
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semitransparente
+                                svgSize: '50px', // Tamaño del ícono de reloj de arena
+                                messageFontSize: '16px', // Tamaño del mensaje
+                            });
+
+                            // Llamar a la función verPuestos para recargar el grid
                             verSistemas().then((serverResponseTime) => {
                                 // Tiempo adicional de 500 ms después de la respuesta del servidor
                                 setTimeout(() => {
@@ -1083,15 +1089,14 @@
                             }).catch(() => {
                                 // En caso de error, desbloquear el contenido principal
                                 Notiflix.Block.remove('.card');
-
+                                document.getElementById('GridSistemas').style.visibility = 'visible';
                                 // Mostrar un mensaje de error con SweetAlert2
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'Hubo un error al recargar los sistemas.',
+                                    text: 'Hubo un error al recargar los puestos.',
                                     icon: 'error',
                                     timer: 2000,
-                                    timerProgressBar: true,
-                                    showConfirmButton: false,
+                                    showConfirmButton: true,
                                     allowOutsideClick: false,
                                     allowEscapeKey: false,
                                     allowEnterKey: false
@@ -1101,29 +1106,29 @@
                                 document.getElementById('GridSistemas').style.visibility = 'visible';
                             });
                         } else {
-                            // Desbloquear el contenido principal si hay un error en la respuesta
-                            Notiflix.Block.remove('.card');
-                            // Mostrar el grid después de que termine la animación de éxito
-                            document.getElementById('GridSistemas').style.visibility = 'visible';
-
-                            // Mostrar un mensaje de error con SweetAlert2
+                            // Mostrar un mensaje de error con SweetAlert2 si la respuesta no es exitosa
                             Swal.fire({
                                 icon: "error",
                                 title: "Error",
-                                text: response.mensaje
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false
+
                             });
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        // Desbloquear el contenido principal en caso de error en la solicitud
-                        Notiflix.Block.remove('.card');
-                        // Mostrar el grid después de que termine la animación de éxito
-                        document.getElementById('GridSistemas').style.visibility = 'visible';
-                        // Mostrar un mensaje de error con SweetAlert2
+                        // Mostrar un mensaje de error con SweetAlert2 en caso de error en la solicitud
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "Ocurrió un error al reactivar el sistema."
+                            text: "Ocurrió un error al agregar el puesto.",
+                            showConfirmButton: true,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false
                         });
 
                         console.error("Error en la solicitud:", textStatus, errorThrown);
