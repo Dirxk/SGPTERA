@@ -174,3 +174,7 @@ body {
 .enlace-correo:hover {
     color: #0D7685 !important; /* Azul */
 }
+
+#ContenidoTera {
+    padding-bottom: 4px;
+}

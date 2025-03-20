@@ -18,6 +18,7 @@ namespace TeracromController
         public Catalogos(DapperContext dapperContext)
         {
             _dapperContext = dapperContext;
+
         }
 
         
@@ -282,12 +283,32 @@ namespace TeracromController
             RespuestaJson respuesta = new RespuestaJson();
             try
             {
-                
-                // Obtener la fecha y hora actual
-                cliente.FechaDel = DateTime.Now;
-
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
+                    // Verificar si existen registros en ClientesUsuarios o Sistemas con el IdCliente igual al Id del cliente
+                    string sqlVerificacion = @"
+                    SELECT COUNT(*) 
+                    FROM (
+                        SELECT IdCliente FROM ClientesUsuarios WHERE IdCliente = @Id AND FlgActivo = 1
+                        UNION ALL
+                        SELECT IdCliente FROM Sistemas WHERE IdCliente = @Id AND FlgActivo = 1
+                    ) AS ClientesActivos";
+
+                    var parametrosVerificacion = new DynamicParameters();
+                    parametrosVerificacion.Add("@Id", cliente.Id, DbType.Int32);
+
+                    int count = await connection.ExecuteScalarAsync<int>(sqlVerificacion, parametrosVerificacion);
+
+                    if (count > 0)
+                    {
+                        respuesta.Resultado = false;
+                        respuesta.Mensaje = "Aún existen elementos activos que dependen de este cliente.";
+                        return respuesta;
+                    }
+
+                    // Obtener la fecha y hora actual
+                    cliente.FechaDel = DateTime.Now;
+
                     // Consulta SQL para desactivar el cliente
                     string sql = @"
                     UPDATE Clientes 
@@ -558,11 +579,32 @@ namespace TeracromController
             RespuestaJson respuesta = new RespuestaJson();
             try
             {
-                // Obtener la fecha y hora actual
-                puesto.FechaDel = DateTime.Now;
-
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
+                    // Verificar si existen registros en Usuarios o ClientesUsuarios con el IdPuesto igual al Id del puesto
+                    string sqlVerificacion = @"
+                    SELECT COUNT(*) 
+                    FROM (
+                        SELECT IdPuesto FROM Usuarios WHERE IdPuesto = @Id AND FlgActivo = 1
+                        UNION ALL
+                        SELECT IdPuesto FROM ClientesUsuarios WHERE IdPuesto = @Id AND FlgActivo = 1
+                    ) AS PuestosActivos";
+
+                    var parametrosVerificacion = new DynamicParameters();
+                    parametrosVerificacion.Add("@Id", puesto.Id, DbType.Int32);
+
+                    int count = await connection.ExecuteScalarAsync<int>(sqlVerificacion, parametrosVerificacion);
+
+                    if (count > 0)
+                    {
+                        respuesta.Resultado = false;
+                        respuesta.Mensaje = "Aún existen elementos activos que dependen de este puesto.";
+                        return respuesta;
+                    }
+
+                    // Obtener la fecha y hora actual
+                    puesto.FechaDel = DateTime.Now;
+
                     // Consulta SQL para desactivar el puesto
                     string sql = @"
                     UPDATE Puestos 
@@ -919,11 +961,29 @@ namespace TeracromController
             RespuestaJson respuesta = new RespuestaJson();
             try
             {
-                // Obtener la fecha y hora actual
-                sistema.FechaDel = DateTime.Now;
-
                 using (var connection = _dapperContext.AbrirConexion("SGP"))
                 {
+                    // Verificar si existen registros en ModuloSistemas con el IdSistema igual al Id del sistema
+                    string sqlVerificacion = @"
+                    SELECT COUNT(*) 
+                    FROM ModuloSistemas 
+                    WHERE IdSistema = @Id AND FlgActivo = 1";
+
+                    var parametrosVerificacion = new DynamicParameters();
+                    parametrosVerificacion.Add("@Id", sistema.Id, DbType.Int32);
+
+                    int count = await connection.ExecuteScalarAsync<int>(sqlVerificacion, parametrosVerificacion);
+
+                    if (count > 0)
+                    {
+                        respuesta.Resultado = false;
+                        respuesta.Mensaje = "Aún existen elementos activos que dependen de este sistema.";
+                        return respuesta;
+                    }
+
+                    // Obtener la fecha y hora actual
+                    sistema.FechaDel = DateTime.Now;
+
                     // Consulta SQL para desactivar el sistema
                     string sql = @"
                     UPDATE Sistemas 
@@ -1075,7 +1135,7 @@ namespace TeracromController
             return respuesta;
         }
 
-        public async Task<RespuestaJson> AgregarUsuario(Usuarios usuario)
+        public async Task<RespuestaJson> AgregarUsuario(Usuarios usuario, string webRoot)
         {
             RespuestaJson respuesta = new RespuestaJson();
             try
@@ -1091,7 +1151,7 @@ namespace TeracromController
                 }
                 else
                 {
-                    string rutaImagenPorDefecto = @"C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\wwwroot\lib\dashboard\assets\img\AvatarTeracrom.png";
+                    string rutaImagenPorDefecto = Path.Combine(webRoot, "lib/dashboard/assets/img/AvatarTeracrom.png");
                     if (System.IO.File.Exists(rutaImagenPorDefecto))
                     {
                         usuario.FotoPerfil = await System.IO.File.ReadAllBytesAsync(rutaImagenPorDefecto);
@@ -1476,7 +1536,7 @@ namespace TeracromController
             return respuesta;
         }
 
-        public async Task<RespuestaJson> AgregarClienteUsuario(ClientesUsuarios clienteusuario)
+        public async Task<RespuestaJson> AgregarClienteUsuario(ClientesUsuarios clienteusuario, string webRoot)
         {
             RespuestaJson respuesta = new RespuestaJson();
             try
@@ -1492,7 +1552,8 @@ namespace TeracromController
                 }
                 else
                 {
-                    string rutaImagenPorDefecto = @"C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\wwwroot\lib\dashboard\assets\img\AvatarTeracromGreen.png";
+                    string rutaImagenPorDefecto = Path.Combine(webRoot, "lib/dashboard/assets/img/AvatarTeracromGreen.png");
+
                     if (System.IO.File.Exists(rutaImagenPorDefecto))
                     {
                         clienteusuario.FotoPerfil = await System.IO.File.ReadAllBytesAsync(rutaImagenPorDefecto);

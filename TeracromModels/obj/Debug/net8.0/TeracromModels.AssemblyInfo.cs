@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TeracromModels")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a76d69cf552840622246eb42dd869168769f67d0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f307f07a4f659b4a6c4f1b9e6f62feb43021812f")]
 [assembly: System.Reflection.AssemblyProductAttribute("TeracromModels")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TeracromModels")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

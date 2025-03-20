@@ -305,6 +305,23 @@
         $(document).ready(function () {
 
             //============================================================================================================================\\
+            //================================================  Validaciones de los Inputs  ===============================================\\
+            //==============================================================================================================================\\
+
+            $("#InpDescripcion, #InpDescripcionEdit").on("input", function () {
+                $(this).val(
+                    $(this).val()
+                        .replace(/[^a-zA-Z0-9\-,.&() ]/g, "") // Permite solo los caracteres especificados
+                        .replace(/\.{2,}/g, ".") // Evita dos o más puntos juntos
+                        .replace(/\-{2,}/g, "-") // Evita dos o más guiones juntos
+                        .replace(/,{2,}/g, ",") // Evita dos o más comas juntas
+                        .replace(/\({2,}/g, "(") // Evita dos o más paréntesis de apertura juntos
+                        .replace(/\){2,}/g, ")") // Evita dos o más paréntesis de cierre juntos
+                        .replace(/&{2,}/g, "&") // Evita dos o más ampersands juntos
+                );
+            });
+
+            //============================================================================================================================\\
             //==========================================               GRID Principal                ======================================\\
             //==============================================================================================================================\\
             // Inicializa la grilla antes de llamar a verPuestos()
@@ -373,22 +390,11 @@
             //==============================================================================================================================\\
             $('#inputBusqueda').autocomplete({
                 source: function (request, response) {
-                    const term = request.term.toLowerCase(); // Obtiene el término de búsqueda en minúsculas.
-
-                    // Verifica que gridPuestos.itemsSource esté definido y sea un array.
-                    if (!gridPuestos.itemsSource || !Array.isArray(gridPuestos.itemsSource)) {
-                        console.error('gridPuestos.itemsSource no está definido o no es un array');
-                        response([]); // Devuelve un array vacío si no hay datos.
-                        return;
-                    }
-
-                    const puestos = gridPuestos.itemsSource; // Obtiene la lista de puestos.
-
-                    // Filtra los puestos, asegurándose de que las propiedades existan.
+                    const term = request.term.toLowerCase(); // Obtiene el término de búsqueda.
+                    const puestos = gridPuestos.itemsSource; // Obtiene la lista de usuarios.
                     const resultados = puestos.filter(puesto =>
-                        (puesto.descripcion && puesto.descripcion.toLowerCase().includes(term)) || // Busca por descripción.
-                        (puesto.tipo && puesto.tipo.toLowerCase().includes(term)) // Busca por tipo.
-                    );
+                        puesto.descripcion.toLowerCase().includes(term)    
+                    ).slice(0, 5); // Limita los resultados a 5.
 
                     // Mapea los resultados para el autocompletado.
                     response(resultados.map(puesto => ({
@@ -397,38 +403,20 @@
                     })));
                 },
                 select: function (event, ui) {
-                    // Verifica que se haya seleccionado un valor válido.
-                    if (!ui.item || !ui.item.value) {
-                        console.error('No se seleccionó un puesto válido');
-                        return;
-                    }
-
                     const puestoId = ui.item.value; // Obtiene el valor seleccionado.
                     const puesto = gridPuestos.itemsSource.find(p => p.descripcion === puestoId); // Busca el puesto en la grilla.
-
                     if (puesto) {
                         gridPuestos.itemsSource = [puesto]; // Filtra la grilla para mostrar solo el puesto seleccionado.
                     }
-                }
+                }      
             });
 
-            // Evento para buscar al hacer clic en el botón de búsqueda.
             $('#btnBuscar').on('click', function () {
-                const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda en minúsculas.
-
-                // Verifica que gridPuestos.itemsSource esté definido y sea un array.
-                if (!gridPuestos.itemsSource || !Array.isArray(gridPuestos.itemsSource)) {
-                    console.error('gridPuestos.itemsSource no está definido o no es un array');
-                    return;
-                }
-
-                const puestos = gridPuestos.itemsSource; // Obtiene la lista de puestos.
-
-                // Filtra los puestos, asegurándose de que las propiedades existan.
+                const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda.
+                const puestos = gridPuestos.itemsSource; // Obtiene la lista de usuarios.
                 const resultados = puestos.filter(puesto =>
-                    (puesto.descripcion && puesto.descripcion.toLowerCase().includes(term)) || // Busca por descripción.
-                    (puesto.tipo && puesto.tipo.toLowerCase().includes(term)) // Busca por tipo.
-                );
+                    puesto.descripcion.toLowerCase().includes(term)
+                ).slice(0, 5); // Limita los resultados a 5.
 
                 if (resultados.length > 0) {
                     gridPuestos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
@@ -442,16 +430,11 @@
                 }
             });
 
-            // Evento para limpiar la búsqueda y mostrar todos los puestos.
+            // Evento para limpiar la búsqueda y mostrar todos los usuarios.
             $('#inputBusqueda').on('input', function () {
                 if ($(this).val() === '') {
-                    // Verifica que la función verPuestos esté definida.
-                    if (typeof verPuestos === 'function') {
-                        verPuestos(); // Recarga todos los puestos.
-                    } else {
-                        console.error('verPuestos no está definido');
-                    }
-                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Puesto no encontrado".
+                    verPuestos(); // Recarga todos los usuarios.
+                    $('#mensajeNoEncontrado').hide(); // Oculta el mensaje de "Usuario no encontrado".
                 }
             });
 

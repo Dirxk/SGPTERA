@@ -11,6 +11,7 @@
     <script src="~/lib/dashboard/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="~/lib/dashboard/vendors/simplebar/simplebar.min.js"></script>
     <script src="~/lib/dashboard/assets/js/config.js"></script>
+
     <!-- CSS de Notiflix -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-3.2.6.min.css" />
 
@@ -27,7 +28,6 @@
     <link href="~/lib/wijmo/styles/wijmo.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SGPTERA.styles.css" asp-append-version="true" />
-
 </head>
 <body>
     <main class="main" id="top">
@@ -94,12 +94,11 @@
                                             Soporte
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#" data-bs-toggle="" aria-expanded="false">
+                                            <a class="nav-link" asp-action="Soporte" asp-controller="Soportes" data-bs-toggle="" aria-expanded="false">
                                                 <div class="d-flex align-items-center">
-                                                    <span class="nav-link-text">PROXIMAMENTE</span>
+                                                    <span class="nav-link-text">Soporte</span>
                                                 </div>
                                             </a>
-                                            <!-- more inner pages-->
                                         </li>
                                     </ul>
                                 </div>
@@ -414,8 +413,10 @@
         </nav>
 
         @* Contenido *@
-        <div class="content">
-            @RenderBody()
+        <div class="content" id="ContenidoTera ">
+            <main role="main">
+                @RenderBody()
+            </main>
         </div>
 
         <div class="modal fade" id="mdLoader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

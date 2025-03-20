@@ -409,6 +409,34 @@
         $(document).ready(function () {
 
             //============================================================================================================================\\
+            //================================================  Validaciones de los Inputs  ===============================================\\
+            //==============================================================================================================================\\
+
+            $("#InpRazonSocial, #InpRazonSocialEdit").on("input", function () {
+                $(this).val(
+                    $(this).val()
+                        .replace(/[^a-zA-Z0-9\-,.&() ]/g, "") // Permite solo los caracteres especificados
+                        .replace(/\.{2,}/g, ".") // Evita dos o más puntos juntos
+                        .replace(/\-{2,}/g, "-") // Evita dos o más guiones juntos
+                        .replace(/,{2,}/g, ",") // Evita dos o más comas juntas
+                        .replace(/\({2,}/g, "(") // Evita dos o más paréntesis de apertura juntos
+                        .replace(/\){2,}/g, ")") // Evita dos o más paréntesis de cierre juntos
+                        .replace(/&{2,}/g, "&") // Evita dos o más ampersands juntos
+                );
+            });
+
+            $("#InpRFC, #InpRFCEdit").on("input", function () {
+                $(this).val($(this).val().replace(/[^a-zA-Z0-9]/g, ""));
+            });
+
+            $("#InpPrefijo, #InpPrefijoEdit").on("input", function () {
+                $(this).val($(this).val()
+                    .replace(/[^a-zA-Z0-9&]/g, "")
+                    .replace(/&{2,}/g, "&")
+                );
+            });
+
+            //============================================================================================================================\\
             //==========================================               GRID Principal                ======================================\\
             //==============================================================================================================================\\
             gridClientes = new wijmo.grid.FlexGrid('#GridClientes', {
@@ -482,7 +510,7 @@
                         cliente.rfc.toLowerCase().includes(term) || // Busca por RFC.
                         cliente.prefijo.toLowerCase().includes(term) || // Busca por prefijo.
                         cliente.telefono.toLowerCase().includes(term) // Busca por teléfono.
-                    );
+                    ).slice(0, 5);
                     response(resultados.map(cliente => ({
                         label: `${cliente.razonSocial} (${cliente.rfc})`, // Muestra la razón social y RFC.
                         value: cliente.razonSocial // Asigna el ID del cliente como valor.
@@ -506,7 +534,7 @@
                     cliente.rfc.toLowerCase().includes(term) || // Busca por RFC.
                     cliente.prefijo.toLowerCase().includes(term) || // Busca por prefijo.
                     cliente.telefono.toLowerCase().includes(term) // Busca por teléfono.
-                );
+                ).slice(0, 5);
 
                 if (resultados.length > 0) {
                     gridClientes.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.

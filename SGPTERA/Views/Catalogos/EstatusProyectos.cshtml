@@ -266,6 +266,36 @@
         $(document).ready(function () {
 
             //============================================================================================================================\\
+            //================================================  Validaciones de los Inputs  ===============================================\\
+            //==============================================================================================================================\\
+
+            $("#InpEstatusProyectosDescripcion, #InpEstatusProyectosDescripcionEdit").on("input", function () {
+                $(this).val(
+                    $(this).val()
+                        .replace(/[^a-zA-Z0-9\-,.&() ]/g, "") // Permite solo los caracteres especificados
+                        .replace(/\.{2,}/g, ".") // Evita dos o más puntos juntos
+                        .replace(/\-{2,}/g, "-") // Evita dos o más guiones juntos
+                        .replace(/,{2,}/g, ",") // Evita dos o más comas juntas
+                        .replace(/\({2,}/g, "(") // Evita dos o más paréntesis de apertura juntos
+                        .replace(/\){2,}/g, ")") // Evita dos o más paréntesis de cierre juntos
+                        .replace(/&{2,}/g, "&") // Evita dos o más ampersands juntos
+                );
+            });
+
+            $("#InpDetalles, #InpDetallesEdit").on("input", function () {
+                $(this).val(
+                    $(this).val()
+                        .replace(/[^a-zA-Z0-9\-,.&() ]/g, "") // Permite solo los caracteres especificados
+                        .replace(/\.{2,}/g, ".") // Evita dos o más puntos juntos
+                        .replace(/\-{2,}/g, "-") // Evita dos o más guiones juntos
+                        .replace(/,{2,}/g, ",") // Evita dos o más comas juntas
+                        .replace(/\({2,}/g, "(") // Evita dos o más paréntesis de apertura juntos
+                        .replace(/\){2,}/g, ")") // Evita dos o más paréntesis de cierre juntos
+                        .replace(/&{2,}/g, "&") // Evita dos o más ampersands juntos
+                );
+            });
+
+            //============================================================================================================================\\
             //==========================================               GRID Principal                ======================================\\
             //==============================================================================================================================\\
             // Inicializa la grilla antes de llamar a verEstatusProyectos()
@@ -330,7 +360,7 @@
                     const EstatusProyectos = GridEstatusProyectos.itemsSource; // Obtiene la lista de ModuloSistemas.
                     const resultados = EstatusProyectos.filter(estatusproyecto =>
                         estatusproyecto.estatusProyectosDescripcion.toLowerCase().includes(term)
-                    );
+                    ).slice(0, 5);
                     response(resultados.map(estatusproyecto => ({
                         label: `${estatusproyecto.estatusProyectosDescripcion}`, // Muestra la descripción y tipo.
                         value: estatusproyecto.estatusProyectosDescripcion // Asigna el ID del puesto como valor.
@@ -350,8 +380,8 @@
                 const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda.
                 const EstatusProyectos = GridEstatusProyectos.itemsSource; // Obtiene la lista de ModuloSistemas.
                 const resultados = EstatusProyectos.filter(estatusproyecto =>
-                    estatusproyecto.estatusProyectosDescripcion.toLowerCase().includes(term) 
-                );
+                    estatusproyecto.estatusProyectosDescripcion.toLowerCase().includes(term)
+                ).slice(0, 5);
 
                 if (resultados.length > 0) {
                     GridEstatusProyectos.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.

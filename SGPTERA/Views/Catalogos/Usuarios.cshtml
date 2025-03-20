@@ -477,6 +477,31 @@
         $(document).ready(function () {
 
             //============================================================================================================================\\
+            //================================================  Validaciones de los Inputs  ===============================================\\
+            //==============================================================================================================================\\
+
+            $("#InpUsuario, #InpUsuarioEdit").on("input", function () {
+                // Elimina caracteres no permitidos y evita dos puntos juntos
+                $(this).val(
+                    $(this).val()
+                        .replace(/[^a-zA-Z0-9.]/g, "") // Solo permite letras, números y puntos
+                        .replace(/\.{2,}/g, ".") // Evita dos o más puntos juntos
+                );
+            });
+
+            $("#InpNombreUsuario, #InpNombreUsuarioEdit").on("input", function () {
+                $(this).val($(this).val().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, "")); // Permite letras y espacios
+            });
+
+            $("#InpApellidoPaternoUsuario, #InpApellidoPaternoUsuarioEdit").on("input", function () {
+                $(this).val($(this).val().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, "")); // Permite letras y espacios
+            });
+
+            $("#InpApellidoMaternoUsuario, #InpApellidoMaternoUsuarioEdit").on("input", function () {
+                $(this).val($(this).val().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, "")); // Permite letras y espacios
+            });
+
+            //============================================================================================================================\\
             //==========================================               GRID Principal                ======================================\\
             //==============================================================================================================================\\
             gridUsuarios = new wijmo.grid.FlexGrid('#GridUsuarios', {
@@ -581,7 +606,8 @@
                         usuario.descripcion.toLowerCase().includes(term) ||
                         usuario.telefono.toLowerCase().includes(term) ||// Busca por teléfono.
                         usuario.correo.toLowerCase().includes(term)
-                    );
+                    ).slice(0, 5); // Limita los resultados a 5.
+
                     response(resultados.map(usuario => ({
                         label: `${usuario.usuario} (${usuario.correo})`, // Muestra la razón social y RFC.
                         value: usuario.usuario // Asigna el ID del usuario como valor.
@@ -596,7 +622,6 @@
                 }
             });
 
-            // Evento para buscar al hacer clic en el botón de búsqueda.
             $('#btnBuscar').on('click', function () {
                 const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda.
                 const usuarios = gridUsuarios.itemsSource; // Obtiene la lista de usuarios.
@@ -608,7 +633,7 @@
                     usuario.descripcion.toLowerCase().includes(term) ||
                     usuario.telefono.toLowerCase().includes(term) ||// Busca por teléfono.
                     usuario.correo.toLowerCase().includes(term)
-                );
+                ).slice(0, 5); // Limita los resultados a 5.
 
                 if (resultados.length > 0) {
                     gridUsuarios.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.

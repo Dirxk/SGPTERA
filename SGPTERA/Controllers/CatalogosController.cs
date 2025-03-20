@@ -12,12 +12,14 @@ namespace SGPTERA.Controllers
         private readonly DapperContext _dapperContext;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWebHostEnvironment _env;
 
-        public CatalogosController(DapperContext dapperContext, IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : base(configuration, httpContextAccessor, dapperContext)
+        public CatalogosController(DapperContext dapperContext, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env) : base(configuration, httpContextAccessor, dapperContext)
         {
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
             _dapperContext = dapperContext;
+            _env = env;
         }
 
         //============================================================================================================================\\
@@ -269,7 +271,7 @@ namespace SGPTERA.Controllers
         public async Task<RespuestaJson> AgregarClienteUsuario(ClientesUsuarios clientesusuarios)
         {
             clientesusuarios.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
-            return await new Catalogos(_dapperContext).AgregarClienteUsuario(clientesusuarios);
+            return await new Catalogos(_dapperContext).AgregarClienteUsuario(clientesusuarios, _env.WebRootPath);
         }
 
         [HttpPost]

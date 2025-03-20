@@ -360,6 +360,30 @@
         $(document).ready(function () {
 
             //============================================================================================================================\\
+            //================================================  Validaciones de los Inputs  ===============================================\\
+            //==============================================================================================================================\\
+
+            $("#InpDescripcion, #InpDescripcionEdit").on("input", function () {
+                $(this).val(
+                    $(this).val()
+                        .replace(/[^a-zA-Z0-9\-,.&() ]/g, "") // Permite solo los caracteres especificados
+                        .replace(/\.{2,}/g, ".") // Evita dos o más puntos juntos
+                        .replace(/\-{2,}/g, "-") // Evita dos o más guiones juntos
+                        .replace(/,{2,}/g, ",") // Evita dos o más comas juntas
+                        .replace(/\({2,}/g, "(") // Evita dos o más paréntesis de apertura juntos
+                        .replace(/\){2,}/g, ")") // Evita dos o más paréntesis de cierre juntos
+                        .replace(/&{2,}/g, "&") // Evita dos o más ampersands juntos
+                );
+            });
+
+            $("#InpPrefijo, #InpPrefijoEdit").on("input", function () {
+                $(this).val($(this).val()
+                    .replace(/[^a-zA-Z0-9&]/g, "")
+                    .replace(/&{2,}/g, "&")
+                );
+            });
+
+            //============================================================================================================================\\
             //==========================================               GRID Principal                ======================================\\
             //==============================================================================================================================\\
             // Inicializa la grilla antes de llamar a verSistemas()
@@ -446,7 +470,7 @@
                         sistema.razonSocial.toLowerCase().includes(term) ||
                         sistema.repositorio.toLowerCase().includes(term) ||
                         sistema.prefijo.toLowerCase().includes(term) // Busca por tipo.
-                    );
+                    ).slice(0, 5);
                     response(resultados.map(sistema => ({
                         label: `${sistema.descripcion} (${sistema.razonSocial})`, // Muestra la descripción y tipo.
                         value: sistema.descripcion // Asigna el ID del sistema como valor.
@@ -469,8 +493,8 @@
                     sistema.descripcion.toLowerCase().includes(term) ||
                     sistema.razonSocial.toLowerCase().includes(term) ||
                     sistema.repositorio.toLowerCase().includes(term) ||
-                    sistema.prefijo.toLowerCase().includes(term) 
-                );
+                    sistema.prefijo.toLowerCase().includes(term)
+                ).slice(0, 5);
 
                 if (resultados.length > 0) {
                     gridSistemas.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.

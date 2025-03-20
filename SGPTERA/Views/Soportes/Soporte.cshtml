@@ -1,0 +1,1915 @@
+﻿@{
+    ViewData["Title"] = "Soporte";
+    var IdUsuario = ViewBag.IdUsuario;
+
+}
+
+<!-- ================================================================================================= -->
+<!-- ======================================= Header de Soporte ======================================= -->
+<!-- ================================================================================================= -->
+
+<div class="kanban-header">
+    <div class="row gx-0 justify-content-between justify-content-md-start">
+        <div class="col-auto d-flex align-items-center">
+            <!-- Botón "Agregar" que abre el modal -->
+            <button class="btn btn-primary fs--2 px-3" data-bs-toggle="modal" data-bs-target="#agregarSoporteModal">
+                <span class="fas fa-cog d-inline-block" style="min-width: 14px"></span>
+                <span class="d-none d-sm-inline ms-2">Agregar</span>
+            </button>
+        </div>
+        <div class="col-md-auto d-flex align-items-center ms-auto mt-2 mt-md-0">
+            <ul class="nav w-100 fs--1">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center text-900 ps-0 pe-2 px-xl-3 fw-bold" href="#!" data-bs-toggle="modal" data-bs-target="#searchBoxModal">
+                        <span class="me-1 fas fa-search" data-fa-transform="up-2" style="min-width: 14px"></span>
+                        <span class="d-none d-xxl-inline">Search</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center text-900 px-2 px-xl-3 fw-bold" href="#!">
+                        <span class="me-1 fa-solid fa-right-left" data-fa-transform="up-2" style="min-width: 14px"></span>
+                        <span class="d-none d-xxl-inline">Export/import</span>
+                    </a>
+                </li>
+                <li class="nav-item ms-auto">
+                    <a class="nav-link d-flex align-items-center pe-0 ps-1 ps-xl-3 text-900 h-100" data-phoenix-toggle="offcanvas" data-phoenix-target="#offcanvasKanban" href="#offcanvasKanban" role="button">
+                        <span class="fa-solid fa-bars d-inline" data-fa-transform="up-2" style="min-width: 14px"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- <!-- Modal para Agregar Soporte -->
+<div class="modal fade" id="agregarSoporteModal" tabindex="-1" aria-labelledby="agregarSoporteModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="FormAgregarSoporte">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agregarSoporteModalLabel">Agregar Soporte</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal -->
+                    <div class="row">
+                        <!-- Campo: Descripción del soporte -->
+                        <div class="col-12 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="InpAgregarSoporteDescripcion" name="InpAgregarSoporteDescripcion" required placeholder="Descripción del soporte" maxlength="150" autocomplete="off">
+                                <label for="InpAgregarSoporteDescripcion">Descripción del soporte</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Editor de texto enriquecido -->
+                    <!-- Editor de texto personalizado -->
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label for="editorSoporte" class="form-label">Detalles del soporte:</label>
+                            <!-- Barra de herramientas del editor -->
+                            <div class="editor-toolbar mb-2 border rounded p-2 bg-light">
+                                <button type="button" class="btn btn-light btn-sm" data-command="bold" title="Negrita">
+                                    <i class="fas fa-bold"></i>
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm" data-command="italic" title="Cursiva">
+                                    <i class="fas fa-italic"></i>
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm" data-command="underline" title="Subrayado">
+                                    <i class="fas fa-underline"></i>
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm" data-command="justifyLeft" title="Alinear a la izquierda">
+                                    <i class="fas fa-align-left"></i>
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm" data-command="justifyCenter" title="Centrar">
+                                    <i class="fas fa-align-center"></i>
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm" data-command="justifyRight" title="Alinear a la derecha">
+                                    <i class="fas fa-align-right"></i>
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm" data-command="insertUnorderedList" title="Lista con viñetas">
+                                    <i class="fas fa-list-ul"></i>
+                                </button>
+                                <button type="button" class="btn btn-light btn-sm" data-command="insertOrderedList" title="Lista numerada">
+                                    <i class="fas fa-list-ol"></i>
+                                </button>
+                            </div>
+                            <!-- Área de edición -->
+                            <div id="editorSoporte" contenteditable="true" class="border rounded p-3" style="height: 450px; overflow-y: auto; background-color: #fff; color: black;"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Campo: Cliente -->
+                        <div class="col-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbCliente" class="form-label">CLIENTE: <span class="text-danger">*</span></label>
+                                <div id="cbCliente"></div>
+                            </div>
+                        </div>
+                        <!-- Campo: Sistema -->
+                        <div class="col-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbSistema" class="form-label">SISTEMA: <span class="text-danger">*</span></label>
+                                <div id="cbSistema"></div>
+                            </div>
+                        </div>
+                        <!-- Campo: Modulo -->
+                        <div class="col-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbModulo" class="form-label">MODULO: <span class="text-danger">*</span></label>
+                                <div id="cbModulo"></div>
+                            </div>
+                        </div>
+                        <!-- Campo: Estatus Soporte -->
+                        <div class="col-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbEstatusSoporte" class="form-label">ESTATUS SOPORTE: <span class="text-danger">*</span></label>
+                                <div id="cbEstatusSoporte"></div>
+                            </div>
+                        </div>
+                        <!-- Campo: Tipo Soporte -->
+                        <div class="col-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbTipoSoporte" class="form-label">TIPO SOPORTE: <span class="text-danger">*</span></label>
+                                <div id="cbTipoSoporte"></div>
+                            </div>
+                        </div>
+                        <!-- Campo: Nivel de Servicio -->
+                        <div class="col-4 mb-3">
+                            <div class="form-group">
+                                <label for="cbNivelServicio" class="form-label">NIVEL DE SERVICIO: <span class="text-danger">*</span></label>
+                                <div id="cbNivelServicio"></div>
+                            </div>
+                        </div>
+                        <!-- Campo: Cliente que Reporta -->
+                        <div class="col-6 mb-3">
+                            <div class="form-group">
+                                <label for="cbClienteReporte" class="form-label">CLIENTE QUE REPORTA: <span class="text-danger">*</span></label>
+                                <div class="w-100" id="cbClienteReporte"></div>
+                            </div>
+                        </div>
+                        <!-- Campo: Usuario interno Involucrado -->
+                        <div class="col-6 mb-3">
+                            <div class="form-group">
+                                <label for="cbUsuarioInvolucrado" class="form-label">USUARIO INVOLUCRADO: <span class="text-danger">*</span></label>
+                                <div class="w-100" id="cbUsuarioInvolucrado"></div>
+                            </div>
+                        </div>
+                        <!-- Campo: Archivo -->
+                        <div class="col-12 mb-3">
+                            <label class="fw-bold mb-2" style="font-size: 1rem;">Subir archivo:</label>
+                            <input class="form-control" id="InpArchivoExt" name="InpArchivoExt" type="file"
+                                   accept=".png,.jpg,.jpeg,.gif,.pdf,.doc,.docx" />
+                        </div>
+
+                        <!-- Previsualización del archivo -->
+                        <div class="col-12 mb-3">
+                            <div id="previewContainer" class="d-none border rounded p-1 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <div id="previewIcon" class="me-2" style="font-size: 3rem;"></div>
+                                    <img id="previewImage" src="" alt="Previsualización" class="img-thumbnail me-2 d-none"
+                                         style="max-width: 150px; max-height: 150px; object-fit: contain;">
+                                    <div>
+                                        <p id="fileName" class="mb-0 fw-bold"></p>
+                                        <small id="fileSize" class="text-muted"></small>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-link text-danger p-3" id="removePreview"
+                                        aria-label="Eliminar previsualización">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- ================================================================================================= -->
+<!-- ======================================= Header de Soporte ======================================= -->
+<!-- ================================================================================================= -->
+
+<div class="kanban-container scrollbar" data-kanban-container="data-kanban-container">
+    <div class="kanban-column scrollbar collapsed">
+        <div class="kanban-column-header px-4 hover-actions-trigger">
+            <div class="d-flex align-items-center border-bottom border-3 py-3 border-warning">
+                <h5 class="mb-0 kanban-column-title">Unassaigned<span class="kanban-title-badge">3</span></h5>
+                <div class="hover-actions-trigger">
+                    <button class="btn btn-sm btn-phoenix-default kanban-header-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
+                    <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                        <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort all tasks</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move all tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Remove all tasks</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Import</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Export</span><span class="fas fa-angle-right fs--2"></span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move column</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Delete column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Archive column</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit title &amp; description</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit colour</span><span class="fas fa-angle-right fs--2"></span></a>
+                    </div>
+                </div><span class="uil uil-left-arrow-to-left fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span><span class="uil uil-arrow-from-right fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span>
+            </div>
+        </div>
+        <div class="kanban-items-container" data-sortable="data-sortable">
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-primary" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-primary"><span>Feature</span><span class="ms-1 d-inline-block fas fa-check-double" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Develop a new feature for the phoenix mobile app</p>
+                        <div class="d-flex mt-2 align-items-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-danger" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span>Bug</span><span class="ms-1 d-inline-block fas fa-bug" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Conduct user research to gather feedback on the latest product iteration</p>
+                        <div class="d-flex mt-2 align-items-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-warning" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span>Issue</span><span class="ms-1 d-inline-block fa-solid fa-triangle-exclamation" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Review and approve marketing materials for the upcoming product launch</p>
+                        <div class="d-flex mt-2 align-items-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-3 px-4 kanban-add-task">
+            <button class="btn bg-sm bg-300 me-2 px-0" data-bs-toggle="modal" data-bs-target="#kanbanAddTask"><span class="fas fa-plus text-white dark__text-400" data-fa-transform="grow-4 down-1"></span></button>
+            <input class="form-control search-input rounded-3 px-3" placeholder="Add new task" />
+        </div>
+    </div>
+    <div class="kanban-column scrollbar">
+        <div class="kanban-column-header px-4 hover-actions-trigger">
+            <div class="d-flex align-items-center border-bottom border-3 py-3 border-300">
+                <h5 class="mb-0 kanban-column-title">To do<span class="kanban-title-badge">2</span></h5>
+                <div class="hover-actions-trigger">
+                    <button class="btn btn-sm btn-phoenix-default kanban-header-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
+                    <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                        <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort all tasks</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move all tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Remove all tasks</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Import</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Export</span><span class="fas fa-angle-right fs--2"></span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move column</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Delete column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Archive column</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit title &amp; description</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit colour</span><span class="fas fa-angle-right fs--2"></span></a>
+                    </div>
+                </div><span class="uil uil-left-arrow-to-left fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span><span class="uil uil-arrow-from-right fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span>
+            </div>
+        </div>
+        <div class="kanban-items-container" data-sortable="data-sortable">
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="position-relative mb-2 overflow-hidden rounded" style="height:200px; width:100%;">
+                            <div class="bg-holder" style="background-image:url('@Url.Content("~/lib/dashboard/assets/img/kanban/1.jpg")'); background-size: cover;">
+                            </div>
+                            <!--/.bg-holder-->
+                        </div>
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-danger" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span>Bug</span><span class="ms-1 d-inline-block fas fa-bug" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Test and debug code for the e-commerce website checkout process</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa-solid fa-paperclip fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>15</p>
+                            <div class="avatar-group ms-auto">
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/30.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/57.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/25.webp" alt="" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-warning" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span>Issue</span><span class="ms-1 d-inline-block fa-solid fa-triangle-exclamation" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Write a blog post on industry trends and best practices</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1 me-3 white-space-nowrap"><span class="fa-solid fa-calendar-xmark fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>Jan 25</p>
+                            <div class="avatar-group ms-auto">
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/30.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/57.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/25.webp" alt="" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-3 px-4 kanban-add-task">
+            <button class="btn bg-sm bg-300 me-2 px-0" data-bs-toggle="modal" data-bs-target="#kanbanAddTask"><span class="fas fa-plus text-white dark__text-400" data-fa-transform="grow-4 down-1"></span></button>
+            <input class="form-control search-input rounded-3 px-3" placeholder="Add new task" />
+        </div>
+    </div>
+    <div class="kanban-column scrollbar">
+        <div class="kanban-column-header px-4 hover-actions-trigger">
+            <div class="d-flex align-items-center border-bottom border-3 py-3 border-primary">
+                <h5 class="mb-0 kanban-column-title">Doing<span class="kanban-title-badge">4</span></h5>
+                <div class="hover-actions-trigger">
+                    <button class="btn btn-sm btn-phoenix-default kanban-header-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
+                    <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                        <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort all tasks</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move all tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Remove all tasks</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Import</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Export</span><span class="fas fa-angle-right fs--2"></span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move column</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Delete column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Archive column</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit title &amp; description</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit colour</span><span class="fas fa-angle-right fs--2"></span></a>
+                    </div>
+                </div><span class="uil uil-left-arrow-to-left fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span><span class="uil uil-arrow-from-right fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span>
+            </div>
+        </div>
+        <div class="kanban-items-container" data-sortable="data-sortable">
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-danger" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span>Bug</span><span class="ms-1 d-inline-block fas fa-bug" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Create wireframes for a new phoenix landing page design</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1 me-3 white-space-nowrap"><span class="fa-solid fa-calendar-xmark fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>Jan 25</p>
+                            <div class="avatar-group ms-auto">
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/57.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <div class="avatar-name rounded-circle text-warning bg-soft-warning"><span>R</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-secondary" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span>Undefined</span><span class="ms-1 d-inline-block fas fa-spinner" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Set up and configure a new software tool for the marketing team</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa fa-check-square fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>5/34</p>
+                            <div class="avatar-group ms-auto">
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/25.webp" alt="" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-primary" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-primary"><span>Feature</span><span class="ms-1 d-inline-block fas fa-check-double" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Draft and send a press release to announce a new partnership</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1 me-3 white-space-nowrap"><span class="fa-solid fa-calendar-xmark fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>Jan 25</p>
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa-solid fa-paperclip fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>15</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="position-relative mb-2 overflow-hidden rounded" style="height:200px; width:100%;">
+                            <div class="bg-holder" style="background-image:url('@Url.Content("~/lib/dashboard/assets/img/kanban/glass.jpg")'); background-size: cover;">
+                            </div>
+                            <!--/.bg-holder-->
+                        </div>
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-warning" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span>Issue</span><span class="ms-1 d-inline-block fa-solid fa-triangle-exclamation" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Conduct a security audit of the phoenix web applications</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1 me-3 white-space-nowrap"><span class="fa-solid fa-calendar-xmark fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>Jan 25</p>
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa-solid fa-paperclip fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>15</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-3 px-4 kanban-add-task">
+            <button class="btn bg-sm bg-300 me-2 px-0" data-bs-toggle="modal" data-bs-target="#kanbanAddTask"><span class="fas fa-plus text-white dark__text-400" data-fa-transform="grow-4 down-1"></span></button>
+            <input class="form-control search-input rounded-3 px-3" placeholder="Add new task" />
+        </div>
+    </div>
+    <div class="kanban-column scrollbar">
+        <div class="kanban-column-header px-4 hover-actions-trigger">
+            <div class="d-flex align-items-center border-bottom border-3 py-3 border-info">
+                <h5 class="mb-0 kanban-column-title">Review<span class="kanban-title-badge">4</span></h5>
+                <div class="hover-actions-trigger">
+                    <button class="btn btn-sm btn-phoenix-default kanban-header-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
+                    <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                        <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort all tasks</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move all tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Remove all tasks</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Import</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Export</span><span class="fas fa-angle-right fs--2"></span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move column</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Delete column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Archive column</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit title &amp; description</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit colour</span><span class="fas fa-angle-right fs--2"></span></a>
+                    </div>
+                </div><span class="uil uil-left-arrow-to-left fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span><span class="uil uil-arrow-from-right fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span>
+            </div>
+        </div>
+        <div class="kanban-items-container" data-sortable="data-sortable">
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-warning" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span>Issue</span><span class="ms-1 d-inline-block fa-solid fa-triangle-exclamation" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Design and develop a new logo for the phoenix</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa-solid fa-paperclip fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>15</p>
+                            <div class="avatar-group ms-auto">
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/57.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/25.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/30.webp" alt="" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-warning" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span>Issue</span><span class="ms-1 d-inline-block fa-solid fa-triangle-exclamation" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Create a fresh visual identity for Phoenix with a new logo design</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa fa-check-square fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>5/34</p>
+                            <div class="avatar-group ms-auto">
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/25.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/57.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/30.webp" alt="" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-secondary" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span>Undefined</span><span class="ms-1 d-inline-block fas fa-spinner" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Identify best software vendors for company-wide system through comprehensive research and evaluation</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa-solid fa-paperclip fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>15</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="position-relative mb-2 overflow-hidden rounded" style="height:200px; width:100%;">
+                            <div class="bg-holder" style="background-image:url('@Url.Content("~/lib/dashboard/assets/img/kanban/wall.jpg")'); background-size: cover;">
+                            </div>
+                            <!--/.bg-holder-->
+                        </div>
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-primary" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-primary"><span>Feature</span><span class="ms-1 d-inline-block fas fa-check-double" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Write and edit copy for a new email marketing campaign</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa-solid fa-paperclip fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>15</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-3 px-4 kanban-add-task">
+            <button class="btn bg-sm bg-300 me-2 px-0" data-bs-toggle="modal" data-bs-target="#kanbanAddTask"><span class="fas fa-plus text-white dark__text-400" data-fa-transform="grow-4 down-1"></span></button>
+            <input class="form-control search-input rounded-3 px-3" placeholder="Add new task" />
+        </div>
+    </div>
+    <div class="kanban-column scrollbar">
+        <div class="kanban-column-header px-4 hover-actions-trigger">
+            <div class="d-flex align-items-center border-bottom border-3 py-3 border-success">
+                <h5 class="mb-0 kanban-column-title">Release<span class="kanban-title-badge">3</span></h5>
+                <div class="hover-actions-trigger">
+                    <button class="btn btn-sm btn-phoenix-default kanban-header-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
+                    <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                        <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Sort all tasks</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move all tasks</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Remove all tasks</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Import</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Export</span><span class="fas fa-angle-right fs--2"></span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move column</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Delete column</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Archive column</span></a>
+                        <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit title &amp; description</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Edit colour</span><span class="fas fa-angle-right fs--2"></span></a>
+                    </div>
+                </div><span class="uil uil-left-arrow-to-left fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span><span class="uil uil-arrow-from-right fs-0 ms-auto kanban-collapse-icon" data-kanban-collapse="data-kanban-collapse"></span>
+            </div>
+        </div>
+        <div class="kanban-items-container" data-sortable="data-sortable">
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-primary" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-primary"><span>Feature</span><span class="ms-1 d-inline-block fas fa-check-double" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Improve Phoenix website usability through user testing</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa-solid fa-paperclip fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>15</p>
+                            <div class="avatar-group ms-auto">
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/57.webp" alt="" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="position-relative mb-2 overflow-hidden rounded" style="height:200px; width:100%;">
+                            <div class="bg-holder" style="background-image:url('@Url.Content("~/lib/dashboard/assets/img/kanban/home.jpg")'); background-size: cover;">
+                            </div>
+                            <!--/.bg-holder-->
+                        </div>
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-danger" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span>Bug</span><span class="ms-1 d-inline-block fas fa-bug" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Develop and deliver a training program for new employees</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa-solid fa-paperclip fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>15</p>
+                            <div class="avatar-group ms-auto">
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/57.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/25.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/30.webp" alt="" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sortable-item-wrapper border-bottom px-2 py-2">
+                <div class="card sortable-item hover-actions-trigger">
+                    <div class="card-body py-3 px-3">
+                        <div class="kanban-status mb-1 position-relative lh-1">
+                            <span class="fa fa-circle me-2 d-inline-block text-secondary" style="min-width:1rem" data-fa-transform="shrink-1 down-3"></span><span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span>Undefined</span><span class="ms-1 d-inline-block fas fa-spinner" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span>
+                            <div class="font-sans-serif">
+                                <button class="btn btn-sm btn-phoenix-default kanban-item-dropdown-btn hover-actions" type="button" data-boundary="viewport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fa-rotate-90" data-fa-transform="shrink-2"></span></button>
+                                <div class="dropdown-menu dropdown-menu-end py-2" style="width: 15rem;">
+                                    <a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Duplicate</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to top</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Jump to bottom</span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Print/Download</span></a><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Share</span><span class="fas fa-angle-right fs--2"></span></a>
+                                    <hr class="my-2" /><a class="dropdown-item d-flex flex-between-center border-1 undefined" href="#!"><span>Move to archive</span><span class="fas fa-angle-right fs--2"></span></a><a class="dropdown-item d-flex flex-between-center border-1 text-danger" href="#!"><span>Delete</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 stretched-link" data-bs-toggle="modal" data-bs-target="#KanbanItemDetailsModal">Organize and lead a brainstorming session to generate new product ideas</p>
+                        <div class="d-flex mt-2 align-items-center">
+                            <p class="mb-0 text-600 fs--1 lh-1"><span class="fa-solid fa-paperclip fs--1 me-2 d-inline-block" style="min-width: 1rem;"></span>15</p>
+                            <div class="avatar-group ms-auto">
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/57.webp" alt="" />
+
+                                </div>
+                                <div class="avatar avatar-s  border border-white rounded-pill">
+                                    <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/25.webp" alt="" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-3 px-4 kanban-add-task">
+            <button class="btn bg-sm bg-300 me-2 px-0" data-bs-toggle="modal" data-bs-target="#kanbanAddTask"><span class="fas fa-plus text-white dark__text-400" data-fa-transform="grow-4 down-1"></span></button>
+            <input class="form-control search-input rounded-3 px-3" placeholder="Add new task" />
+        </div>
+    </div>
+    <div class="kanban-column scrollbar position-relative bg-transparent">
+        <div class="d-flex h-100 flex-center fw-bold hover-bg-100">
+            <a class="text-decoration-none stretched-link text-800" href="#!">
+                <div class="circle-btn bg-200 mx-auto"><span class="fas fa-plus" data-fa-transform="shrink-2"></span></div><span>Add another list</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ======================================= Header de Soporte ======================================= -->
+<!-- ================================================================================================= -->
+
+<div class="phoenix-offcanvas phoenix-offcanvas-end bg-100 position-fixed" tabindex="-1" id="offcanvasKanban" style="max-width: 445px">
+    <div class="offcanvas-header">
+        <h3 class="offcanvas-title">Phoenix Kanban</h3>
+        <button class="btn p-1 fw-bolder" type="button" data-phoenix-dismiss="offcanvas" aria-label="Close"><span class="fas fa-times fs-0"> </span></button>
+    </div>
+    <div class="offcanvas-body">
+        <h4 class="text-1000 fw-semi-bold mb-0 mt-6">Admins </h4>
+        <div class="d-flex align-items-center mt-3">
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <div class="avatar avatar-xl  me-3 border border-white rounded-pill">
+                        <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/14.webp" alt="" />
+
+                    </div>
+                </a>
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img//team/14.webp" alt="" /></div>
+                                <h6 class="text-white light">Sasha Blaus</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+            <div class="flex-1">
+                <a class="text-decoration-none text-1000 lh-1 fw-semi-bold" href="#!">Sasha Blaus</a>
+                <h6 class="mb-0 lh-1 text-1000 fw-semi-bold">potatogirl</h6>
+            </div>
+        </div>
+        <h4 class="text-1000 fw-semi-bold mb-0 mt-5 mb-3">
+            Members
+        </h4>
+        <div class="d-flex">
+            <div class="dropdown">
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(../../assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img/team/33.webp" alt="" /></div>
+                                <h6 class="text-white light">Tyrion Lannister</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <div class="avatar avatar-m  me-2 border border-white rounded-pill">
+                        <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/30.webp" alt="" />
+
+                    </div>
+                </a>
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img//team/30.webp" alt="" /></div>
+                                <h6 class="text-white light">Milind Mikuja</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <div class="avatar avatar-m  me-2 border border-white rounded-pill">
+                        <img class="rounded-circle " src="~/lib/dashboard/assets/img//team/31.webp" alt="" />
+
+                    </div>
+                </a>
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img//team/31.webp" alt="" /></div>
+                                <h6 class="text-white light">Stanly Drinkwater</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <div class="avatar avatar-m  me-2 border border-white rounded-pill">
+                        <img class="rounded-circle " src="~/lib/dashboard/assets/img//team/60.webp" alt="" />
+
+                    </div>
+                </a>
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img//team/60.webp" alt="" /></div>
+                                <h6 class="text-white light">Josef Stravinsky</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <div class="avatar avatar-m  me-2 border border-white rounded-pill">
+                        <img class="rounded-circle " src="~/lib/dashboard/assets/img//team/65.webp" alt="" />
+
+                    </div>
+                </a>
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img//team/65.webp" alt="" /></div>
+                                <h6 class="text-white light">Igor Borvibson</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+        </div>
+        <h4 class="text-1000 fw-semi-bold mb-0 mt-3 mb-3">
+            Guests
+        </h4>
+        <div class="d-flex">
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <div class="avatar avatar-m  me-2 border border-white rounded-pill">
+                        <img class="rounded-circle " src="~/lib/dashboard/assets/img//team/2.webp" alt="" />
+
+                    </div>
+                </a>
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img//team/2.webp" alt="" /></div>
+                                <h6 class="text-white light">Tyrion Lannister</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <div class="avatar avatar-m  me-2 border border-white rounded-pill">
+                        <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/3.webp" alt="" />
+
+                    </div>
+                </a>
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img//team/3.webp" alt="" /></div>
+                                <h6 class="text-white light">Milind Mikuja</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <div class="avatar avatar-m  me-2 border border-white rounded-pill">
+                        <img class="rounded-circle " src="~/lib/dashboard/assets/img//team/4.webp" alt="" />
+
+                    </div>
+                </a>
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img//team/4.webp" alt="" /></div>
+                                <h6 class="text-white light">Stanly Drinkwater</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                    <div class="avatar avatar-m  me-2 border border-white rounded-pill">
+                        <img class="rounded-circle " src="~/lib/dashboard/assets/img//team/5.webp" alt="" />
+
+                    </div>
+                </a>
+                <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                    <div class="position-relative">
+                        <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                        </div>
+                        <!--/.bg-holder-->
+
+                        <div class="p-3">
+                            <div class="text-end">
+                                <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                            </div>
+                            <div class="text-center">
+                                <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img//team/5.webp" alt="" /></div>
+                                <h6 class="text-white light">Josef Stravinsky</h6>
+                                <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                <div class="d-flex flex-center mb-3">
+                                    <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                    <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white">
+                        <div class="p-3 border-bottom">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                    <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                </div>
+                                <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                            </div>
+                        </div>
+                        <ul class="nav d-flex flex-column py-3 border-bottom">
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                            <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                </div>
+            </div>
+        </div>
+        <h4 class="text-1000 fw-semi-bold mb-0 mt-7 mb-3 border-bottom pb-3">Description <span class="fas fa-pencil text-900 fs--1 ms-3 cursor-pointer" data-fa-transform="up-2"></span></h4>
+        <p>Phoenix is a rich and complex symbol that continues to capture the imagination of people across cultures and time periods. Whether seen as a symbol of hope, renewal, or mystery, the Phoenix remains an enduring icon of the human spirit.</p>
+        <ul class="list-unstyled mb-0">
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3  border-bottom" href="#!"><span>Board Setting</span><span class="fas fa-angle-right fs--1 me-3"></span></a></li>
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3  border-bottom" href="#!"><span>Duplicate Board</span><span class="fas fa-angle-right fs--1 me-3"></span></a></li>
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3  border-bottom" href="#!"><span>Manage Labels</span><span class="fas fa-angle-right fs--1 me-3"></span></a></li>
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3  border-bottom" href="#!"><span>Go to Archive</span><span class="fas fa-angle-right fs--1 me-3"></span></a></li>
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3  border-bottom" href="#!"><span>Print</span><span class="fas fa-angle-right fs--1 me-3"></span></a></li>
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3  border-bottom" href="#!"><span>Export As</span><span class="fas fa-angle-right fs--1 me-3"></span></a></li>
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3  border-bottom" href="#!"><span>Integrations</span><span class="fas fa-angle-right fs--1 me-3"></span></a></li>
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3  border-bottom" href="#!"><span>Privacy Settings</span><span class="fas fa-angle-right fs--1 me-3"></span></a></li>
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3  border-bottom" href="#!"><span>Automation</span><span class="fas fa-angle-right fs--1 me-3"></span></a></li>
+            <li><a class="text-1000 fw-semi-bold text-decoration-none d-flex flex-between-center py-3 text-danger pb-0 pb-0" href="#!"><span>Leave Board</span></a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- ================================================================================================= -->
+<!-- ======================================= Header de Soporte ======================================= -->
+<!-- ================================================================================================= -->
+<div class="phoenix-offcanvas-backdrop" data-phoenix-backdrop="data-phoenix-backdrop"></div>
+
+<div class="support-chat-container">
+    <div class="container-fluid support-chat">
+        <div class="card bg-white">
+            <div class="card-header d-flex flex-between-center px-4 py-3 border-bottom">
+                <h5 class="mb-0 d-flex align-items-center gap-2">Demo widget<span class="fa-solid fa-circle text-success fs--3"></span></h5>
+                <div class="btn-reveal-trigger">
+                    <button class="btn btn-link p-0 dropdown-toggle dropdown-caret-none transition-none d-flex" type="button" id="support-chat-dropdown" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h text-900"></span></button>
+                    <div class="dropdown-menu dropdown-menu-end py-2" aria-labelledby="support-chat-dropdown"><a class="dropdown-item" href="#!">Request a callback</a><a class="dropdown-item" href="#!">Search in chat</a><a class="dropdown-item" href="#!">Show history</a><a class="dropdown-item" href="#!">Report to Admin</a><a class="dropdown-item btn-support-chat" href="#!">Close Support</a></div>
+                </div>
+            </div>
+            <div class="card-body chat p-0">
+                <div class="d-flex flex-column-reverse scrollbar h-100 p-3">
+                    <div class="text-end mt-6">
+                        <a class="mb-2 d-inline-flex align-items-center text-decoration-none text-1100 hover-bg-soft rounded-pill border border-primary py-2 ps-4 pe-3" href="#!">
+                            <p class="mb-0 fw-semi-bold fs--1">I need help with something</p><span class="fa-solid fa-paper-plane text-primary fs--1 ms-3"></span>
+                        </a><a class="mb-2 d-inline-flex align-items-center text-decoration-none text-1100 hover-bg-soft rounded-pill border border-primary py-2 ps-4 pe-3" href="#!">
+                            <p class="mb-0 fw-semi-bold fs--1">I can’t reorder a product I previously ordered</p><span class="fa-solid fa-paper-plane text-primary fs--1 ms-3"></span>
+                        </a><a class="mb-2 d-inline-flex align-items-center text-decoration-none text-1100 hover-bg-soft rounded-pill border border-primary py-2 ps-4 pe-3" href="#!">
+                            <p class="mb-0 fw-semi-bold fs--1">How do I place an order?</p><span class="fa-solid fa-paper-plane text-primary fs--1 ms-3"></span>
+                        </a><a class="false d-inline-flex align-items-center text-decoration-none text-1100 hover-bg-soft rounded-pill border border-primary py-2 ps-4 pe-3" href="#!">
+                            <p class="mb-0 fw-semi-bold fs--1">My payment method not working</p><span class="fa-solid fa-paper-plane text-primary fs--1 ms-3"></span>
+                        </a>
+                    </div>
+                    <div class="text-center mt-auto">
+                        <div class="avatar avatar-3xl status-online"><img class="rounded-circle border border-3 border-white" src="~/lib/dashboard/assets/img/team/30.webp" alt="" /></div>
+                        <h5 class="mt-2 mb-3">Eric</h5>
+                        <p class="text-center text-black mb-0">Ask us anything – we’ll get back to you here or by email within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center gap-2 border-top ps-3 pe-4 py-3">
+                <div class="d-flex align-items-center flex-1 gap-3 border rounded-pill px-4">
+                    <input class="form-control outline-none border-0 flex-1 fs--1 px-0" type="text" placeholder="Write message" />
+                    <label class="btn btn-link d-flex p-0 text-500 fs--1 border-0" for="supportChatPhotos"><span class="fa-solid fa-image"></span></label>
+                    <input class="d-none" type="file" accept="image/*" id="supportChatPhotos" />
+                    <label class="btn btn-link d-flex p-0 text-500 fs--1 border-0" for="supportChatAttachment"> <span class="fa-solid fa-paperclip"></span></label>
+                    <input class="d-none" type="file" id="supportChatAttachment" />
+                </div>
+                <button class="btn p-0 border-0 send-btn"><span class="fa-solid fa-paper-plane fs--1"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+<div class="modal fade" id="kanbanAddTask" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row gx-3 gy-4">
+                    <div class="col-sm-6 col-md-12">
+                        <div class="form-floating">
+                            <input class="form-control" id="kanbanTaskTitle" type="text" placeholder="title" value="" />
+                            <label for="kanbanTaskTitle">Title</label>
+                        </div>
+                    </div>
+                    <div class="col-12 gy-4">
+                        <div class="form-floating">
+                            <textarea class="form-control" id="floatingProjectDescription" placeholder="Leave a comment here" style="height: 128px"></textarea>
+                            <label for="floatingProjectDescription">ADD A DESCRIPTION</label>
+                        </div>
+                    </div>
+                    <div class="col-12 gy-4">
+                        <div class="dropzone dropzone-multiple bg-transparent p-0" id="Kanbandropzone" data-dropzone="data-dropzone" data-options='{"url":"valid/url","maxFiles":1,"dictDefaultMessage":"Choose or Drop a file here"}'>
+                            <div class="fallback">
+                                <input type="file" name="file" />
+                            </div>
+                            <div class="dz-message py-3" data-dz-message="data-dz-message">
+                                <div class="dz-message-text text-center text-800"><img class="mb-2" src="~/lib/dashboard/assets/img/icons/image-icon.png" width="24" alt="" /><br />Add cover image </div>
+                            </div>
+                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                <div class="d-flex pb-3 border-bottom media px-2">
+                                    <div class="border border-dashed border-300 p-2 rounded-2 me-2"><img class="rounded-2 dz-image" src="~/lib/dashboard/assets/img/icons/file.png" alt="..." data-dz-thumbnail="data-dz-thumbnail" /></div>
+                                    <div class="flex-1 d-flex flex-between-center">
+                                        <div>
+                                            <h6 data-dz-name="data-dz-name"></h6>
+                                            <div class="d-flex align-items-center">
+                                                <p class="mb-0 fs--1 text-400 lh-1" data-dz-size="data-dz-size"></p>
+                                                <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress=""></span></div>
+                                            </div><span class="fs--2 text-danger" data-dz-errormessage="data-dz-errormessage"></span>
+                                        </div>
+                                        <div class="dropdown font-sans-serif">
+                                            <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal dropdown-caret-none" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-end border py-2"><a class="dropdown-item" href="#!" data-dz-remove="data-dz-remove">Remove File</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-floating">
+                            <select class="form-select" id="TaskType">
+                                <option selected="selected">Phoenix</option>
+                                <option value="2">Boreas</option>
+                                <option value="3">Erebus</option>
+                            </select>
+                            <label for="TaskType">BORAD TYPE</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-floating">
+                            <select class="form-select" id="KanbanColumnType">
+                                <option selected="selected">Unassigned</option>
+                                <option value="2">To do</option>
+                                <option value="3">Doing</option>
+                                <option value="3">Review</option>
+                                <option value="3">Release</option>
+                            </select>
+                            <label for="KanbanColumnType">COLUMN</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-floating">
+                            <select class="form-select" id="KanbanPlaceNumber">
+                                <option selected="selected">01</option>
+                                <option value="2">02</option>
+                                <option value="3">03</option>
+                            </select>
+                            <label for="KanbanPlaceNumber">PLACE</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-floating">
+                            <select class="form-select" id="KanbanAssignedMember">
+                                <option selected="selected" value="1">Unassigned (Default)</option>
+                                <option value="2">Richard Dawkins</option>
+                                <option value="3">Ashley Garrett</option>
+                                <option value="4">Barbara Lucas</option>
+                                <option value="5">Woodrow Burton</option>
+                            </select>
+                            <label for="KanbanAssignedMember">ASSIGNED TO</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-floating">
+                            <select class="form-select" id="KanbanPriorityLavel">
+                                <option selected="selected">Low (Default)</option>
+                                <option value="2">High</option>
+                                <option value="2">Medium</option>
+                                <option value="2">Urgent</option>
+                            </select>
+                            <label for="KanbanPriorityLavel">PRIORITY</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-floating">
+                            <select class="form-select" id="KanbanCategoryType">
+                                <option selected="selected">UNASSIGNED (Default)</option>
+                                <option value="2">Feature</option>
+                                <option value="2">Bug</option>
+                                <option value="2">Issue</option>
+                            </select>
+                            <label for="KanbanCategoryType">CATEGORY</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs--2 me-1" data-fa-transform="up-1"></span>Close</button>
+                <button class="btn btn-primary px-6" type="button" data-bs-dismiss="modal">Done</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="KanbanItemDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-md-down modal-md modal-dialog-centered">
+        <div class="modal-content overflow-hidden">
+            <div class="modal-body p-0">
+                <div class="position-relative" style="height:200px; width:100%;">
+                    <div class="bg-holder" style="background-image:url('@Url.Content("~/lib/dashboard/assets/img/kanban/modal-bg.jpg")'); background-size: cover;">
+                    </div>
+                    <!--/.bg-holder-->
+                </div>
+                <div class="row gy-4 py-0 gx-0">
+                    <div class="col-lg-8 col-12">
+                        <div class="row mt-0 gy-4 pb-3 gx-0 px-3">
+                            <div class="col-4 col-sm-3">
+                                <h6 class="text-600 fw-bolder lh-sm mt-1">TITLE </h6>
+                            </div>
+                            <div class="col-8 col-sm-9">
+                                <h4 class="mb-0 text-1100 lh-sm">Reproduced below for those interested</h4>
+                            </div>
+                            <div class="col-4 col-sm-3">
+                                <h6 class="text-600 fw-bolder lh-sm mt-1">DESCRIPTION </h6>
+                            </div>
+                            <div class="col-8 col-sm-9">
+                                <P class="fs--1 mb-0">Reproduced below for those interested" is a phrase used to provide additional content or details for individuals who have expressed interest in a particular topic. It signals that what follows is optional and caters specifically to those who want to delve deeper into the subject matter.</P>
+                            </div>
+                            <div class="col-4 col-sm-3">
+                                <h6 class="text-600 fw-bolder lh-sm mt-1">BOARD </h6>
+                            </div>
+                            <div class="col-8 col-sm-9">
+                                <P class="mb-0 text-1100 fw-semi-bold">Phoenix</P>
+                            </div>
+                            <div class="col-4 col-sm-3">
+                                <h6 class="text-600 fw-bolder lh-sm mt-1">COLUMN </h6>
+                            </div>
+                            <div class="col-8 col-sm-9">
+                                <P class="mb-0 text-1100 fw-semi-bold d-inline-block kanban-column-underline-warning">Doing</P>
+                            </div>
+                            <div class="col-4 col-sm-3">
+                                <h6 class="text-600 fw-bolder lh-sm mt-1">ASSAIGNED TO </h6>
+                            </div>
+                            <div class="col-8 col-sm-9">
+                                <div class="d-flex align-items-center">
+                                    <a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        <div class="avatar avatar-s  me-1">
+                                            <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/30.webp" alt="" />
+
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                                        <div class="position-relative">
+                                            <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                                            </div>
+                                            <!--/.bg-holder-->
+
+                                            <div class="p-3">
+                                                <div class="text-end">
+                                                    <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                                    <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img/team/30.webp" alt="" /></div>
+                                                    <h6 class="text-white light">Stanly Drinkwater</h6>
+                                                    <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                                    <div class="d-flex flex-center mb-3">
+                                                        <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                                        <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-white">
+                                            <div class="p-3 border-bottom">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="d-flex">
+                                                        <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                                        <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                                        <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                                    </div>
+                                                    <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                                                </div>
+                                            </div>
+                                            <ul class="nav d-flex flex-column py-3 border-bottom">
+                                                <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                                                <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                                    </div><a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        <div class="avatar avatar-s  me-1">
+                                            <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/60.webp" alt="" />
+
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                                        <div class="position-relative">
+                                            <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                                            </div>
+                                            <!--/.bg-holder-->
+
+                                            <div class="p-3">
+                                                <div class="text-end">
+                                                    <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                                    <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img/team/60.webp" alt="" /></div>
+                                                    <h6 class="text-white light">Emma Watson</h6>
+                                                    <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                                    <div class="d-flex flex-center mb-3">
+                                                        <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                                        <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-white">
+                                            <div class="p-3 border-bottom">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="d-flex">
+                                                        <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                                        <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                                        <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                                    </div>
+                                                    <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                                                </div>
+                                            </div>
+                                            <ul class="nav d-flex flex-column py-3 border-bottom">
+                                                <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                                                <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                                    </div><a class="dropdown-toggle dropdown-caret-none d-inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        <div class="avatar avatar-s  me-1">
+                                            <img class="rounded-circle " src="~/lib/dashboard/assets/img/team/25.webp" alt="" />
+
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu avatar-dropdown-menu p-0 overflow-hidden" style="width: 320px;">
+                                        <div class="position-relative">
+                                            <div class="bg-holder z-index--1" style="background-image:url(~/lib/dashboard/assets/img/bg/bg-32.png);background-size: auto;">
+                                            </div>
+                                            <!--/.bg-holder-->
+
+                                            <div class="p-3">
+                                                <div class="text-end">
+                                                    <button class="btn p-0 me-2"><span class="fa-solid fa-user-plus text-white light"></span></button>
+                                                    <button class="btn p-0"><span class="fa-solid fa-ellipsis text-white light"></span></button>
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="avatar avatar-xl status-online position-relative me-2 me-sm-0 me-xl-2 mb-2"><img class="rounded-circle border border-white" src="~/lib/dashboard/assets/img/team/25.webp" alt="" /></div>
+                                                    <h6 class="text-white light">Igor Borvibson</h6>
+                                                    <p class="text-600 fw-semi-bold fs--2 mb-2">tyrion222</p>
+                                                    <div class="d-flex flex-center mb-3">
+                                                        <h6 class="text-white light mb-0">224 <span class="fw-normal text-300">connections</span></h6><span class="fa-solid fa-circle text-700 mx-1" data-fa-transform="shrink-10 up-2"></span>
+                                                        <h6 class="text-white light mb-0">23 <span class="fw-normal text-300">mutual</span></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bg-white">
+                                            <div class="p-3 border-bottom">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="d-flex">
+                                                        <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-phone"></span></button>
+                                                        <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg me-2"><span class="fa-solid fa-message"></span></button>
+                                                        <button class="btn btn-phoenix-secondary btn-icon btn-icon-lg"><span class="fa-solid fa-video"></span></button>
+                                                    </div>
+                                                    <button class="btn btn-phoenix-primary"><span class="fa-solid fa-envelope me-2"></span>Send Email</button>
+                                                </div>
+                                            </div>
+                                            <ul class="nav d-flex flex-column py-3 border-bottom">
+                                                <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900 d-inline-block" data-feather="clipboard"></span><span class="text-1000 flex-1">Assigned Projects</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                                                <li class="nav-item"><a class="nav-link px-3 d-flex flex-between-center" href="#!"> <span class="me-2 text-900" data-feather="pie-chart"></span><span class="text-1000 flex-1">View activiy</span><span class="fa-solid fa-chevron-right fs--3"></span></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="p-3 d-flex justify-content-between"><a class="btn btn-link p-0 text-decoration-none" href="#!">Details </a><a class="btn btn-link p-0 text-decoration-none text-danger" href="#!">Unassign </a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 col-sm-3">
+                                <h6 class="text-600 fw-bolder lh-sm mt-1">PRIORITY </h6>
+                            </div>
+                            <div class="col-8 col-sm-9">
+                                <P class="mb-0 text-1100 fw-semi-bold"><span class="fa fa-circle m text-warning" data-fa-transform="shrink-6 down-1"></span>High</P>
+                            </div>
+                            <div class="col-4 col-sm-3">
+                                <h6 class="text-600 fw-bolder lh-sm mt-1">CATEGORY </h6>
+                            </div>
+                            <div class="col-8 col-sm-9"><span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span>Bug</span><span class="ms-1 fas fa-bug item.icon" data-fa-transform="up-2" style="height:7.8px;width:7.8px;"></span></span></div>
+                            <div class="col-4 col-sm-3">
+                                <h6 class="text-600 fw-bolder lh-sm mt-1">ATTACHMENTS </h6>
+                            </div>
+                            <div class="col-8 col-sm-9">
+                                <div class="border-bottom d-flex flex-row pb-3">
+                                    <img class="rounded-3" src="~/lib/dashboard/assets/img/kanban/a1.jpg" width="64" height="64" alt="" />
+                                    <div class="flex-1 ms-3 d-flex flex-column">
+                                        <h5 class="lh-sm">Silly_sight_1.png</h5>
+                                        <p class="lh-1 fs--1 text-700 fw-medium mb-0">21st Decemver, 12:56 PM</p>
+                                        <div class="d-flex text-700 mt-auto"><span class="fas fa-comment me-3" data-fa-transform="shrink-4"></span><span class="fas fa-trash me-3" data-fa-transform="shrink-4"></span><span class="fas fa-pencil" data-fa-transform="shrink-4"></span></div>
+                                    </div>
+                                </div>
+                                <div class="border-bottom d-flex flex-row pb-3 mt-3">
+                                    <div class="border rounded-3 flex-center d-flex" style="width:64px; height: 64px">
+                                        <div class="fa-solid fa-file-zipper fa-2x text-400"></div>
+                                    </div>
+                                    <div class="flex-1 ms-3 d-flex flex-column">
+                                        <h5 class="lh-sm">All_images.zip</h5>
+                                        <p class="lh-1 fs--1 text-700 fw-medium mb-0">21st Decemver, 12:56 PM</p>
+                                        <div class="d-flex text-700 mt-auto"><span class="fas fa-comment me-3" data-fa-transform="shrink-4"></span><span class="fas fa-trash me-3" data-fa-transform="shrink-4"></span><span class="fas fa-pencil" data-fa-transform="shrink-4"></span></div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-link ps-0"><span class="fas fa-plus me-2" data-fa-transform="shrink-3"></span>Add an Attachment</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 border-start-lg">
+                        <div class="scrollbar" style="max-height: 667px;">
+                            <div class="px-3">
+                                <h5 class="mb-3 mt-4">Actions</h5>
+                                <ul class="nav flex-column flex-sm-row flex-lg-column list-unstyled">
+                                    <li class="kanban-action-item lh-sm nav-item me-2"><a class="nav-link text-1100 fw-semi-bold fs--1 stretched-link" href="#!"><span class="me-2 fa-solid fa-file-export"></span>Move</a></li>
+                                    <li class="kanban-action-item lh-sm nav-item me-2"><a class="nav-link text-1100 fw-semi-bold fs--1 stretched-link" href="#!"><span class="me-2 fa-solid fa-clone"></span>Duplicate</a></li>
+                                    <li class="kanban-action-item lh-sm nav-item me-2"><a class="nav-link text-1100 fw-semi-bold fs--1 stretched-link" href="#!"><span class="me-2 fa-solid fa-share-nodes"></span>Share</a></li>
+                                    <li class="kanban-action-item lh-sm nav-item me-2"><a class="nav-link text-1100 fw-semi-bold fs--1 stretched-link" href="#!"><span class="me-2 fa-solid fa-square-plus"></span>Create template</a></li>
+                                    <li class="kanban-action-item lh-sm nav-item me-2"><a class="nav-link text-1100 fw-semi-bold fs--1 stretched-link" href="#!"><span class="me-2 fa-solid fa-arrows-up-to-line"></span>Jump to top</a></li>
+                                    <li class="kanban-action-item lh-sm nav-item me-2"><a class="nav-link text-1100 fw-semi-bold fs--1 stretched-link" href="#!"><span class="me-2 fa-solid fa-box-archive"></span>Move to Archive</a></li>
+                                    <li class="kanban-action-item lh-sm nav-item me-2"><a class="nav-link text-1100 fw-semi-bold fs--1 stretched-link" href="#!"><span class="me-2 fa-solid fa-trash-can"></span>Move to Trash</a></li>
+                                    <li class="kanban-action-item lh-sm nav-item me-2"><a class="nav-link text-1100 fw-semi-bold fs--1 stretched-link" href="#!"><span class="me-2 fa-solid fa-download"></span>Print/Download</a></li>
+                                </ul>
+                                <h5 class="mt-6">Activities</h5>
+                                <div class="d-flex border-bottom ">
+                                    <div class="pt-3 text-warning"><span class="border rounded-pill p-1 fas fa-random" data-fa-transform="shrink-4"></span></div>
+                                    <div class="activity-item ps-2 py-3">
+                                        <p class="mb-1 fs--1"><span class="fw-bold"> Alfen Loebe </span> Moved the task <a href="#!">"the standard chunk" </a>from <span class="fw-bold">Doing</span> to <span class="fw-bold">To Do</span></p>
+                                        <div class="d-flex">
+                                            <p class="mb-0 fs--1 me-3"> <span class="fa-regular fa-clock me-1"></span>10:41 AM</p>
+                                            <p class="mb-0 fs--1">Aughst 7,2022</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex border-bottom ">
+                                    <div class="pt-3 text-info"><span class="border rounded-pill p-1 fa-solid fa-paperclip" data-fa-transform="shrink-4"></span></div>
+                                    <div class="activity-item ps-2 py-3">
+                                        <p class="mb-1 fs--1"><span class="fw-bold"> Jessie Samson </span> Attached image3.png to the task <a href="#!">"the standard chunk" </a></p>
+                                        <div class="d-flex">
+                                            <p class="mb-0 fs--1 me-3"> <span class="fa-regular fa-clock me-1"></span>10:41 AM</p>
+                                            <p class="mb-0 fs--1">Aughst 7,2022</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex border-bottom ">
+                                    <div class="pt-3 text-info"><span class="border rounded-pill p-1 fas fa-plus" data-fa-transform="shrink-4"></span></div>
+                                    <div class="activity-item ps-2 py-3">
+                                        <p class="mb-1 fs--1"><span class="fw-bold"> Alfen Loebe </span> Moved the task <a href="#!">"the standard chunk" </a>from <span class="fw-bold">Doing</span> to <span class="fw-bold">To Do</span></p>
+                                        <div class="d-flex">
+                                            <p class="mb-0 fs--1 me-3"> <span class="fa-regular fa-clock me-1"></span>10:41 AM</p>
+                                            <p class="mb-0 fs--1">Aughst 7,2022</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex  ">
+                                    <div class="pt-3 text-primary"><span class="border rounded-pill p-1 fas fa-random" data-fa-transform="shrink-4"></span></div>
+                                    <div class="activity-item ps-2 py-3">
+                                        <p class="mb-1 fs--1"><span class="fw-bold"> Alfen Loebe </span> Moved the task <a href="#!">"the standard chunk" </a>from <span class="fw-bold">Doing</span> to <span class="fw-bold">To Do</span></p>
+                                        <div class="d-flex">
+                                            <p class="mb-0 fs--1 me-3"> <span class="fa-regular fa-clock me-1"></span>10:41 AM</p>
+                                            <p class="mb-0 fs--1">Aughst 7,2022</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close"><span class="fas fa-times fs--2 me-1" data-fa-transform="up-1"></span>Close</button>
+                <button class="btn btn-phoenix-primary px-6" type="button" data-bs-target="#kanbanAddTask" data-bs-toggle="modal">Edit<span class="fas fa-edit ms-2" data-fa-transform="shrink-3"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        
+        // Inicializar el AutoComplete con los datos obtenidos
+        var cbIdEmpresa = new wijmo.input.AutoComplete('#cbCliente', {
+            displayMemberPath: 'Cliente', selectedValuePath: 'Id', itemsSource: [],  selectedValue: -1
+        });
+
+        var cbIdPuesto = new wijmo.input.AutoComplete('#cbSistema', {
+            displayMemberPath: 'Sistema', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+        var cbIdPuesto = new wijmo.input.AutoComplete('#cbModulo', {
+            displayMemberPath: 'Modulo', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+        var cbIdEmpresa = new wijmo.input.AutoComplete('#cbEstatusSoporte', {
+            displayMemberPath: 'EstatusSoporte', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+        var cbIdPuesto = new wijmo.input.AutoComplete('#cbTipoSoporte', {
+            displayMemberPath: 'TipoSoporte', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+        var cbIdPuesto = new wijmo.input.AutoComplete('#cbNivelServicio', {
+            displayMemberPath: 'NivelServicio', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+        var cbIdEmpresa = new wijmo.input.AutoComplete('#cbClienteReporte', {
+            displayMemberPath: 'ClienteReporte', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+        var cbIdEmpresa = new wijmo.input.AutoComplete('#cbUsuarioInvolucrado', {
+            displayMemberPath: 'UsuarioInvolucrado', selectedValuePath: 'Id', itemsSource: [], selectedValue: -1
+        });
+
+
+        var phoenixIsRTL = window.config.config.phoenixIsRTL;
+        if (phoenixIsRTL) {
+            $('#style-default, #user-style-default').attr('disabled', true);
+            $('html').attr('dir', 'rtl');
+        } else {
+            $('#style-rtl, #user-style-rtl').attr('disabled', true);
+        }
+
+        var navbarTopStyle = window.config.config.phoenixNavbarTopStyle;
+        var navbarTop = $('.navbar-top');
+        if (navbarTopStyle === 'darker') {
+            navbarTop.addClass('navbar-darker');
+        }
+
+        var navbarVerticalStyle = window.config.config.phoenixNavbarVerticalStyle;
+        var navbarVertical = $('.navbar-vertical');
+        if (navbarVertical.length && navbarVerticalStyle === 'darker') {
+            navbarVertical.addClass('navbar-darker');
+        }
+
+        $(document).ready(function () {
+            // Función para ejecutar comandos de formato
+            function execCommand(command, value = null) {
+                document.execCommand(command, false, value);
+            }
+
+            // Asignar eventos a los botones de la barra de herramientas
+            $(".editor-toolbar button").on("click", function () {
+                const command = $(this).data("command");
+                execCommand(command);
+            });
+
+            $('#InpArchivoExt').on('change', function (event) {
+                const file = event.target.files[0]; // Obtiene el archivo seleccionado.
+                if (file) {
+                    const fileType = file.type;
+                    const fileName = file.name;
+                    const fileSize = (file.size / 1024).toFixed(2) + ' KB';
+                    const reader = new FileReader();
+
+                    $('#fileName').text(fileName);
+                    $('#fileSize').text(fileSize);
+                    $('#previewContainer').removeClass('d-none');
+
+                    if (fileType.startsWith('image/')) {
+                        // Si es una imagen, mostrarla
+                        reader.onload = function (e) {
+                            $('#previewImage').attr('src', e.target.result).removeClass('d-none');
+                            $('#previewIcon').addClass('d-none'); // Oculta el icono
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        // Si es un documento, mostrar un icono
+                        $('#previewImage').addClass('d-none'); // Oculta la imagen
+
+                        if (fileName.endsWith('.pdf')) {
+                            $('#previewIcon').html('<i class="fas fa-file-pdf text-danger p-3"></i>').removeClass('d-none');
+                        } else if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) {
+                            $('#previewIcon').html('<i class="fas fa-file-word text-primary p-3"></i>').removeClass('d-none');
+                        } else {
+                            $('#previewIcon').html('<i class="fas fa-file text-secondary"></i>').removeClass('d-none');
+                        }
+                    }
+                }
+            });
+
+            // Evento para eliminar la previsualización del archivo
+            $('#removePreview').on('click', function () {
+                $('#previewImage').attr('src', '').addClass('d-none'); // Limpia la imagen y la oculta
+                $('#previewIcon').html('').addClass('d-none'); // Oculta el icono
+                $('#fileName').text(''); // Limpia el nombre del archivo
+                $('#fileSize').text(''); // Limpia el tamaño del archivo
+                $('#previewContainer').addClass('d-none'); // Oculta el contenedor de previsualización
+                $('#InpArchivoExt').val(''); // Limpia el input de archivo
+            });
+
+            // Evento para limpiar el formulario al cerrar el modal
+            $('#agregarSoporteModal').on('hidden.bs.modal', function () {
+                $('#FormAgregarSoporte')[0].reset();
+                $('#FormAgregarSoporte').validate().resetForm();
+                $('#previewImage').attr('src', '').addClass('d-none');
+                $('#previewIcon').html('').addClass('d-none');
+                $('#fileName').text('');
+                $('#fileSize').text('');
+                $('#previewContainer').addClass('d-none');
+
+                // Restablecer el selectedValue del componente Wijmo cbCliente a -1
+                if (cbCliente && cbCliente.selectedValue !== undefined) {
+                    cbCliente.selectedValue = -1;
+                }
+
+                // Restablecer el selectedValue del componente Wijmo cbSistema a -1
+                if (cbSistema && cbSistema.selectedValue !== undefined) {
+                    cbSistema.selectedValue = -1;
+                }
+
+                // Restablecer el selectedValue del componente Wijmo cbModulo a -1
+                if (cbModulo && cbModulo.selectedValue !== undefined) {
+                    cbModulo.selectedValue = -1;
+                }
+
+                // Restablecer el selectedValue del componente Wijmo cbEstatusSoporte a -1
+                if (cbEstatusSoporte && cbEstatusSoporte.selectedValue !== undefined) {
+                    cbEstatusSoporte.selectedValue = -1;
+                }
+
+                // Restablecer el selectedValue del componente Wijmo cbTipoSoporte a -1
+                if (cbTipoSoporte && cbTipoSoporte.selectedValue !== undefined) {
+                    cbTipoSoporte.selectedValue = -1;
+                }
+
+                // Restablecer el selectedValue del componente Wijmo cbNivelServicio a -1
+                if (cbNivelServicio && cbNivelServicio.selectedValue !== undefined) {
+                    cbNivelServicio.selectedValue = -1;
+                }
+
+                // Restablecer el selectedValue del componente Wijmo cbClienteReporte a -1
+                if (cbClienteReporte && cbClienteReporte.selectedValue !== undefined) {
+                    cbClienteReporte.selectedValue = -1;
+                }
+
+                // Restablecer el selectedValue del componente Wijmo cbUsuarioInvolucrado a -1
+                if (cbUsuarioInvolucrado && cbUsuarioInvolucrado.selectedValue !== undefined) {
+                    cbUsuarioInvolucrado.selectedValue = -1;
+                } // Aquí se cierra el último bloque if
+            });
+        });
+    </script>
+}

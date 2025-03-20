@@ -341,6 +341,36 @@
         $(document).ready(function () {
 
             //============================================================================================================================\\
+            //================================================  Validaciones de los Inputs  ===============================================\\
+            //==============================================================================================================================\\
+
+            $("#InpModuloSistemasDescripcion, #InpModuloSistemasDescripcionEdit").on("input", function () {
+                $(this).val(
+                    $(this).val()
+                        .replace(/[^a-zA-Z0-9\-,.&() ]/g, "") // Permite solo los caracteres especificados
+                        .replace(/\.{2,}/g, ".") // Evita dos o más puntos juntos
+                        .replace(/\-{2,}/g, "-") // Evita dos o más guiones juntos
+                        .replace(/,{2,}/g, ",") // Evita dos o más comas juntas
+                        .replace(/\({2,}/g, "(") // Evita dos o más paréntesis de apertura juntos
+                        .replace(/\){2,}/g, ")") // Evita dos o más paréntesis de cierre juntos
+                        .replace(/&{2,}/g, "&") // Evita dos o más ampersands juntos
+                );
+            });
+
+            $("#InpDetalles, #InpDetallesEdit").on("input", function () {
+                $(this).val(
+                    $(this).val()
+                        .replace(/[^a-zA-Z0-9\-,.&() ]/g, "") // Permite solo los caracteres especificados
+                        .replace(/\.{2,}/g, ".") // Evita dos o más puntos juntos
+                        .replace(/\-{2,}/g, "-") // Evita dos o más guiones juntos
+                        .replace(/,{2,}/g, ",") // Evita dos o más comas juntas
+                        .replace(/\({2,}/g, "(") // Evita dos o más paréntesis de apertura juntos
+                        .replace(/\){2,}/g, ")") // Evita dos o más paréntesis de cierre juntos
+                        .replace(/&{2,}/g, "&") // Evita dos o más ampersands juntos
+                );
+            });
+
+            //============================================================================================================================\\
             //==========================================               GRID Principal                ======================================\\
             //==============================================================================================================================\\
             // Inicializa la grilla antes de llamar a verModuloSistemas()
@@ -352,8 +382,8 @@
                 columns: [
                     { binding: '', header: '#', width: 50, align: 'center' },
                     { binding: 'moduloSistemaDescripcion', header: 'Módulos', width: '*', align: 'center' },
-                    { binding: 'idSistema', header: 'Sistema', width: '*', align: 'center' },
                     { binding: 'detalles', header: 'Detalles', width: '*', align: 'center' },
+                    { binding: 'idSistema', header: 'Sistema', width: '*', align: 'center' },
                     { header: '', isReadOnly: true, width: 80, align: 'center' }
                 ],
                 isReadOnly: true,
@@ -409,8 +439,10 @@
                     const term = request.term.toLowerCase(); // Obtiene el término de búsqueda.
                     const ModuloSistemas = GridModuloSistemas.itemsSource; // Obtiene la lista de ModuloSistemas.
                     const resultados = ModuloSistemas.filter(modulosistema =>
-                        modulosistema.moduloSistemaDescripcion.toLowerCase().includes(term)
-                    );
+                        modulosistema.moduloSistemaDescripcion.toLowerCase().includes(term) ||
+                        modulosistema.detalles.toLowerCase().includes(term) ||
+                        modulosistema.descripcion.toLowerCase().includes(term)
+                    ).slice(0, 5);
                     response(resultados.map(modulosistema => ({
                         label: `${modulosistema.moduloSistemaDescripcion}`, // Muestra la descripción y tipo.
                         value: modulosistema.moduloSistemaDescripcion // Asigna el ID del puesto como valor.
@@ -430,8 +462,10 @@
                 const term = $('#inputBusqueda').val().toLowerCase(); // Obtiene el término de búsqueda.
                 const ModuloSistemas = GridModuloSistemas.itemsSource; // Obtiene la lista de ModuloSistemas.
                 const resultados = ModuloSistemas.filter(modulosistema =>
-                    modulosistema.moduloSistemaDescripcion.toLowerCase().includes(term)
-                );
+                    modulosistema.moduloSistemaDescripcion.toLowerCase().includes(term) ||
+                    modulosistema.detalles.toLowerCase().includes(term) ||
+                    modulosistema.descripcion.toLowerCase().includes(term) 
+                ).slice(0, 5);
 
                 if (resultados.length > 0) {
                     GridModuloSistemas.itemsSource = resultados; // Filtra la grilla para mostrar los resultados.
