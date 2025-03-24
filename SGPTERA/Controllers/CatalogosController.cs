@@ -232,7 +232,7 @@ namespace SGPTERA.Controllers
         public async Task<RespuestaJson> AgregarUsuario(Usuarios usuarios)
         {
             usuarios.IdUsuarioSet = int.Parse(GetSessionValue("IdUsuario").ToString() ?? "");
-            return await new Catalogos(_dapperContext).AgregarUsuario(usuarios);
+            return await new Catalogos(_dapperContext).AgregarUsuario(usuarios, _env.WebRootPath);
         }
 
         [HttpPost]

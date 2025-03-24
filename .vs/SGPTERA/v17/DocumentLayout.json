@@ -3,16 +3,60 @@
   "WorkspaceRootPath": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\login\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\login\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracromcontroller\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|solutionrelative:teracromcontroller\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA48E4F5-7AB5-43E1-A25C-CA693D09CDFF}|TeracromDatabase\\TeracromDatabase.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracromdatabase\\dappercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CA48E4F5-7AB5-43E1-A25C-CA693D09CDFF}|TeracromDatabase\\TeracromDatabase.csproj|solutionrelative:teracromdatabase\\dappercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\sgptera.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\sgptera.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A45FEAFC-9A08-454C-AA96-0F132DED5B85}|TeracromModels\\TeracromModels.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracrommodels\\sgpmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A45FEAFC-9A08-454C-AA96-0F132DED5B85}|TeracromModels\\TeracromModels.csproj|solutionrelative:teracrommodels\\sgpmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\catalogos\\sistemas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\catalogos\\sistemas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracromcontroller\\catalogos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C609527A-79AF-4336-9D8A-C25A6B7AD335}|TeracromController\\TeracromController.csproj|solutionrelative:teracromcontroller\\catalogos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\catalogos\\clientes.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\catalogos\\clientes.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\controllers\\catalogoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\controllers\\catalogoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\soportes\\soporte.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\soportes\\soporte.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\controllers\\gestionproyectoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\controllers\\gestionproyectoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\catalogos\\usuarios.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\catalogos\\usuarios.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\catalogos\\clientesusuarios.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -25,10 +69,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\catalogos\\estatustareas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -51,20 +91,8 @@
       "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\catalogos\\modulosistemas.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\catalogos\\clientes.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\catalogos\\clientes.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\catalogos\\puestos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\catalogos\\puestos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\sgptera\\views\\catalogos\\usuarios.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B5F86754-8D54-4FB5-9948-E583E445D19E}|SGPTERA\\SGPTERA.csproj|solutionrelative:sgptera\\views\\catalogos\\usuarios.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A45FEAFC-9A08-454C-AA96-0F132DED5B85}|TeracromModels\\TeracromModels.csproj|c:\\users\\teracrom 10\\source\\repos\\sgptera\\teracrommodels\\sgpmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A45FEAFC-9A08-454C-AA96-0F132DED5B85}|TeracromModels\\TeracromModels.csproj|solutionrelative:teracrommodels\\sgpmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,49 +102,186 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Soporte.cshtml",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Soportes\\Soporte.cshtml",
-              "RelativeDocumentMoniker": "SGPTERA\\Views\\Soportes\\Soporte.cshtml",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Soportes\\Soporte.cshtml",
-              "RelativeToolTip": "SGPTERA\\Views\\Soportes\\Soporte.cshtml",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAANQGAABsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-19T17:38:12.033Z",
+              "DocumentIndex": 4,
+              "Title": "DapperContext.cs",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\DapperContext.cs",
+              "RelativeDocumentMoniker": "TeracromDatabase\\DapperContext.cs",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromDatabase\\DapperContext.cs",
+              "RelativeToolTip": "TeracromDatabase\\DapperContext.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAQwEMAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-24T17:09:26.623Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Account.cs",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\Account.cs",
+              "RelativeDocumentMoniker": "TeracromController\\Account.cs",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\Account.cs",
+              "RelativeToolTip": "TeracromController\\Account.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAEMAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T19:25:03.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "SGPTERA\\Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "SGPTERA\\Controllers\\LoginController.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAiwE8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-20T21:59:03.425Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Login\\Login.cshtml",
+              "RelativeDocumentMoniker": "SGPTERA\\Views\\Login\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Login\\Login.cshtml",
+              "RelativeToolTip": "SGPTERA\\Views\\Login\\Login.cshtml",
+              "ViewState": "AQIAABMBAAAAAAAAAAAAABoBAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-20T21:57:35.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "SGPTERA\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "SGPTERA\\Controllers\\AuthController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-20T18:48:17.933Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "CatalogosController.cs",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\CatalogosController.cs",
               "RelativeDocumentMoniker": "SGPTERA\\Controllers\\CatalogosController.cs",
               "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\CatalogosController.cs",
               "RelativeToolTip": "SGPTERA\\Controllers\\CatalogosController.cs",
-              "ViewState": "AQIAAAUBAAAAAAAAAAAEwBEBAABMAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAACGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-26T17:42:30.983Z",
+              "WhenOpened": "2025-02-26T17:42:30.983Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Catalogos.cs",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\Catalogos.cs",
+              "RelativeDocumentMoniker": "TeracromController\\Catalogos.cs",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\Catalogos.cs",
+              "RelativeToolTip": "TeracromController\\Catalogos.cs",
+              "ViewState": "AQIAAPgFAAAAAAAAAAAqwGsGAABXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-28T18:45:06.154Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Clientes.cshtml",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Clientes.cshtml",
+              "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\Clientes.cshtml",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Clientes.cshtml",
+              "RelativeToolTip": "SGPTERA\\Views\\Catalogos\\Clientes.cshtml",
+              "ViewState": "AQIAAJoCAAAAAAAAAAAAAJYCAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-18T16:38:30.361Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "GestionProyectosController.cs",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\GestionProyectosController.cs",
+              "RelativeDocumentMoniker": "SGPTERA\\Controllers\\GestionProyectosController.cs",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\GestionProyectosController.cs",
+              "RelativeToolTip": "SGPTERA\\Controllers\\GestionProyectosController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T19:27:22.69Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SGPTERA.csproj",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\SGPTERA.csproj",
+              "RelativeDocumentMoniker": "SGPTERA\\SGPTERA.csproj",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\SGPTERA.csproj",
+              "RelativeToolTip": "SGPTERA\\SGPTERA.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-03-20T18:30:12.78Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 13,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "SGPTERA\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "SGPTERA\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "ViewState": "AQIAANYBAAAAAAAAAAAcwOYBAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-18T19:53:02.727Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SGPModels.cs",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\SGPModels.cs",
+              "RelativeDocumentMoniker": "TeracromModels\\SGPModels.cs",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\SGPModels.cs",
+              "RelativeToolTip": "TeracromModels\\SGPModels.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAA5wBsAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-14T17:01:53.536Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "Sistemas.cshtml",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Sistemas.cshtml",
+              "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\Sistemas.cshtml",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Sistemas.cshtml",
+              "RelativeToolTip": "SGPTERA\\Views\\Catalogos\\Sistemas.cshtml",
+              "ViewState": "AQIAAHMCAAAAAAAAAAAAAH4CAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-21T19:49:13.943Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Usuarios.cshtml",
+              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Usuarios.cshtml",
+              "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\Usuarios.cshtml",
+              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Usuarios.cshtml",
+              "RelativeToolTip": "SGPTERA\\Views\\Catalogos\\Usuarios.cshtml",
+              "ViewState": "AQIAACkDAAAAAAAAAAAAAMUCAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-14T23:13:28.345Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "EstatusTareas.cshtml",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\EstatusTareas.cshtml",
               "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\EstatusTareas.cshtml",
@@ -128,7 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 16,
               "Title": "site.css",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "SGPTERA\\wwwroot\\css\\site.css",
@@ -140,7 +305,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 14,
               "Title": "ClientesUsuarios.cshtml",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\ClientesUsuarios.cshtml",
               "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\ClientesUsuarios.cshtml",
@@ -152,7 +317,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 18,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Program.cs",
               "RelativeDocumentMoniker": "SGPTERA\\Program.cs",
@@ -164,20 +329,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Catalogos.cs",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\Catalogos.cs",
-              "RelativeDocumentMoniker": "TeracromController\\Catalogos.cs",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromController\\Catalogos.cs",
-              "RelativeToolTip": "TeracromController\\Catalogos.cs",
-              "ViewState": "AQIAAHMEAAAAAAAAAAAAwIUEAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-28T18:45:06.154Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 15,
               "Title": "SoportesController.cs",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Controllers\\SoportesController.cs",
               "RelativeDocumentMoniker": "SGPTERA\\Controllers\\SoportesController.cs",
@@ -189,7 +341,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 19,
               "Title": "NivelComplejidadTareas.cshtml",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\NivelComplejidadTareas.cshtml",
               "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\NivelComplejidadTareas.cshtml",
@@ -201,7 +353,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 20,
               "Title": "EstatusProyectos.cshtml",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\EstatusProyectos.cshtml",
               "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\EstatusProyectos.cshtml",
@@ -213,7 +365,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 21,
               "Title": "ModuloSistemas.cshtml",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\ModuloSistemas.cshtml",
               "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\ModuloSistemas.cshtml",
@@ -225,19 +377,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Clientes.cshtml",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Clientes.cshtml",
-              "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\Clientes.cshtml",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Clientes.cshtml",
-              "RelativeToolTip": "SGPTERA\\Views\\Catalogos\\Clientes.cshtml",
-              "ViewState": "AQIAAKEBAAAAAAAAAAAqwK8BAAALAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-18T16:38:30.361Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 22,
               "Title": "Puestos.cshtml",
               "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Puestos.cshtml",
               "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\Puestos.cshtml",
@@ -246,30 +386,6 @@
               "ViewState": "AQIAAC4BAAAAAAAAAAAAADIBAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-18T16:19:43.05Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Usuarios.cshtml",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Usuarios.cshtml",
-              "RelativeDocumentMoniker": "SGPTERA\\Views\\Catalogos\\Usuarios.cshtml",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\SGPTERA\\Views\\Catalogos\\Usuarios.cshtml",
-              "RelativeToolTip": "SGPTERA\\Views\\Catalogos\\Usuarios.cshtml",
-              "ViewState": "AQIAAOMBAAAAAAAAAAAqwPYBAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-14T23:13:28.345Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "SGPModels.cs",
-              "DocumentMoniker": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\SGPModels.cs",
-              "RelativeDocumentMoniker": "TeracromModels\\SGPModels.cs",
-              "ToolTip": "C:\\Users\\Teracrom 10\\source\\repos\\SGPTERA\\TeracromModels\\SGPModels.cs",
-              "RelativeToolTip": "TeracromModels\\SGPModels.cs",
-              "ViewState": "AQIAAIAAAAAAAAAAAIA2wI0AAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-14T17:01:53.536Z"
             }
           ]
         }

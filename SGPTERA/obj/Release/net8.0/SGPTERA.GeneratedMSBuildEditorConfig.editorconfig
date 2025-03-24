@@ -1,0 +1,107 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = SGPTERA
+build_property.RootNamespace = SGPTERA
+build_property.ProjectDir = C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = C:\Users\Teracrom 10\source\repos\SGPTERA\SGPTERA
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Clientes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXENsaWVudGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/ClientesUsuarios.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXENsaWVudGVzVXN1YXJpb3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/EstatusProyectos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXEVzdGF0dXNQcm95ZWN0b3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/EstatusSoportes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXEVzdGF0dXNTb3BvcnRlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/EstatusTareas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXEVzdGF0dXNUYXJlYXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/ModuloSistemas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXE1vZHVsb1Npc3RlbWFzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/NivelComplejidadTareas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXE5pdmVsQ29tcGxlamlkYWRUYXJlYXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/NivelServicioSoportes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXE5pdmVsU2VydmljaW9Tb3BvcnRlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Puestos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXFB1ZXN0b3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Sistemas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXFNpc3RlbWFzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/TipoSoportes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXFRpcG9Tb3BvcnRlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Catalogos/Usuarios.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0YWxvZ29zXFVzdWFyaW9zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Login/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Soportes/Soporte.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29wb3J0ZXNcU29wb3J0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-o0iipu21mp
+
+[C:/Users/Teracrom 10/source/repos/SGPTERA/SGPTERA/Views/Shared/_LayoutLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-9tfoutexob

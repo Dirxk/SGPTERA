@@ -1792,11 +1792,11 @@ namespace TeracromController
                 {
                     // Consulta SQL para desactivar el cliente usuario
                     string sql = @"
-            UPDATE ClientesUsuarios 
-            SET FlgActivo = 0, 
-                IdUsuarioDel = @IdUsuarioDel, 
-                FechaDel = @FechaDel 
-            WHERE Id = @Id";
+                    UPDATE ClientesUsuarios 
+                    SET FlgActivo = 0, 
+                        IdUsuarioDel = @IdUsuarioDel, 
+                        FechaDel = @FechaDel 
+                    WHERE Id = @Id";
 
                     var parametros = new DynamicParameters();
                     parametros.Add("@Id", clienteusuario.Id, DbType.Int32);

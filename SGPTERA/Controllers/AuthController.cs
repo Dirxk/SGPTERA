@@ -31,7 +31,8 @@ namespace SGPTERA.Controllers
 
             if (filterContext.HttpContext.Request.Method == HttpMethods.Get && UrlGet.Contains(ViewBag.fullNamePage as string ?? "") && GetSessionValue("IdUsuario") == null)
             {
-                filterContext.HttpContext.Response.Redirect("/Login/Login");
+                var Login = Url.Action("Login", "Login");
+                filterContext.HttpContext.Response.Redirect(Login);
             }
             base.OnActionExecuting(filterContext);
         }

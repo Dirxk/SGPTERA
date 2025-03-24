@@ -30,7 +30,7 @@
                                 <i class="fas fa-lock"></i>
                             </div>
                             <div class="form-floating position-relative">
-                                <input type="password" class="form-control password-input input-valid-out" id="TCLoginPassword" name="TCLoginPassword" minlength="8" placeholder="Contraseña" aria-label="TCLoginPassword" aria-describedby="basic-addon1" required>
+                                <input type="password" class="form-control password-input input-valid-out" id="TCLoginPassword" name="TCLoginPassword" minlength="8" placeholder="Contraseña" aria-label="TCLoginPassword" aria-describedby="basic-addon1" required autocomplete="off">
                                 <label for="TCLoginPassword" class="me-3">contraseña</label>
                             </div>
                             <div class="col-12 text-start mb-3 mt-3">
@@ -65,35 +65,39 @@
                                 <p>Accede a todos nuestros beneficios.</p>
                             </div>
                             <div class="col-6 form-floating mb-3">
-                                <input type="text" class="form-control input-valid-out" id="TCUserName" name="TCUserName" placeholder="Nombre de Usuario" aria-label="TCUserName" required>
+                                <input type="text" class="form-control input-valid-out" id="TCUserName" name="TCUserName" placeholder="Nombre de Usuario" aria-label="TCUserName" required autocomplete="off">
                                 <label for="TCUserName" class="me-3">Nombre de usuario</label>
                             </div>
                             <div class="col-6 form-floating">
-                                <input type="text" class="form-control input-valid-out" id="TCName" name="TCName" placeholder="Nombre" aria-label="TCName" required>
+                                <input type="text" class="form-control input-valid-out" id="TCName" name="TCName" placeholder="Nombre" aria-label="TCName" required autocomplete="off">
                                 <label for="TCName" class="me-3">Nombre(s)</label>
                             </div>
                             <div class="col-6 form-floating mb-3">
-                                <input type="text" class="form-control input-valid-out" id="TCLastNameP" name="TCLastNameP" placeholder="Apellido Paterno" aria-label="TCLastNameP" required>
+                                <input type="text" class="form-control input-valid-out" id="TCLastNameP" name="TCLastNameP" placeholder="Apellido Paterno" aria-label="TCLastNameP" required autocomplete="off">
                                 <label for="TCLastNameP" class="me-3">Apellido Paterno</label>
                             </div>
                             <div class="col-6 form-floating mb-2">
-                                <input type="text" class="form-control input-valid-out" id="TCLastNameM" name="TCLastNameM" placeholder="Apellido Materno" aria-label="TCLastNameM" required>
+                                <input type="text" class="form-control input-valid-out" id="TCLastNameM" name="TCLastNameM" placeholder="Apellido Materno" aria-label="TCLastNameM" required autocomplete="off">
                                 <label for="TCLastNameM" class="me-3">Apellido Materno</label>
                             </div>
                             <div class="col-6 form-floating mb-2">
-                                <input type="tel" class="form-control input-valid-out" id="TCTelefono" name="TCTelefono" placeholder="Teléfono" aria-label="TCTelefono" required>
+                                <input type="tel" class="form-control input-valid-out" id="TCTelefono" name="TCTelefono" placeholder="Teléfono" aria-label="TCTelefono" required autocomplete="off">
                                 <label for="TCTelefono" class="me-3">Teléfono</label>
                             </div>
                             <div class="col-6 form-floating mb-3">
-                                <input type="email" class="form-control input-valid-out" id="TCEmail" name="TCEmail" placeholder="Correo electrónico" aria-label="TCEmail" required>
+                                <input type="email" class="form-control input-valid-out" id="TCEmail" name="TCEmail" placeholder="Correo electrónico" aria-label="TCEmail" required autocomplete="off">
                                 <label for="TCEmail" class="me-3">Correo Electrónico</label>
                             </div>
+                            <div class="TogglePasswordRegister d-flex justify-content-end align-items-center gap-2 mb-3" style="cursor: pointer;">
+                                <p class="mb-0 small">Mostrar contraseña</p>
+                                <i class="fas fa-lock"></i>
+                            </div>
                             <div class="col-6 form-floating position-relative mb-2">
-                                <input type="text" class="form-control password-input input-valid-out" id="TCPassword" name="TCPassword" minlength="8" placeholder="Contraseña" aria-label="TCPassword" required>
+                                <input type="password" class="form-control password-input input-valid-out" id="TCPassword" name="TCPassword" minlength="8" placeholder="Contraseña" aria-label="TCPassword" required autocomplete="off">
                                 <label for="TCPassword" class="me-3">Contraseña</label>
                             </div>
                             <div class="col-6 form-floating position-relative mb-3">
-                                <input type="password" class="form-control password-input input-valid-out" id="TCconfirmPassword" name="TCconfirmPassword" minlength="8" placeholder="Repite la Contraseña" aria-label="TCconfirmPassword" required>
+                                <input type="password" class="form-control password-input input-valid-out" id="TCconfirmPassword" name="TCconfirmPassword" minlength="8" placeholder="Repite la Contraseña" aria-label="TCconfirmPassword" required autocomplete="off">
                                 <label for="TCconfirmPassword" class="me-3">Repite la Contraseña</label>
                             </div>
                             <div class="col-12 d-grid gap-2">
@@ -122,36 +126,61 @@
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
     <script>
-        function GetUrl(action, controller) {
-            const urlBase = '@Url.Action("__action__", "__controller__")';
-            return urlBase.replace("__action__", action).replace("__controller__", controller);
-        }
-        $(function () {
 
-            // Bloquear clic derecho en la imagen
-            $('#BackgroundLoginTeracrom').on('contextmenu', function (e) {
-                return false;
-            });
+        // Bloquear clic derecho en la imagen
+        $('#BackgroundLoginTeracrom').on('contextmenu', function (e) {
+            return false;
+        });
 
-            // Bloquear arrastre de la imagen
-            $('#BackgroundLoginTeracrom').on('dragstart', function (e) {
-                return false;
-            });
+        // Bloquear arrastre de la imagen
+        $('#BackgroundLoginTeracrom').on('dragstart', function (e) {
+            return false;
+        });
 
-            // Bloquear clic derecho en la imagen
-            $('#BackgroundRegisterTeracrom').on('contextmenu', function (e) {
-                return false;
-            });
+        // Bloquear clic derecho en la imagen
+        $('#BackgroundRegisterTeracrom').on('contextmenu', function (e) {
+            return false;
+        });
 
-            // Bloquear arrastre de la imagen
-            $('#BackgroundRegisterTeracrom').on('dragstart', function (e) {
-                return false;
-            });
+        // Bloquear arrastre de la imagen
+        $('#BackgroundRegisterTeracrom').on('dragstart', function (e) {
+            return false;
+        });
 
-            // Funcionalidad para mostrar/ocultar contraseña
+        $(document).ready(function () {
+
+            // Función para limpiar los formularios
+            function limpiarFormulario(formulario) {
+                formulario[0].reset(); // Restablece los campos del formulario
+                formulario.validate().resetForm(); // Limpia los mensajes de validación
+            }
+
+            // Función para resetear el estado del TogglePassword
+            function resetearTogglePassword() {
+                const $passwordInputs = $('.password-input'); // Selecciona ambos campos de contraseña
+                const $iconLogin = $('.TogglePassword i');
+                const $textLogin = $('.TogglePassword p');
+                const $iconRegister = $('.TogglePasswordRegister i');
+                const $textRegister = $('.TogglePasswordRegister p');
+
+                // Restablecer el tipo de input a "password"
+                $passwordInputs.attr('type', 'password');
+
+                // Restablecer el ícono y texto en el formulario de login
+                $iconLogin.removeClass('fa-lock-open').addClass('fa-lock');
+                $textLogin.text('Mostrar contraseña');
+
+                // Restablecer el ícono y texto en el formulario de registro
+                $iconRegister.removeClass('fa-lock-open').addClass('fa-lock');
+                $textRegister.text('Mostrar contraseña');
+            }
+
+            //============================================================================================================================\\
+            //=========================================  Funcionalidad del boton ver contraseña  ==========================================\\
+            //==============================================================================================================================\\
+
+            // Funcionalidad para mostrar/ocultar contraseña en el formulario de login
             $(".TogglePassword").click(function () {
                 const $passwordInput = $('.password-input');
                 const $icon = $(this).find('i');
@@ -168,10 +197,37 @@
                 }
             });
 
+            // Funcionalidad para mostrar/ocultar contraseña en el formulario de registro
+            $(".TogglePasswordRegister").click(function () {
+                const $passwordInputs = $('.password-input'); // Selecciona ambos campos de contraseña
+                const $icon = $(this).find('i');
+                const $text = $(this).find('p');
+
+                if ($passwordInputs.attr('type') === 'password') {
+                    $passwordInputs.attr('type', 'text'); // Cambia a tipo "text" para mostrar la contraseña
+                    $icon.removeClass('fa-lock').addClass('fa-lock-open');
+                    $text.text('Ocultar contraseña');
+                } else {
+                    $passwordInputs.attr('type', 'password'); // Cambia a tipo "password" para ocultar la contraseña
+                    $icon.removeClass('fa-lock-open').addClass('fa-lock');
+                    $text.text('Mostrar contraseña');
+                }
+            });
+
+            //============================================================================================================================\\
+            //===============================================  Boton de redireccionamiento  ===============================================\\
+            //==============================================================================================================================\\
+
             // Botón "Crear una cuenta"
             $('#BtnNewRegister').click(function () {
                 // Desplazamiento de la imagen
                 $('.img-animation').addClass('img-move');
+
+                // Limpiar el formulario de login
+                limpiarFormulario($('#FrmLogin'));
+
+                // Resetear el estado del TogglePassword
+                resetearTogglePassword();
 
                 // Ocultar el formulario de login y mostrar el de registro
                 $('#FrmLogin').fadeOut(500, function () {
@@ -184,85 +240,60 @@
                 // Volver la imagen a su posición original
                 $('.img-animation').removeClass('img-move');
 
+                // Limpiar el formulario de registro
+                limpiarFormulario($('#FrmRegister'));
+
+                // Resetear el estado del TogglePassword
+                resetearTogglePassword();
+
                 // Ocultar el formulario de registro y mostrar el de login
                 $('#FrmRegister').fadeOut(500, function () {
                     $('#FrmLogin').fadeIn(500);
                 });
             });
 
+            //============================================================================================================================\\
+            //=================================================  Formulario para el Login  ================================================\\
+            //==============================================================================================================================\\
+
+            $("#TCLoginEmail").on("input", function () {
+                let value = $(this).val(); // <-- Ya no convertimos a minúsculas
+                value = value.replace(/[^a-zA-Z0-9.@@]/g, ""); // Permite mayúsculas y minúsculas
+
+                // Asegurar que solo haya un @@ en el email
+                if ((value.match(/@@/g) || []).length > 1) {
+                    value = value.substring(0, value.lastIndexOf('@@'));
+                }
+
+                $(this).val(value);
+            });
+
+            // Validar que no se permitan espacios en TCconfirmPassword
+            $("#TCLoginPassword").on("input", function () {
+                $(this).val($(this).val().replace(/\s/g, ""));
+            });
+
+            // Configuración de la validación del formulario
             $("#FrmLogin").validate({
                 rules: {
                     TCLoginEmail: {
                         required: true
                     },
                     TCLoginPassword: {
-                        required: true,
-                        minlength: 8
+                        required: true
                     }
                 },
                 messages: {
                     TCLoginEmail: {
-                        required: "Por favor, ingresa tu correo."
+                        required: "Por favor, ingresa tu correo o tu usuario"
                     },
                     TCLoginPassword: {
-                        required: "Por favor, ingresa tu contraseña.",
-                        minlength: "La contraseña debe tener al menos 8 caracteres."
+                        required: "Por favor, ingresa tu contraseña."
                     }
                 },
                 submitHandler: function (form, event) {
-                    event.preventDefault()
-
-                    var email = $("#TCLoginEmail").val();
-                    var password = $("#TCLoginPassword").val();
-                    var user2 = $("#TCLoginEmail").val();
-
-                    var urlVerificarUsuario = '@Url.Action("VerificarUsuario", "Login")';
-
-                    $.ajax({
-                        type: 'POST',
-                        url: urlVerificarUsuario,
-                        data: { email: email, password: password, user2: user2},
-                        beforeSend: function(){
-                            mdLoader.show()
-                        },
-                        complete: function(){
-                            setTimeout(function () { mdLoader.hide() },500)
-                        },
-                        success: function (response) {
-
-                            if (response.resultado) {
-                                setTimeout(()=>{
-                                    Swal.fire({
-                                        title: "Inicio de Sesión exitoso",
-                                        icon: "success",
-                                        draggable: true
-                                    }).then(() => {
-                                        window.location.href = '@Url.Action("Index", "Home")';
-                                    });
-
-                                }, 500)
-                    
-                            } else {
-                                // Manejo de error, no se muestra el modal
-                                Swal.fire({
-                                    title: "Error",
-                                    text: response.mensaje || "Credenciales inválidas.",
-                                    icon: "error",
-                                    draggable: true
-                                });
-                            }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            FrmLogin.preventDefault();
-                            // Manejo de error, no se muestra el modal
-                            console.error("Error en la solicitud:", textStatus, errorThrown);
-                            Swal.fire({
-                                title: "Error",
-                                text: "Ocurrió un error inesperado. Inténtalo de nuevo.",
-                                icon: "error"
-                            });
-                        }
-                    });
+                    event.preventDefault();
+                    VerificarUsuario(); // Llamar a la función que maneja el login
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mb-2 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -272,14 +303,122 @@
                 errorClass: 'alert-validate'
             });
 
-            // Jquery Validate para el registro
+            function VerificarUsuario() {
+                var formData = new FormData();
+                formData.append('Correo', $('#TCLoginEmail').val());
+                formData.append('Usuario', $('#TCLoginEmail').val());
+                formData.append('Contrasena', $('#TCLoginPassword').val());
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("VerificarUsuario", "Login")',
+                    data: formData,
+                    processData: false,  // Evita que jQuery procese los datos
+                    contentType: false,  // Evita que jQuery establezca el tipo de contenido
+                    beforeSend: function () {
+                        mdLoader.show();
+                    },
+                    complete: function () {
+                        setTimeout(function () { mdLoader.hide(); }, 500);
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            Swal.fire({
+                                title: "Inicio de Sesión exitoso",
+                                icon: "success",
+                                draggable: true,
+                                timer: 1500, // Cierra automáticamente después de 1.5 segundos
+                                showConfirmButton: false
+                            }).then(() => {
+                                window.location.href = '@Url.Action("Index", "Home")';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false,
+                                draggable: true
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                        Swal.fire({
+                            title: "Error",
+                            text: "Ocurrió un error inesperado. Inténtalo de nuevo.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+
+
+            //============================================================================================================================\\
+            //===============================================  Formulario para el Registro  ================================================\\
+            //==============================================================================================================================\\
+
+            // Validar que solo se ingresen números y el signo + en el campo de teléfono
+            $("#TCTelefono").on("input", function () {
+                $(this).val($(this).val().replace(/[^0-9+]/g, ""));
+            });
+
+            // Validar que solo se permitan letras y números en TCUserName, sin espacios
+            $("#TCUserName").on("input", function () {
+                $(this).val($(this).val().replace(/[^a-zA-Z0-9]/g, ""));
+            });
+
+            // Validar que solo se permitan letras y un solo espacio en TCName (para nombres como "Juan Pablo")
+            $("#TCName").on("input", function () {
+                $(this).val($(this).val().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, ""));
+                // Asegurar que solo haya un espacio
+                $(this).val($(this).val().replace(/\s{2,}/g, ' '));
+            });
+
+            // Validar que solo se permitan letras en TCLastNameP, sin espacios
+            $("#TCLastNameP").on("input", function () {
+                $(this).val($(this).val().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g, ""));
+            });
+
+            // Validar que solo se permitan letras en TCLastNameM, sin espacios
+            $("#TCLastNameM").on("input", function () {
+                $(this).val($(this).val().replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g, ""));
+            });
+
+            // Validar que solo se permitan minúsculas
+            $("#TCEmail").on("input", function () {
+                let value = $(this).val().toLowerCase(); // Convertir a minúsculas
+                value = value.replace(/[^a-z0-9.@@]/g, ""); // Usa @@ en lugar de
+
+                // Asegurar que solo haya un en el email
+                if ((value.match(/@@/g) || []).length > 1) {
+                    value = value.substring(0, value.lastIndexOf('@@'));
+                }
+
+                $(this).val(value);
+            });
+
+            // Validar que no se permitan espacios en TCconfirmPassword
+            $("#TCconfirmPassword").on("input", function () {
+                $(this).val($(this).val().replace(/\s/g, ""));
+            });
+
+            // Validar que no se permitan espacios en TCconfirmPassword
+            $("#TCPassword").on("input", function () {
+                $(this).val($(this).val().replace(/\s/g, ""));
+            });
+
+            // Configuración del validador para el formulario de registro
             $("#FrmRegister").validate({
                 rules: {
                     TCUserName: { required: true, minlength: 2 },
                     TCName: { required: true, minlength: 2 },
                     TCLastNameP: { required: true, minlength: 2 },
                     TCLastNameM: { required: true, minlength: 2 },
-                    TCTelefono: {required: true, minlength:2},
+                    TCTelefono: { required: true, minlength: 2 },
                     TCEmail: { required: true, email: true },
                     TCPassword: { required: true, minlength: 8 },
                     TCconfirmPassword: { required: true, minlength: 8, equalTo: "#TCPassword" },
@@ -289,58 +428,14 @@
                     TCName: { required: "Nombre requerido.", minlength: "Mínimo 2 caracteres." },
                     TCLastNameP: { required: "Apellido paterno requerido.", minlength: "Mínimo 2 caracteres." },
                     TCLastNameM: { required: "Apellido materno requerido.", minlength: "Mínimo 2 caracteres." },
-                    TCTelefono: {required: "Telefono requerido.", minlength: "Mínimo 10 caracteres."},
+                    TCTelefono: { required: "Teléfono requerido.", minlength: "Mínimo 10 caracteres." },
                     TCEmail: { required: "Correo requerido.", email: "Correo no válido." },
                     TCPassword: { required: "Contraseña requerida.", minlength: "Mínimo 8 caracteres." },
                     TCconfirmPassword: { required: "Repite la contraseña.", equalTo: "Contraseñas no coinciden." }
                 },
                 submitHandler: function (form, event) {
-                    // event.preventDefault();
-                    var User = {
-                        Usuario: $('#TCUserName').val(),
-                        NombreUsuario: $('#TCName').val(),
-                        ApellidoPaternoUsuario: $('#TCLastNameP').val(),
-                        ApellidoMaternoUsuario: $('#TCLastNameM').val(),
-                        Telefono: $('#TCTelefono').val(),
-                        Correo: $('#TCEmail').val(),
-                        Contrasena: $('#TCPassword').val()
-                    };
-
-
-                    var url = '@Url.Action("RegistrarUsuario", "Login")';
-                    console.log(User);
-                    // return;
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        async:true,
-                        data: {
-                            User
-                        },
-                        beforeSend: function () {
-                            mdLoader.show()
-                        },
-                        complete: function () {
-                            setTimeout(function () { mdLoader.hide() }, 500)
-                        },
-                        success: function (response) {
-                            console.log("Respuesta del servidor:", response);
-                            if (response.resultado) {
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "¡Registro exitoso!",
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                                setTimeout(() => window.location.href = "/Login/Login", 1000);
-                            } else {
-                                Swal.fire({ icon: "error", title: "Error", text: response.mensaje });
-                            }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            console.error("Error en la solicitud:", textStatus, errorThrown);
-                        }
-                    });
+                    event.preventDefault(); // Evitar el envío tradicional del formulario
+                    AgregarUsuario(); // Llamar a la función que maneja el registro
                 },
                 errorPlacement: function (error, element) {
                     error.addClass('col-12 mt-2 bg-danger text-white text-center p-2 rounded');
@@ -350,10 +445,68 @@
                 errorClass: 'alert-validate'
             });
 
+            // Función para manejar el registro
+            function AgregarUsuario() {
+                var formData = new FormData();
+                formData.append('Usuario', $('#TCUserName').val());
+                formData.append('NombreUsuario', $('#TCName').val());
+                formData.append('ApellidoPaternoUsuario', $('#TCLastNameP').val());
+                formData.append('ApellidoMaternoUsuario', $('#TCLastNameM').val());
+                formData.append('Telefono', $('#TCTelefono').val());
+                formData.append('Correo', $('#TCEmail').val());
+                formData.append('Contrasena', $('#TCPassword').val());
 
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("RegistrarUsuario", "Login")',
+                    async: true,
+                    data: formData,
+                    processData: false,  
+                    contentType: false,  
+                    beforeSend: function () {
+                        mdLoader.show();
+                    },
+                    complete: function () {
+                        setTimeout(function () { mdLoader.hide(); }, 500);
+                    },
+                    success: function (response) {
+                        if (response.resultado) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "¡Registro exitoso!",
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                $('.img-animation').removeClass('img-move');
+                                limpiarFormulario($('#FrmRegister'));
+                                resetearTogglePassword();
+                                $('#FrmRegister').fadeOut(500, function () {
+                                    $('#FrmLogin').fadeIn(500);
+                                });
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: response.mensaje,
+
+                                showConfirmButton: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false,
+                                draggable: true
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("Error en la solicitud:", textStatus, errorThrown);
+                        Swal.fire({ icon: "error", title: "Error", text: "Ocurrió un error inesperado." });
+                    }
+                });
+            }
         });
-    </script>
 
-}
+    </script>
+   }
 
 

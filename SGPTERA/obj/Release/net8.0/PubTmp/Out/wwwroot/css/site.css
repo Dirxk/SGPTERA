@@ -1,0 +1,180 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* From Uiverse.io by coding-masala */
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+
+.box {
+    width: 20px;
+    height: 20px;
+    margin: 0 8px;
+    border-radius: 50%;
+    animation: jump_4123 1s ease-in-out infinite;
+}
+
+    .box:nth-child(1) {
+        background-color: #4e4e4e;
+        animation-delay: 0.2s;
+    }
+
+    .box:nth-child(2) {
+        background-color: #bdbdbd;
+        animation-delay: 0.4s;
+    }
+
+    .box:nth-child(3) {
+        background-color: #4e4e4e;
+        animation-delay: 0.6s;
+    }
+
+    .box:nth-child(4) {
+        background-color: #bdbdbd;
+        animation-delay: 0.8s;
+    }
+
+@keyframes jump_4123 {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-30px);
+    }
+}
+
+
+/* Estilos base para el contenedor de sugerencias */
+.ui-autocomplete {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 325px; /* Ancho máximo */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    font-size: 14px;
+    text-align: left;
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: none; /* Sin sombra */
+}
+
+/* Estilos para cada elemento de la lista */
+.ui-autocomplete .ui-menu-item {
+    cursor: pointer;
+    color: #333333; /* Color de texto */
+    background-color: #ffffff; /* Fondo blanco */
+    border-bottom: 1px solid #eeeeee; /* Línea divisoria entre elementos */
+}
+
+/* Estilos para el elemento seleccionado o hover */
+.ui-autocomplete .ui-menu-item:hover,
+.ui-autocomplete .ui-state-focus {
+    color: #ffffff; /* Texto blanco */
+    background-color: #007bff; /* Fondo azul */
+    border-bottom: 1px solid #007bff; /* Línea divisoria azul */
+}
+
+/* Media Queries para pantallas pequeñas (móviles) */
+@media (max-width: 325px) {
+    .ui-autocomplete {
+        width: 100%; /* Ocupa todo el ancho en móviles */
+        max-width: none; /* Elimina el límite de ancho */
+        font-size: 16px; /* Aumenta el tamaño de la fuente para mejor legibilidad */
+    }
+}
+
+/* Media Queries para pantallas medianas (tablets) */
+@media (min-width: 125px) and (max-width: 225px) {
+    .ui-autocomplete {
+        width: 80%; /* Reduce el ancho para tablets */
+        max-width: 400px; /* Ajusta el ancho máximo */
+    }
+}
+
+/* Media Queries para pantallas grandes (escritorio) */
+@media (min-width: 1024px) {
+    .ui-autocomplete {
+        width: 225px; /* Mantén el ancho original para pantallas grandes */
+    }
+}
+
+/* Cambiar el color de fondo y texto de las celdas seleccionadas */
+.wj-flexgrid .wj-cell.wj-state-selected {
+    background-color: #8899ac !important; /* Naranja */
+    color: #000000 !important; /* Texto negro */
+}
+
+/* Cambiar el color de fondo y texto de las celdas seleccionadas sin foco */
+.wj-flexgrid .wj-cell.wj-state-multi-selected {
+    background-color: #8899ac !important; /* Naranja claro */
+    color: #000000 !important; /* Texto negro */
+}
+
+
+.wj-header {
+    background: #0f1822 !important;
+    background-image: none !important;
+    color: #fff !important;
+}
+
+/* Celdas normales */
+.wj-flexgrid .wj-cell {
+    background-color: #22303c; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+}
+
+/* Celdas alternas */
+.wj-flexgrid .wj-cell.wj-alt {
+    background-color: #22303c; /* Color de fondo alterno */
+    color: #ffffff; /* Color del texto */
+}
+
+/* Celdas congeladas */
+.wj-flexgrid .wj-cell.wj-cell-frz {
+    background-color: #22303c; /* Color de fondo congelado */
+    color: #ffffff; /* Color del texto */
+}
+
+/* Celdas congeladas alternas */
+.wj-flexgrid .wj-cell.wj-cell-frz.wj-alt {
+    background-color: #22303c; /* Color de fondo congelado alterno */
+    color: #ffffff; /* Color del texto */
+}
+
+/* Estilo para el enlace de teléfono */
+.enlace-telefono:hover {
+    color: #61C181 !important; /* Verde */
+}
+
+/* Estilo para el enlace de correo */
+.enlace-correo:hover {
+    color: #0D7685 !important; /* Azul */
+}
+
+#ContenidoTera {
+    padding-bottom: 4px;
+}
